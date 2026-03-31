@@ -20,6 +20,12 @@ This is the Frontend for **SRJ System**, a school management system that manages
 - Keep implementations minimal but scalable.
 - Do not introduce new libraries without justification.
 - Organize code by feature/module, not by technical role.
+
+# Github
+
+- This project uses GitHub for version control and collaboration.
+- Commits should follow the Conventional Commits specification for clarity and consistency.
+- Only make commits and push when I tell you to.
     
 ## Permissions & Access Control
 
