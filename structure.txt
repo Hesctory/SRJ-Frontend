@@ -1,0 +1,69 @@
+# Project structure plan for SRJ Frontend (React Admin + Clean Architecture)
+
+src/
+  App.tsx                         # React Admin bootstrap, custom layout
+  index.tsx                       # app entry point
+  Layout.tsx                      # custom layout wrapper
+  modules.ts                      # module definitions for homepage menu
+  authProvider.ts                 # React Admin auth provider
+  dataProvider.ts                 # React Admin data provider
+
+  application/
+    useCases/
+      LoginUseCase.ts             # login business workflow
+      YourFeatureUseCase.ts       # new future use case example
+
+  domain/
+    entities/
+      User.ts                     # user domain model and factory
+      YourEntity.ts               # feature domain model
+    valueObjects/
+      AuthCredentials.ts          # email/password validation
+      YourValueObject.ts          # additional VOs
+
+  infrastructure/
+    services/
+      AuthAPI.ts                  # backend auth REST adapter
+      YourFeatureAPI.ts           # backend feature adapter
+    dtos/
+      userData.ts                 # data transfer objects
+      yourFeatureData.ts          # DTOs for feature
+
+  repository/
+    repositories/
+      IAuthRepository.ts          # repository interface contract
+      IYourFeatureRepository.ts   # feature contract
+    implementations/
+      AuthRepositoryImpl.ts       # implements IAuthRepository
+      YourFeatureRepositoryImpl.ts# implements feature repository
+
+  presentation/
+    hooks/
+      useLogin.ts                 # custom login hook
+      useYourFeature.ts           # custom feature hook
+    components/
+      CustomLoginForm.tsx         # login form component
+      ModuleCard.tsx              # module UI card in dashboard
+      ModulePageLayout.tsx        # shared page shell
+    pages/
+      CustomLogin.tsx             # custom login page
+      Home.tsx                    # dashboard module matrix
+      YourFeaturePage.tsx         # feature page
+
+  admin/
+    resources.ts                  # React Admin Resource configuration
+
+  users/
+    users-create.tsx              # existing user create page
+    usersList.tsx                 # existing user list page
+
+
+# Additional architecture notes
+
+- Keep dependencies: domain <- application <- repository <- infrastructure <- presentation
+- Use adapters (impl) to map infrastructure DTOs <-> domain entities
+- Add test files adjacent:
+  application/useCases/LoginUseCase.test.ts
+  repository/implementations/AuthRepositoryImpl.test.ts
+  presentation/hooks/useLogin.test.ts
+
