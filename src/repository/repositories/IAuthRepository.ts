@@ -1,5 +1,5 @@
-import { User } from "../../domain/entities/User";
+import { DSession } from "../../domain/entities/DSession";
 
 export interface IAuthRepository {
-  login(email: string, password: string): Promise<User | null>;
+  login(email: string, password: string): Promise<DSession>;
 }

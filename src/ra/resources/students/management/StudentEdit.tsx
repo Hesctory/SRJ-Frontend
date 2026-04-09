@@ -1,0 +1,82 @@
+import { BooleanInput, Edit, DateInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
+import { Box, Typography } from "@mui/material";
+import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
+import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
+import DisabilityForm from "../../../../presentation/components/DisabilityForm";
+import MultipleGuardiansForm from "../../../../presentation/components/MultipleGuardiansForm";
+
+export const StudentEdit = () => {
+    return (
+        <Edit>
+            <TabbedForm >
+                <TabbedForm.Tab label="Datos Personales">
+
+                    <Box display="flex" gap={2} width="100%">
+                        <TextInput source="names" label="Nombres" isRequired validate={required()} />
+                        <TextInput source="paternalLastname" label="Apellido Paterno" isRequired validate={required()} />
+                        <TextInput source="maternalLastname" label="Apellido Materno" isRequired validate={required()} />
+                    </Box>
+
+                    <ReferenceInput source="genderId" reference="genders">
+                        <SelectInput label="Sexo" isRequired validate={required()} />
+                    </ReferenceInput>
+
+                    <Box display="flex" gap={2} width="100%">
+                        <ReferenceInput source="documentTypeId" reference="document-types">
+                            <SelectInput label="Tipo de Documento" isRequired validate={required()} />
+                        </ReferenceInput>
+                        <TextInput source="idDocumentNumber" label="Número de Documento" isRequired validate={required()} />
+                    </Box>
+
+                    <ReferenceInput source="ethnicIdentificationId" reference="ethnic-self-identifications">
+                        <SelectInput label="Autoidentificación Étnica" />
+                    </ReferenceInput>
+                    <ReferenceInput source="nativeLanguageId" reference="languages">
+                        <SelectInput label="Lengua Materna" isRequired validate={required()} />
+                    </ReferenceInput>
+                    <SecondLanguagesFormSelector />
+
+                    <Typography variant="caption" color="text.secondary">
+                        Solo si el estudiante es mayor de edad:
+                    </Typography>
+                    <Box display="flex" gap={2} width="100%">
+                        <TextInput source="cellphone" label="Celular" />
+                        <TextInput source="landlineNumber" label="Teléfono fijo" />
+                        <TextInput source="email" label="Correo electrónico" />
+                    </Box>
+
+                </TabbedForm.Tab>
+
+                <TabbedForm.Tab label="Datos de Nacimiento">
+                    <DateInput source="birthDate" label="Fecha de Nacimiento" isRequired validate={required()} />
+                    <Box display="flex" gap={2} width="100%">
+                        <LocationFormSelector sourcePrefix="birthLocation" />
+                    </Box>
+                </TabbedForm.Tab>
+
+                <TabbedForm.Tab label="Domicilio">
+                    <TextInput source="address" label="Dirección" isRequired validate={required()} />
+                    <Box display="flex" gap={2} width="100%">
+                        <LocationFormSelector sourcePrefix="addressLocation" />
+                    </Box>
+                    <BooleanInput
+                        source="hasElectronicDevices"
+                        label="Cuenta con dispositivos electrónicos"
+                    />
+                    <BooleanInput
+                        source="hasInternetAccess"
+                        label="Cuenta con acceso a internet"
+                    />
+                </TabbedForm.Tab>
+
+                <TabbedForm.Tab label="Apoderados">
+                    <MultipleGuardiansForm />
+                </TabbedForm.Tab>
+
+                <TabbedForm.Tab label="Discapacidad">
+                    <DisabilityForm />
+                </TabbedForm.Tab>
+            </TabbedForm>
+        </Edit>
+    );
+};
