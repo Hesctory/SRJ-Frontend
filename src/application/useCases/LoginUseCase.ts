@@ -15,10 +15,13 @@ export class LoginUseCase {
     }
     const authCredentials : AuthCredentials = AuthCredentials.create(email, password)
     // Delegate to repository
-    const user = await this.authRepository.login(authCredentials.credentials.email, authCredentials.credentials.password);
-    if (!user){
-      throw new Error("Incorrect Credentials");
+    try {
+      const session = await this.authRepository.login(authCredentials.credentials.email, authCredentials.credentials.password);
+      localStorage.setItem('user', JSON.stringify(session.getUser()));
+      localStorage.setItem('token', session.getToken());
+      return session.getUser();
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : 'Login failed');
     }
-    return user;
   }
 }

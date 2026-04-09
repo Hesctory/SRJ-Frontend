@@ -9,7 +9,6 @@ export const MyMenu = () => {
   return (
     <Menu>
       <Menu.DashboardItem />
-      <Menu.ResourceItems />
       {modules.map((module) => {
         const isOpen = openStates[module.id] || false;
         const handleToggle = () => setOpenStates(prev => ({...prev, [module.id]: !prev[module.id]}));

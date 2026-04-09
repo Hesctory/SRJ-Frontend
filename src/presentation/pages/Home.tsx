@@ -14,7 +14,7 @@ export const Home: React.FC = () => {
   const handleModuleClick = (module: Module) => {
     // Save the selected module to localStorage
     localStorage.setItem('selectedModule', JSON.stringify(module));
-    
+    console.log(localStorage.getItem('token'));
     // Navigate to the module path
     navigate(module.path);
   };

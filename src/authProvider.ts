@@ -3,6 +3,7 @@ import { AuthProvider } from 'react-admin';
 import { AuthAPI } from './infrastructure/services/AuthAPI';
 import { LoginUseCase } from './application/useCases/LoginUseCase';
 import { AuthRepositoryImpl } from './repository/implementations/AuthRepositoryImpl';
+import { DSession } from './domain/entities/DSession';
 
 interface LoginParams {
     username: string;
@@ -18,8 +19,8 @@ const authProvider: AuthProvider = {
         const loginUseCase = new LoginUseCase(authRepository);
         try {
             const user = await loginUseCase.execute(username, password);
+            console.log(localStorage.getItem('token'), localStorage.getItem('user'));
             // Guarda token (aquí podrías usar JWT o similar)
-            localStorage.setItem('token', JSON.stringify(user));
             return Promise.resolve();
         } catch (error) {
             return Promise.reject(error instanceof Error ? error.message : 'Login failed');
@@ -35,8 +36,11 @@ const authProvider: AuthProvider = {
     // CheckAuth: revisa si el usuario sigue logueado
     checkAuth: async () => {
         const token = localStorage.getItem('token');
-        if (token) return Promise.resolve();
-        return Promise.reject({ redirectTo: '/login' });
+        if(DSession.getExpiresAtFromToken(token || '') < new Date() || !token) {
+            localStorage.removeItem('token');
+            return Promise.reject({ redirectTo: '/login' });
+        }
+        return Promise.resolve();
     },
 
     // CheckError: maneja errores de auth (401, 403)

@@ -4,8 +4,8 @@ export class User {
     private id: number,
     private name: string,
     private email: string,
-    private password: string,
-    private role: string,
+    private phone: string,
+    private roles: string [],
   ) {
   }
 
@@ -13,10 +13,10 @@ export class User {
     id: number, 
     name: string,
     email: string,
-    password: string,
-    role: string
+    phone: string,
+    roles: string []
   ): User {
-    return new User(id, name, email, password, role);
+    return new User(id, name, email, phone, roles);
   }
 
   static fromJSON(data: any): User {
@@ -25,7 +25,7 @@ export class User {
       data.name,
       data.email,
       data.password,
-      data.role 
+      data.roles
     );
   }
 
@@ -42,11 +42,11 @@ export class User {
     return this.email;
   }
 
-  getPassword(): string {
-    return this.password;
+  getPhone(): string {
+    return this.phone;
   }
 
-  getRole(): string {
-    return this.role;
+  getRoles(): string[] {
+    return this.roles;
   }
 }

@@ -82,7 +82,7 @@ export const modules: Module[] = [
             {
                 id: 11,
                 name: "Gestión de estudiantes",
-                path: "/students/management",
+                path: "/students",
                 permissions: [],
                 icon: <PersonAddIcon />
             },
@@ -105,7 +105,7 @@ export const modules: Module[] = [
             {
                 id: 21,
                 name: "Gestión de Staff",
-                path: "/staff/management",
+                path: "/staff",
                 permissions: [],
                 icon: <PersonAddIcon />
             },
@@ -128,14 +128,14 @@ export const modules: Module[] = [
             {
                 id: 31,
                 name: "Editoriales",
-                path: "/purchases-sales/publishers",
+                path: "/publishers",
                 permissions: [],
                 icon: <MenuBookIcon />
             },
             {
                 id: 32,
                 name: "Productos",
-                path: "/purchases-sales/products",
+                path: "/products",
                 permissions: [],
                 icon: <InventoryIcon />
             },
@@ -179,70 +179,70 @@ export const modules: Module[] = [
             {
                 id: 41,
                 name: "Años escolares",
-                path: "/configurations/school-years",
+                path: "/school-years",
                 permissions: [],
                 icon: <CalendarTodayIcon />
             },
             {
                 id: 42,
                 name: "Planes contables",
-                path: "/configurations/accounting-plans",
+                path: "/accounting-plans",
                 permissions: [],
                 icon: <SavingsIcon />
             },
             {
                 id: 43,
                 name: "Entidades Legales",
-                path: "/configurations/institutions",
+                path: "/legal-entities",
                 permissions: [],
                 icon: <CorporateFareIcon />
             },
             {
                 id: 44,
                 name: "Niveles",
-                path: "/configurations/levels",
+                path: "/levels",
                 permissions: [],
                 icon: <AccountTreeIcon />
             },
             {
                 id: 45,
                 name: "Grados",
-                path: "/configurations/grades",
+                path: "/grades",
                 permissions: [],
                 icon: <GradeIcon />
             },
             {
                 id: 46,
-                name: "Secciones",
-                path: "/configurations/sections",
+                name: "Oferta de Grados",
+                path: "/grade-offerings",
                 permissions: [],
                 icon: <ViewModuleIcon />
             },
             {
                 id: 47,
                 name: "Costos",
-                path: "/configurations/costs",
+                path: "/costs",
                 permissions: [],
                 icon: <AttachMoneyIcon />
             },
             {
                 id: 48,
                 name: "Aulas",
-                path: "/configurations/classrooms",
+                path: "/classrooms",
                 permissions: [],
                 icon: <MeetingRoomIcon />
             },
             {
                 id: 49,
                 name: "Areas de Trabajo",
-                path: "/configurations/work-areas",
+                path: "/work-areas",
                 permissions: [],
                 icon: <CategoryIcon />
             },
             {
                 id: 410,
                 name: "Cargos de Trabajo",
-                path: "/configurations/work-positions",
+                path: "/work-positions",
                 permissions: [],
                 icon: <WorkIcon />
             }
@@ -258,7 +258,7 @@ export const modules: Module[] = [
             {
                 id: 51,
                 name: "Gestión de Series",
-                path: "/e-billing/debit-credit-series",
+                path: "/debit-credit-series",
                 permissions: [],
                 icon: <ReceiptLongIcon />
             },
@@ -332,14 +332,14 @@ export const modules: Module[] = [
             {
                 id: 71,
                 name: "Categorías",
-                path: "/lunches/categories",
+                path: "/categories",
                 permissions: [],
                 icon: <RestaurantIcon />
             },
             {
                 id: 72,
                 name: "Loncheras",
-                path: "/lunches/lunches",
+                path: "/lunches",
                 permissions: [],
                 icon: <FastfoodIcon />
             },

@@ -1,24 +1,18 @@
-import type { userData } from '../dtos/userData';
-
+import { API_URL, httpClient } from '../../ra/dataProvider';
+import { LoginResponseData } from '../dtos/LoginResponseData';
+//import type { userData } from '../dtos/userData';
 
 export class AuthAPI {
-  private baseUrl: string;
-
-  constructor() {
-    this.baseUrl = 'http://localhost:3000';
-  }
-
-  async login(email: string, password: string): Promise<userData > {
+  async login(email: string, password: string): Promise<LoginResponseData> {
     try {
-      const response = await fetch(`${this.baseUrl}/users?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`);
-      
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
+      const response = await httpClient(`${API_URL}/login`, {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
 
-      const users: userData[] = await response.json();
-      console.log(users[0])
-      return users[0];
+      const loginResponse: LoginResponseData = await response.json;
+
+      return loginResponse;
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : 'Login failed');
     }

@@ -1,0 +1,1074 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "test@example.com",
+      "password": "123456",
+      "name": "Usuario Test",
+      "role": "user"
+    },
+    {
+      "id": 2,
+      "email": "admin@example.com",
+      "password": "admin123",
+      "name": "Administrador",
+      "role": "admin"
+    },
+    {
+      "id": 3,
+      "email": "hesctory@gmail.com",
+      "password": "123jijixdxd",
+      "name": "Hector",
+      "role": "user"
+    },
+    {
+      "id": 4,
+      "email": "hectoryolvis@hotmail.com",
+      "password": "jejemejujo",
+      "name": "IsLocated",
+      "role": "director"
+    }
+  ],
+  "students": [
+    {
+      "id": 1,
+      "enrollmentCode": 2024001,
+      "dni": "12345678",
+      "firstName": "Ana María",
+      "paternalLastName": "García",
+      "maternalLastName": "López",
+      "age": 15,
+      "birthDate": "2009-05-12",
+      "level": "Secundaria",
+      "grade": "3ro",
+      "section": "A"
+    },
+    {
+      "id": 2,
+      "enrollmentCode": 2024002,
+      "dni": "87654321",
+      "firstName": "Carlos Jesús",
+      "paternalLastName": "Mendoza",
+      "maternalLastName": "Rojas",
+      "age": 14,
+      "birthDate": "2010-08-23",
+      "level": "Secundaria",
+      "grade": "2do",
+      "section": "B"
+    },
+    {
+      "id": 3,
+      "enrollmentCode": 2024003,
+      "dni": "11223344",
+      "firstName": "Lucía Fernanda",
+      "paternalLastName": "Torres",
+      "maternalLastName": "Paredes",
+      "age": 13,
+      "birthDate": "2011-02-17",
+      "level": "Secundaria",
+      "grade": "1ro",
+      "section": "C"
+    },
+    {
+      "id": 4,
+      "enrollmentCode": 2024004,
+      "dni": "55667788",
+      "firstName": "Mateo Alejandro",
+      "paternalLastName": "Rivas",
+      "maternalLastName": "Castro",
+      "age": 12,
+      "birthDate": "2012-11-30",
+      "level": "Primaria",
+      "grade": "6to",
+      "section": "A"
+    }
+  ],
+  "staff": [
+    {
+      "id": 2,
+      "positionId": "POS-002",
+      "areaId": "AREA-02",
+      "districtId": "DIS-002",
+      "academicYear": "2024",
+      "staffCode": "EMP-002",
+      "paternalLastName": "Rodríguez",
+      "maternalLastName": "Mendoza",
+      "names": "Ana María",
+      "DNI": "23456789",
+      "sex": "Female",
+      "birthDate": "1990-07-22",
+      "address": "Calle Los Olivos 456",
+      "phone": "01-3456789",
+      "mobile": "976543210",
+      "spouseName": "Luis Torres",
+      "spouseId": "98765432",
+      "spouseOccupation": "Engineer",
+      "childrenCount": 1,
+      "previousInstitution": "Universidad Nacional Mayor de San Marcos",
+      "professionalTitle": "Master of Business Administration",
+      "hireDate": "2018-08-15",
+      "terminationDate": null,
+      "salary": 4200,
+      "notes": "Outstanding academic coordinator",
+      "isActive": true,
+      "province": "Arequipa",
+      "department": "Arequipa",
+      "institution": "SRJ"
+    }
+  ],
+  "publishers": [
+    {
+      "id": 1,
+      "description": "Editorial Santillana"
+    },
+    {
+      "id": 2,
+      "description": "Editorial Norma"
+    },
+    {
+      "id": 3,
+      "description": "Editorial Bruño"
+    },
+    {
+      "id": 4,
+      "description": "Editorial SM"
+    },
+    {
+      "id": 5,
+      "description": "Editorial Pearson"
+    }
+  ],
+  "school-years": [
+    {
+      "id": 1,
+      "schoolYear": "2019",
+      "date": "01/03/2019",
+      "endDate": "20/12/2019"
+    },
+    {
+      "id": 2,
+      "schoolYear": "2020",
+      "date": "01/03/2020",
+      "endDate": "20/12/2020"
+    },
+    {
+      "id": 3,
+      "schoolYear": "2021",
+      "date": "01/03/2021",
+      "endDate": "20/12/2021"
+    },
+    {
+      "id": 4,
+      "schoolYear": "2022",
+      "date": "01/03/2022",
+      "endDate": "20/12/2022"
+    },
+    {
+      "id": 5,
+      "schoolYear": "2023",
+      "date": "01/03/2023",
+      "endDate": "20/12/2023"
+    },
+    {
+      "id": 6,
+      "schoolYear": "2024",
+      "date": "01/03/2024",
+      "endDate": "20/12/2024"
+    },
+    {
+      "id": 7,
+      "schoolYear": "2025",
+      "date": "01/03/2025",
+      "endDate": "20/12/2025"
+    },
+    {
+      "id": 8,
+      "schoolYear": "2026",
+      "date": "01/03/2026",
+      "endDate": "20/12/2026"
+    }
+  ],
+  "legal-entities": [
+    {
+      "id": 1,
+      "name": "IE Nuestra Señora de Guadalupe",
+      "ruc": "20123456789",
+      "validFrom": 2,
+      "validTo": null
+    },
+    {
+      "id": 2,
+      "name": "IE San Agustín",
+      "ruc": "20345678901",
+      "validFrom": 1,
+      "validTo": 8
+    },
+    {
+      "id": 3,
+      "name": "Colegio San Juan Bautista",
+      "ruc": "20567890123",
+      "validFrom": 1,
+      "validTo": 6
+    },
+    {
+      "id": 4,
+      "name": "IE Sagrado Corazón",
+      "ruc": "20789012345",
+      "validFrom": 3,
+      "validTo": null
+    },
+    {
+      "id": 5,
+      "name": "Colegio Santa María",
+      "ruc": "20901234567",
+      "validFrom": 2,
+      "validTo": 7
+    },
+    {
+      "name": "SRJ Educa SAC",
+      "ruc": "8344897324654872645892634948562394568327476586732465862634587236487528746589245",
+      "validFrom": 2,
+      "id": 6
+    }
+  ],
+  "levels": [
+    {
+      "id": 1,
+      "legalEntityId": 6,
+      "level": "Inicial"
+    },
+    {
+      "id": 2,
+      "legalEntityId": 6,
+      "level": "Primaria"
+    },
+    {
+      "id": 3,
+      "legalEntityId": 6,
+      "level": "Secundaria"
+    }
+  ],
+  "grades": [
+    {
+      "id": 1,
+      "levelId": 1,
+      "grade": "3°"
+    },
+    {
+      "id": 2,
+      "levelId": 1,
+      "grade": "4°"
+    },
+    {
+      "id": 3,
+      "levelId": 1,
+      "grade": "5°"
+    },
+    {
+      "id": 4,
+      "levelId": 2,
+      "grade": "1°"
+    },
+    {
+      "id": 5,
+      "levelId": 2,
+      "grade": "2°"
+    },
+    {
+      "id": 6,
+      "levelId": 2,
+      "grade": "3°"
+    },
+    {
+      "id": 7,
+      "levelId": 2,
+      "grade": "4°"
+    },
+    {
+      "id": 8,
+      "levelId": 2,
+      "grade": "5°"
+    },
+    {
+      "id": 9,
+      "levelId": 2,
+      "grade": "6°"
+    },
+    {
+      "id": 10,
+      "levelId": 3,
+      "grade": "1°"
+    },
+    {
+      "id": 11,
+      "levelId": 3,
+      "grade": "2°"
+    },
+    {
+      "id": 12,
+      "levelId": 3,
+      "grade": "3°"
+    },
+    {
+      "id": 13,
+      "levelId": 3,
+      "grade": "4°"
+    },
+    {
+      "id": 14,
+      "levelId": 3,
+      "grade": "5°"
+    }
+  ],
+  "work-areas": [
+    {
+      "id": 1,
+      "area": "Administración"
+    },
+    {
+      "id": 2,
+      "area": "Contabilidad"
+    },
+    {
+      "id": 3,
+      "area": "Recursos Humanos"
+    },
+    {
+      "id": 4,
+      "area": "Tecnología de la Información"
+    },
+    {
+      "id": 5,
+      "area": "Ventas"
+    },
+    {
+      "id": 6,
+      "area": "Marketing"
+    },
+    {
+      "id": 7,
+      "area": "Atención al Cliente"
+    },
+    {
+      "id": 8,
+      "area": "Operaciones"
+    },
+    {
+      "id": 9,
+      "area": "Logística"
+    },
+    {
+      "id": 10,
+      "area": "Compras"
+    },
+    {
+      "id": 11,
+      "area": "Mantenimiento"
+    },
+    {
+      "id": 12,
+      "area": "Calidad"
+    },
+    {
+      "id": 13,
+      "area": "Investigación y Desarrollo"
+    },
+    {
+      "id": 14,
+      "area": "Legal"
+    },
+    {
+      "id": 15,
+      "area": "Servicios Generales"
+    }
+  ],
+  "work-positions": [
+    {
+      "id": 1,
+      "position": "Gerente General"
+    },
+    {
+      "id": 2,
+      "position": "Gerente de Administración"
+    },
+    {
+      "id": 3,
+      "position": "Gerente de Ventas"
+    },
+    {
+      "id": 4,
+      "position": "Coordinador"
+    },
+    {
+      "id": 5,
+      "position": "Supervisor"
+    },
+    {
+      "id": 6,
+      "position": "Analista"
+    },
+    {
+      "id": 7,
+      "position": "Asistente"
+    },
+    {
+      "id": 8,
+      "position": "Secretaria"
+    },
+    {
+      "id": 9,
+      "position": "Contador"
+    },
+    {
+      "id": 10,
+      "position": "Abogado"
+    },
+    {
+      "id": 11,
+      "position": "Desarrollador"
+    },
+    {
+      "id": 12,
+      "position": "Soporte Técnico"
+    },
+    {
+      "id": 13,
+      "position": "Ejecutivo de Ventas"
+    },
+    {
+      "id": 14,
+      "position": "Especialista en Marketing"
+    },
+    {
+      "id": 15,
+      "position": "Analista de Recursos Humanos"
+    },
+    {
+      "id": 16,
+      "position": "Recepcionista"
+    },
+    {
+      "id": 17,
+      "position": "Conductor"
+    },
+    {
+      "id": 18,
+      "position": "Mensajero"
+    },
+    {
+      "id": 19,
+      "position": "Técnico de Mantenimiento"
+    },
+    {
+      "id": 20,
+      "position": "Jefe de Operaciones"
+    }
+  ],
+  "grade-offerings": [
+    {
+      "id": 2,
+      "gradeId": 2,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 3,
+      "gradeId": 3,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 4,
+      "gradeId": 4,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 5,
+      "gradeId": 5,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 6,
+      "gradeId": 6,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 7,
+      "gradeId": 7,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 8,
+      "gradeId": 8,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 9,
+      "gradeId": 8,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "tarde"
+    },
+    {
+      "id": 10,
+      "gradeId": 9,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 11,
+      "gradeId": 9,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "tarde"
+    },
+    {
+      "id": 12,
+      "gradeId": 10,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 13,
+      "gradeId": 11,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 14,
+      "gradeId": 12,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 15,
+      "gradeId": 13,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "id": 16,
+      "gradeId": 14,
+      "sections": [
+        "A",
+        "B"
+      ],
+      "nSections": 2,
+      "shift": "mañana"
+    },
+    {
+      "gradeId": 14,
+      "shift": "tarde",
+      "nSections": 4,
+      "id": 17
+    }
+  ],
+  "shifts": [
+    {
+      "id": 1,
+      "name": "mañana"
+    },
+    {
+      "id": 2,
+      "name": "tarde"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "category": "Desayuno"
+    },
+    {
+      "id": 2,
+      "category": "Almuerzo"
+    },
+    {
+      "id": 3,
+      "category": "Cena"
+    },
+    {
+      "id": 4,
+      "category": "Postres"
+    },
+    {
+      "id": 5,
+      "category": "Entradas"
+    }
+  ],
+  "lunches": [
+    {
+      "id": 1,
+      "categoryId": 1,
+      "lunch": "Lasaña"
+    },
+    {
+      "id": 2,
+      "categoryId": 1,
+      "lunch": "Espaguetis a la carbonara"
+    },
+    {
+      "id": 3,
+      "categoryId": 2,
+      "lunch": "Tacos al pastor"
+    },
+    {
+      "id": 4,
+      "categoryId": 2,
+      "lunch": "Enchiladas verdes"
+    },
+    {
+      "id": 5,
+      "categoryId": 3,
+      "lunch": "Sushi roll"
+    },
+    {
+      "id": 6,
+      "categoryId": 3,
+      "lunch": "Ramen de cerdo"
+    },
+    {
+      "id": 7,
+      "categoryId": 4,
+      "lunch": "Curry de pollo"
+    },
+    {
+      "id": 8,
+      "categoryId": 4,
+      "lunch": "Biriyani de verduras"
+    },
+    {
+      "id": 9,
+      "categoryId": 5,
+      "lunch": "Arroz frito"
+    },
+    {
+      "id": 10,
+      "categoryId": 5,
+      "lunch": "Tallarines saltados"
+    }
+  ],
+  "disscountTypes": [
+    {
+      "id": 1,
+      "concept": "Sin descuento"
+    },
+    {
+      "id": 2,
+      "concept": "1 hermano"
+    },
+    {
+      "id": 3,
+      "concept": "2 hermanos"
+    },
+    {
+      "id": 4,
+      "concept": "3 o más hermanos"
+    },
+    {
+      "id": 5,
+      "concept": "Hijo de personal"
+    },
+    {
+      "id": 6,
+      "concept": "Pago contado anual"
+    },
+    {
+      "id": 7,
+      "concept": "Beca deportiva"
+    },
+    {
+      "id": 8,
+      "concept": "Beca académica"
+    },
+    {
+      "id": 9,
+      "concept": "Exalumno"
+    },
+    {
+      "id": 10,
+      "concept": "Convenio empresarial"
+    }
+  ],
+  "costs": [
+    {
+      "id": 1,
+      "levelId": 1,
+      "shift": "mañana",
+      "inscription": 50000,
+      "enrollment": 25000,
+      "monthly": 120000,
+      "disscountTypeId": 1,
+      "schoolYearId": 7
+    },
+    {
+      "id": 2,
+      "levelId": 1,
+      "shift": "tarde",
+      "inscription": 50000,
+      "enrollment": 25000,
+      "monthly": 120000,
+      "disscountTypeId": 1,
+      "schoolYearId": 7
+    },
+    {
+      "id": 3,
+      "levelId": 2,
+      "shift": "mañana",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 135000,
+      "disscountTypeId": 1,
+      "schoolYearId": 7
+    },
+    {
+      "id": 4,
+      "levelId": 2,
+      "shift": "tarde",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 135000,
+      "disscountTypeId": 1,
+      "schoolYearId": 7
+    },
+    {
+      "id": 5,
+      "levelId": 3,
+      "shift": "mañana",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 150000,
+      "disscountTypeId": 1,
+      "schoolYearId": 7
+    },
+    {
+      "id": 6,
+      "levelId": 3,
+      "shift": "tarde",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 150000,
+      "disscountTypeId": 1,
+      "schoolYearId": 7
+    },
+    {
+      "id": 7,
+      "levelId": 1,
+      "shift": "mañana",
+      "inscription": 50000,
+      "enrollment": 25000,
+      "monthly": 120000,
+      "disscountTypeId": 2,
+      "schoolYearId": 7
+    },
+    {
+      "id": 8,
+      "levelId": 1,
+      "shift": "tarde",
+      "inscription": 50000,
+      "enrollment": 25000,
+      "monthly": 120000,
+      "disscountTypeId": 2,
+      "schoolYearId": 7
+    },
+    {
+      "id": 9,
+      "levelId": 2,
+      "shift": "mañana",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 135000,
+      "disscountTypeId": 2,
+      "schoolYearId": 7
+    },
+    {
+      "id": 10,
+      "levelId": 2,
+      "shift": "tarde",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 135000,
+      "disscountTypeId": 2,
+      "schoolYearId": 7
+    },
+    {
+      "id": 11,
+      "levelId": 3,
+      "shift": "mañana",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 150000,
+      "disscountTypeId": 2,
+      "schoolYearId": 7
+    },
+    {
+      "id": 12,
+      "levelId": 3,
+      "shift": "tarde",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 150000,
+      "disscountTypeId": 2,
+      "schoolYearId": 7
+    },
+    {
+      "id": 13,
+      "levelId": 1,
+      "shift": "mañana",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 125000,
+      "disscountTypeId": 1,
+      "schoolYearId": 8
+    },
+    {
+      "id": 14,
+      "levelId": 1,
+      "shift": "tarde",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 125000,
+      "disscountTypeId": 1,
+      "schoolYearId": 8
+    },
+    {
+      "id": 15,
+      "levelId": 2,
+      "shift": "mañana",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 140000,
+      "disscountTypeId": 1,
+      "schoolYearId": 8
+    },
+    {
+      "id": 16,
+      "levelId": 2,
+      "shift": "tarde",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 140000,
+      "disscountTypeId": 1,
+      "schoolYearId": 8
+    },
+    {
+      "id": 17,
+      "levelId": 3,
+      "shift": "mañana",
+      "inscription": 65000,
+      "enrollment": 40000,
+      "monthly": 155000,
+      "disscountTypeId": 1,
+      "schoolYearId": 8
+    },
+    {
+      "id": 18,
+      "levelId": 3,
+      "shift": "tarde",
+      "inscription": 65000,
+      "enrollment": 40000,
+      "monthly": 155000,
+      "disscountTypeId": 1,
+      "schoolYearId": 8
+    },
+    {
+      "id": 19,
+      "levelId": 1,
+      "shift": "mañana",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 125000,
+      "disscountTypeId": 2,
+      "schoolYearId": 8
+    },
+    {
+      "id": 20,
+      "levelId": 1,
+      "shift": "tarde",
+      "inscription": 55000,
+      "enrollment": 30000,
+      "monthly": 125000,
+      "disscountTypeId": 2,
+      "schoolYearId": 8
+    },
+    {
+      "id": 21,
+      "levelId": 2,
+      "shift": "mañana",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 140000,
+      "disscountTypeId": 2,
+      "schoolYearId": 8
+    },
+    {
+      "id": 22,
+      "levelId": 2,
+      "shift": "tarde",
+      "inscription": 60000,
+      "enrollment": 35000,
+      "monthly": 140000,
+      "disscountTypeId": 2,
+      "schoolYearId": 8
+    },
+    {
+      "id": 23,
+      "levelId": 3,
+      "shift": "mañana",
+      "inscription": 65000,
+      "enrollment": 40000,
+      "monthly": 155000,
+      "disscountTypeId": 2,
+      "schoolYearId": 8
+    },
+    {
+      "id": 24,
+      "levelId": 3,
+      "shift": "tarde",
+      "inscription": 65000,
+      "enrollment": 40000,
+      "monthly": 155000,
+      "disscountTypeId": 2,
+      "schoolYearId": 8
+    }
+  ],
+  "classrooms": [
+    {
+      "id": 1,
+      "name": "Salón A-101",
+      "capacity": 30
+    },
+    {
+      "id": 2,
+      "name": "Salón A-102",
+      "capacity": 28
+    },
+    {
+      "id": 3,
+      "name": "Salón B-201",
+      "capacity": 35
+    },
+    {
+      "id": 4,
+      "name": "Salón B-202",
+      "capacity": 32
+    },
+    {
+      "id": 5,
+      "name": "Laboratorio de Ciencias",
+      "capacity": 25
+    },
+    {
+      "id": 6,
+      "name": "Salón de Informática",
+      "capacity": 24
+    },
+    {
+      "id": 7,
+      "name": "Salón de Música",
+      "capacity": 20
+    },
+    {
+      "id": 8,
+      "name": "Salón de Arte",
+      "capacity": 22
+    },
+    {
+      "id": 9,
+      "name": "Auditorio",
+      "capacity": 120
+    },
+    {
+      "id": 10,
+      "name": "Salón C-301",
+      "capacity": 30
+    },
+    {
+      "id": 11,
+      "name": "Salón C-302",
+      "capacity": 30
+    },
+    {
+      "id": 12,
+      "name": "Biblioteca - Sala de Estudio",
+      "capacity": 40
+    },
+    {
+      "name": "Parque jurasico",
+      "capacity": 200,
+      "id": 13
+    }
+  ],
+  "receiptType": [
+    {
+      "id": 1,
+      "type": "Boleta de Venta Electrónica"
+    },
+    {
+      "id": 2,
+      "type": "Factura Electrónica"
+    },
+    {
+      "id": 3,
+      "type": "Nota de Crédito Electrónica"
+    }
+  ]
+}
