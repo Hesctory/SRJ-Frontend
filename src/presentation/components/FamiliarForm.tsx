@@ -3,11 +3,11 @@ import { Box } from "@mui/material";
 import LocationFormSelector from "./LocationFormSelector";
 import SecondLanguagesFormSelector from "./SecondLanguagesFormSelector";
 
-interface GuardianFormProps {
+interface FamiliarFormProps {
     sourcePrefix?: string;
 }
 
-const GuardianForm = ({ sourcePrefix }: GuardianFormProps) => {
+const FamiliarForm = ({ sourcePrefix }: FamiliarFormProps) => {
     const base = sourcePrefix ? `${sourcePrefix}.` : "";
 
     return (
@@ -40,7 +40,22 @@ const GuardianForm = ({ sourcePrefix }: GuardianFormProps) => {
                 <SelectInput label="Autoidentificación Étnica" />
             </ReferenceInput>
 
-            <ReferenceInput source={`${base}relationshipId`} reference="relationship-guardians">
+            <ReferenceInput source={`${base}civilStateId`} reference="civil-states">
+                <SelectInput label="Estado Civil" />
+            </ReferenceInput>
+            <ReferenceInput source={`${base}religionId`} reference="religions">
+                <SelectInput label="Religión" />
+            </ReferenceInput>
+
+            <Box display="flex" gap={2} width="100%">
+                <ReferenceInput source={`${base}levelOfEducationId`} reference="level-of-educations">
+                    <SelectInput label="Nivel de Instrucción" isRequired validate={required()}/>
+                </ReferenceInput>
+                <TextInput source={`${base}occupation`} label="Ocupación" />
+                <TextInput source={`${base}workCenter`} label="Centro de Trabajo" />
+            </Box>
+
+            <ReferenceInput source={`${base}relationshipId`} reference="familiar-relationship-types">
                 <SelectInput label="Relación con el NNA" isRequired validate={required()} />
             </ReferenceInput>
 
@@ -57,4 +72,4 @@ const GuardianForm = ({ sourcePrefix }: GuardianFormProps) => {
     );
 };
 
-export default GuardianForm;
+export default FamiliarForm;
