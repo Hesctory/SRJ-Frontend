@@ -1,13 +1,13 @@
-import { BooleanInput, Create, DateInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
+import { BooleanInput, Create, DateInput, NumberInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
 import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
 import DisabilityForm from "../../../../presentation/components/DisabilityForm";
-import MultipleGuardiansForm from "../../../../presentation/components/MultipleGuardiansForm";
+import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
 
 export const StudentCreate = () => {
         return (
-        <Create>
+        <Create >
             <TabbedForm >
                 <TabbedForm.Tab label="Datos Personales">
 
@@ -31,10 +31,20 @@ export const StudentCreate = () => {
                     <ReferenceInput source="ethnicIdentificationId" reference="ethnic-self-identifications">
                         <SelectInput label="Autoidentificación Étnica"  />
                     </ReferenceInput>
-                    <ReferenceInput source="nativeLanguageId" reference="languages">
-                        <SelectInput label="Lengua Materna" isRequired validate={required()} />
+                    <Box display="flex" gap={2} width="100%" alignItems="flex-start">
+                        <ReferenceInput source="nativeLanguageId" reference="languages">
+                            <SelectInput label="Lengua Materna" isRequired validate={required()} />
+                        </ReferenceInput>
+                        <SecondLanguagesFormSelector />
+                    </Box>
+
+                    <ReferenceInput source="religionId" reference="religions">
+                        <SelectInput label="Religión" />
                     </ReferenceInput>
-                    <SecondLanguagesFormSelector />
+                    <ReferenceInput source="civilStateId" reference="civil-states">
+                        <SelectInput label="Estado Civil" />
+                    </ReferenceInput>
+                    <NumberInput source="numberOfSiblings" label="Número de Hermanos" min={0} />
 
                     <Typography variant="caption" color="text.secondary">
                         Solo si el estudiante es mayor de edad:
@@ -49,6 +59,9 @@ export const StudentCreate = () => {
 
                 <TabbedForm.Tab label="Datos de Nacimiento">
                     <DateInput source="birthDate" label="Fecha de Nacimiento" isRequired validate={required()}/>
+                    <ReferenceInput source="childbirthTypeId" reference="childbirth-types">
+                        <SelectInput label="Tipo de Parto" />
+                    </ReferenceInput>
                     <Box display="flex" gap={2} width="100%">
                         <LocationFormSelector sourcePrefix="birthLocation"/>
                     </Box>
@@ -70,7 +83,7 @@ export const StudentCreate = () => {
                 </TabbedForm.Tab>
 
                 <TabbedForm.Tab label="Apoderados">
-                    <MultipleGuardiansForm />
+                    <MultipleFamiliarsForm />
                 </TabbedForm.Tab>
 
                 <TabbedForm.Tab label="Discapacidad">

@@ -9,31 +9,31 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { RecordContextProvider, ReferenceField, useRecordContext } from "react-admin";
-import GuardianForm from "./GuardianForm";
+import FamiliarForm from "./FamiliarForm";
 
 const RelationshipLabel = () => {
     const record = useRecordContext();
     return <>{record?.name ?? ""}</>;
 };
 
-interface GuardianAccordionSummaryProps {
+interface FamiliarAccordionSummaryProps {
     sourcePrefix: string;
 }
 
-const GuardianAccordionSummary = ({ sourcePrefix }: GuardianAccordionSummaryProps) => {
+const FamiliarAccordionSummary = ({ sourcePrefix }: FamiliarAccordionSummaryProps) => {
     const names = useWatch({ name: `${sourcePrefix}.names` });
     const paternalLastname = useWatch({ name: `${sourcePrefix}.paternalLastname` });
     const maternalLastname = useWatch({ name: `${sourcePrefix}.maternalLastname` });
     const relationshipId = useWatch({ name: `${sourcePrefix}.relationshipId` });
 
-    const fullName = [names, paternalLastname, maternalLastname ].filter(Boolean).join(" ");
+    const fullName = [names, paternalLastname, maternalLastname].filter(Boolean).join(" ");
 
     return (
         <Typography>
             {relationshipId && (
                 <Box component="span" sx={{ bgcolor: "primary.main", color: "primary.contrastText", px: 1, py: 0.25, borderRadius: 1, mr: 1 }}>
                     <RecordContextProvider value={{ id: relationshipId, relationshipId }}>
-                        <ReferenceField source="relationshipId" reference="relationship-guardians" link={false}>
+                        <ReferenceField source="relationshipId" reference="familiar-relationship-types" link={false}>
                             <RelationshipLabel />
                         </ReferenceField>
                     </RecordContextProvider>
@@ -44,30 +44,31 @@ const GuardianAccordionSummary = ({ sourcePrefix }: GuardianAccordionSummaryProp
     );
 };
 
-const MultipleGuardiansForm = () => {
+const MultipleFamiliarsForm = () => {
     const { control } = useFormContext();
-    const { fields, append, remove } = useFieldArray({ 
-                                                        control, 
-                                                        name: "guardians",
-                                                        rules: {
-                                                            validate: (value) => 
-                                                                (value && value.length > 0) || "Debe agregar al menos un apoderado"
-                                                        }});
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "familiars",
+        rules: {
+            validate: (value) =>
+                (value && value.length > 0) || "Debe agregar al menos un apoderado"
+        }
+    });
 
     return (
         <>
             {fields.map((field, index) => {
-                const sourcePrefix = `guardians.${index}`;
+                const sourcePrefix = `familiars.${index}`;
                 return (
                     <Accordion key={field.id} defaultExpanded={index === fields.length - 1}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                            <GuardianAccordionSummary sourcePrefix={sourcePrefix} />
+                            <FamiliarAccordionSummary sourcePrefix={sourcePrefix} />
                         </AccordionSummary>
-                        <AccordionDetails>  
-                            <GuardianForm sourcePrefix={sourcePrefix} />
+                        <AccordionDetails>
+                            <FamiliarForm sourcePrefix={sourcePrefix} />
                             <Box mt={1}>
                                 <Button color="error" onClick={() => remove(index)}>
-                                    Eliminar apoderado
+                                    Eliminar Familiar
                                 </Button>
                             </Box>
                         </AccordionDetails>
@@ -76,11 +77,11 @@ const MultipleGuardiansForm = () => {
             })}
             <Box mt={2}>
                 <Button variant="outlined" onClick={() => append({})}>
-                    Agregar apoderado
+                    Agregar Familiar
                 </Button>
             </Box>
         </>
     );
 };
 
-export default MultipleGuardiansForm;
+export default MultipleFamiliarsForm;

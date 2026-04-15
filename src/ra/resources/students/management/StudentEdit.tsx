@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
 import DisabilityForm from "../../../../presentation/components/DisabilityForm";
-import MultipleGuardiansForm from "../../../../presentation/components/MultipleGuardiansForm";
+import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
 
 export const StudentEdit = () => {
     return (
@@ -70,7 +70,7 @@ export const StudentEdit = () => {
                 </TabbedForm.Tab>
 
                 <TabbedForm.Tab label="Apoderados">
-                    <MultipleGuardiansForm />
+                    <MultipleFamiliarsForm />
                 </TabbedForm.Tab>
 
                 <TabbedForm.Tab label="Discapacidad">

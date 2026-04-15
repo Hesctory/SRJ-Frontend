@@ -26,3 +26,6 @@ export { DebitCreditSeriesResource } from "./e-billing/debit-credit-series";
 // Lunches
 export { LunchCategoriesResource } from "./lunches/categories";
 export { LunchesResource } from "./lunches/lunches";
+
+// Economic Management
+export { EnrollmentPaymentsResource } from "./economicManagement/enrollmentPayments";

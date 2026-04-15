@@ -34,6 +34,7 @@
       "id": 1,
       "enrollmentCode": 2024001,
       "dni": "12345678",
+      "fullName": "Ana María García López",
       "firstName": "Ana María",
       "paternalLastName": "García",
       "maternalLastName": "López",
@@ -47,6 +48,7 @@
       "id": 2,
       "enrollmentCode": 2024002,
       "dni": "87654321",
+      "fullName": "Carlos Jesús Mendoza Rojas",
       "firstName": "Carlos Jesús",
       "paternalLastName": "Mendoza",
       "maternalLastName": "Rojas",
@@ -60,6 +62,7 @@
       "id": 3,
       "enrollmentCode": 2024003,
       "dni": "11223344",
+      "fullName": "Lucía Fernanda Torres Paredes",
       "firstName": "Lucía Fernanda",
       "paternalLastName": "Torres",
       "maternalLastName": "Paredes",
@@ -73,6 +76,7 @@
       "id": 4,
       "enrollmentCode": 2024004,
       "dni": "55667788",
+      "fullName": "Mateo Alejandro Rivas Castro",
       "firstName": "Mateo Alejandro",
       "paternalLastName": "Rivas",
       "maternalLastName": "Castro",
@@ -1069,6 +1073,55 @@
     {
       "id": 3,
       "type": "Nota de Crédito Electrónica"
+    }
+  ],
+  "payments": [
+    {
+      "id": 1,
+      "amount": 1000,
+      "date": "2026-03-01",
+      "method": "Tarjeta de Crédito"
+    }
+  ],
+  "enrollments": [
+    {
+      "id": 1,
+      "studentId": 1,
+      "gradeOfferingId": 2,
+      "yearId": 8,
+      "enrollmentDate": "2026-02-15",
+      "paymentIds":[
+        8, 14, 19
+      ],
+      "paymentStatus": "pending",
+      "isNew": true
+    }
+  ],
+  "enrollment-payments": [
+    {
+      "id": 1,
+      "enrollmentId": 1,
+      "tuitions": [
+        {
+          "monthId": 1,
+          "amount": 125000,
+          "dueDate": "2026-03-05",
+          "status": "pending",
+          "paymentIds": [
+            1, 2, 3
+          ]
+        }
+      ]
+    }
+  ],
+  "inscriptions": [
+    {
+      "enrollmentId": 1,
+      "amount": 4500,
+      "paymentIds": [
+        5, 17, 12
+      ],
+      "status": "pending"
     }
   ]
 }
