@@ -9,6 +9,7 @@ import { AppCustomRoutes } from "./ra/CustomRoutes";
 import {
     StaffResource,
     StudentsResource,
+    EnrolledStudentsReportResource,
     PublishersResource,
     ProductsResource,
     SchoolYearsResource,
@@ -38,6 +39,7 @@ export const App = () =>
     <Admin theme={lightTheme} dataProvider={dataProvider} authProvider={authProvider} layout={MyLayout} loginPage={CustomLogin} dashboard={Home}>
         {StaffResource}
         {StudentsResource}
+        {EnrolledStudentsReportResource}
         {PublishersResource}
         {ProductsResource}
         {SchoolYearsResource}

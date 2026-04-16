@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 export const EnrollmentPaymentsList = () => {
     const navigate = useNavigate();
 
-    const handleRowClick = (): false => {
-        navigate("/enrollment-payments/1");
+    const handleRowClick = (id: string | number): false => {
+        navigate(`/enrollment-selector/${id}`);
         return false;
     };
 

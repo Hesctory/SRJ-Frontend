@@ -3,6 +3,7 @@ export { StaffResource } from "./staff";
 
 // Students
 export { StudentsResource } from "./students/management";
+export { EnrolledStudentsReportResource } from "./students/reports/enrolled-students-report";
 
 // Purchases & Sales
 export { PublishersResource } from "./purchases-sales/publishers";

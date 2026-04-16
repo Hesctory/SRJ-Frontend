@@ -20,6 +20,8 @@ import { LunchesReports } from "./lunches/Reports";
 import { LunchesEconomicManagement } from "./lunches/EconomicManagement";
 import { LunchesRenditions } from "./lunches/Renditions";
 import { DailyCash } from "./daily-cash/DailyCash";
+import { EnrollmentSelectorPage } from "./enrollmentPayments/EnrollmentSelectorPage";
+import { EnrollmentPaymentsEdit } from "../resources/economicManagement/enrollmentPayments/EnrollmentPaymentsEdit";
 
 export const AppCustomRoutes = (
     <CustomRoutes>
@@ -47,6 +49,9 @@ export const AppCustomRoutes = (
         <Route path="/lunches/reports" element={<LunchesReports />} />
         <Route path="/lunches/economic-management" element={<LunchesEconomicManagement />} />
         <Route path="/lunches/renditions" element={<LunchesRenditions />} />
+        {/* Enrollment Payments */}
+        <Route path="/enrollment-selector/:id" element={<EnrollmentSelectorPage />} />
+        <Route path="/enrollment-payments/:studentId/:enrollmentId" element={<EnrollmentPaymentsEdit />} />
         {/* Daily Cash */}
         <Route path="/daily-cash" element={<DailyCash />} />
     </CustomRoutes>

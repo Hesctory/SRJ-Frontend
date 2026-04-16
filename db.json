@@ -32,7 +32,7 @@
   "students": [
     {
       "id": 1,
-      "enrollmentCode": 2024001,
+      "studentCode": 2024001,
       "dni": "12345678",
       "fullName": "Ana María García López",
       "firstName": "Ana María",
@@ -42,11 +42,12 @@
       "birthDate": "2009-05-12",
       "level": "Secundaria",
       "grade": "3ro",
-      "section": "A"
+      "section": "A",
+      "schoolyearId": 6
     },
     {
       "id": 2,
-      "enrollmentCode": 2024002,
+      "studentCode": 2024002,
       "dni": "87654321",
       "fullName": "Carlos Jesús Mendoza Rojas",
       "firstName": "Carlos Jesús",
@@ -60,7 +61,7 @@
     },
     {
       "id": 3,
-      "enrollmentCode": 2024003,
+      "studentCode": 2024003,
       "dni": "11223344",
       "fullName": "Lucía Fernanda Torres Paredes",
       "firstName": "Lucía Fernanda",
@@ -74,7 +75,7 @@
     },
     {
       "id": 4,
-      "enrollmentCode": 2024004,
+      "studentCode": 2024004,
       "dni": "55667788",
       "fullName": "Mateo Alejandro Rivas Castro",
       "firstName": "Mateo Alejandro",
@@ -118,6 +119,13 @@
       "province": "Arequipa",
       "department": "Arequipa",
       "institution": "SRJ"
+    },
+    {
+      "staffCode": "E1123",
+      "names": "Juan Alvaro",
+      "paternalLastName": "Perez",
+      "maternalLastName": "Chavez",
+      "id": 3
     }
   ],
   "publishers": [
@@ -1075,12 +1083,236 @@
       "type": "Nota de Crédito Electrónica"
     }
   ],
-  "payments": [
+    "payments": [
     {
       "id": 1,
       "amount": 1000,
       "date": "2026-03-01",
       "method": "Tarjeta de Crédito"
+    },
+    {
+      "id": 2,
+      "amount": 1500,
+      "date": "2026-03-02",
+      "method": "Efectivo"
+    },
+    {
+      "id": 3,
+      "amount": 2000,
+      "date": "2026-03-03",
+      "method": "Transferencia Bancaria"
+    },
+    {
+      "id": 4,
+      "amount": 750,
+      "date": "2026-03-04",
+      "method": "Tarjeta de Débito"
+    },
+    {
+      "id": 5,
+      "amount": 3000,
+      "date": "2026-03-05",
+      "method": "Yape"
+    },
+    {
+      "id": 6,
+      "amount": 1200,
+      "date": "2026-03-06",
+      "method": "Plin"
+    },
+    {
+      "id": 7,
+      "amount": 1800,
+      "date": "2026-03-07",
+      "method": "Tarjeta de Crédito"
+    },
+    {
+      "id": 8,
+      "amount": 2500,
+      "date": "2026-03-08",
+      "method": "Efectivo"
+    },
+    {
+      "id": 9,
+      "amount": 900,
+      "date": "2026-03-09",
+      "method": "Transferencia Bancaria"
+    },
+    {
+      "id": 10,
+      "amount": 3200,
+      "date": "2026-03-10",
+      "method": "Tarjeta de Débito"
+    },
+    {
+      "id": 11,
+      "amount": 500,
+      "date": "2026-03-11",
+      "method": "Yape"
+    },
+    {
+      "id": 12,
+      "amount": 2100,
+      "date": "2026-03-12",
+      "method": "Plin"
+    },
+    {
+      "id": 13,
+      "amount": 1350,
+      "date": "2026-03-13",
+      "method": "Tarjeta de Crédito"
+    },
+    {
+      "id": 14,
+      "amount": 1750,
+      "date": "2026-03-14",
+      "method": "Efectivo"
+    },
+    {
+      "id": 15,
+      "amount": 2800,
+      "date": "2026-03-15",
+      "method": "Transferencia Bancaria"
+    },
+    {
+      "id": 16,
+      "amount": 650,
+      "date": "2026-03-16",
+      "method": "Tarjeta de Débito"
+    },
+    {
+      "id": 17,
+      "amount": 1950,
+      "date": "2026-03-17",
+      "method": "Yape"
+    },
+    {
+      "id": 18,
+      "amount": 3400,
+      "date": "2026-03-18",
+      "method": "Plin"
+    },
+    {
+      "id": 19,
+      "amount": 1100,
+      "date": "2026-03-19",
+      "method": "Tarjeta de Crédito"
+    },
+    {
+      "id": 20,
+      "amount": 2300,
+      "date": "2026-03-20",
+      "method": "Efectivo"
+    },
+    {
+      "id": 21,
+      "amount": 800,
+      "date": "2026-03-21",
+      "method": "Transferencia Bancaria"
+    },
+    {
+      "id": 22,
+      "amount": 2900,
+      "date": "2026-03-22",
+      "method": "Tarjeta de Débito"
+    },
+    {
+      "id": 23,
+      "amount": 1600,
+      "date": "2026-03-23",
+      "method": "Yape"
+    },
+    {
+      "id": 24,
+      "amount": 2200,
+      "date": "2026-03-24",
+      "method": "Plin"
+    },
+    {
+      "id": 25,
+      "amount": 400,
+      "date": "2026-03-25",
+      "method": "Tarjeta de Crédito"
+    },
+    {
+      "id": 26,
+      "amount": 2600,
+      "date": "2026-03-26",
+      "method": "Efectivo"
+    },
+    {
+      "id": 27,
+      "amount": 1450,
+      "date": "2026-03-27",
+      "method": "Transferencia Bancaria"
+    },
+    {
+      "id": 28,
+      "amount": 3100,
+      "date": "2026-03-28",
+      "method": "Tarjeta de Débito"
+    },
+    {
+      "id": 29,
+      "amount": 700,
+      "date": "2026-03-29",
+      "method": "Yape"
+    },
+    {
+      "id": 30,
+      "amount": 1850,
+      "date": "2026-03-30",
+      "method": "Plin"
+    }
+  ],
+  "months": [
+    {
+      "id": 1,
+      "month": "Enero"
+    },
+    {
+      "id": 1,
+      "month": "Febrero"
+    },
+    {
+      "id": 1,
+      "month": "Marzo"
+    },
+    {
+      "id": 1,
+      "month": "Abril"
+    },
+    {
+      "id": 1,
+      "month": "Mayo"
+    },
+    {
+      "id": 1,
+      "month": "Junio"
+    },
+    {
+      "id": 1,
+      "month": "Julio"
+    },
+    {
+      "id": 1,
+      "month": "Agosto"
+    },
+    {
+      "id": 1,
+      "month": "Setiembre"
+    },
+    {
+      "id": 1,
+      "month": "Octubre"
+    },
+    {
+      "id": 1,
+      "month": "Noviembre"
+    },
+    {
+      "id": 1,
+      "month": "Diciembre"
     }
   ],
   "enrollments": [
@@ -1088,13 +1320,45 @@
       "id": 1,
       "studentId": 1,
       "gradeOfferingId": 2,
-      "yearId": 8,
+      "yearId": 7,
       "enrollmentDate": "2026-02-15",
-      "paymentIds":[
-        8, 14, 19
-      ],
+      "enrollmentPrice": 1200,
+      "paymentIds": [1],
       "paymentStatus": "pending",
       "isNew": true
+    },
+    {
+      "id": 2,
+      "studentId": 1,
+      "gradeOfferingId": 2,
+      "yearId": 8,
+      "enrollmentDate": "2026-02-20",
+      "enrollmentPrice": 1250,
+      "paymentIds": [2],
+      "paymentStatus": "paid",
+      "isNew": false
+    },
+    {
+      "id": 3,
+      "studentId": 4,
+      "gradeOfferingId": 5,
+      "yearId": 7,
+      "enrollmentDate": "2026-02-18",
+      "enrollmentPrice": 1150,
+      "paymentIds": [3],
+      "paymentStatus": "partial",
+      "isNew": false
+    },
+    {
+      "id": 4,
+      "studentId": 4,
+      "gradeOfferingId": 5,
+      "yearId": 8,
+      "enrollmentDate": "2026-02-25",
+      "enrollmentPrice": 1300,
+      "paymentIds": [4],
+      "paymentStatus": "pending",
+      "isNew": false
     }
   ],
   "enrollment-payments": [
@@ -1103,13 +1367,342 @@
       "enrollmentId": 1,
       "tuitions": [
         {
-          "monthId": 1,
-          "amount": 125000,
+          "monthId": 3,
+          "tuitionCost": 120,
+          "amountPaid": 0,
           "dueDate": "2026-03-05",
           "status": "pending",
-          "paymentIds": [
-            1, 2, 3
-          ]
+          "paymentIds": []
+        },
+        {
+          "monthId": 4,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-04-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 5,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-05-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 6,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-06-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 7,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-07-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 8,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-08-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 9,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-09-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 10,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-10-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 11,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-11-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 12,
+          "tuitionCost": 120,
+          "amountPaid": 0,
+          "dueDate": "2026-12-05",
+          "status": "pending",
+          "paymentIds": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "enrollmentId": 2,
+      "tuitions": [
+        {
+          "monthId": 3,
+          "tuitionCost": 125,
+          "amountPaid": 125,
+          "dueDate": "2026-03-05",
+          "status": "paid",
+          "paymentIds": [3]
+        },
+        {
+          "monthId": 4,
+          "tuitionCost": 125,
+          "amountPaid": 125,
+          "dueDate": "2026-04-05",
+          "status": "paid",
+          "paymentIds": [11]
+        },
+        {
+          "monthId": 5,
+          "tuitionCost": 125,
+          "amountPaid": 125,
+          "dueDate": "2026-05-05",
+          "status": "paid",
+          "paymentIds": [25]
+        },
+        {
+          "monthId": 6,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-06-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 7,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-07-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 8,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-08-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 9,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-09-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 10,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-10-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 11,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-11-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 12,
+          "tuitionCost": 125,
+          "amountPaid": 0,
+          "dueDate": "2026-12-05",
+          "status": "pending",
+          "paymentIds": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "enrollmentId": 3,
+      "tuitions": [
+        {
+          "monthId": 3,
+          "tuitionCost": 115,
+          "amountPaid": 115,
+          "dueDate": "2026-03-05",
+          "status": "paid",
+          "paymentIds": [1]
+        },
+        {
+          "monthId": 4,
+          "tuitionCost": 115,
+          "amountPaid": 115,
+          "dueDate": "2026-04-05",
+          "status": "paid",
+          "paymentIds": [6]
+        },
+        {
+          "monthId": 5,
+          "tuitionCost": 115,
+          "amountPaid": 115,
+          "dueDate": "2026-05-05",
+          "status": "paid",
+          "paymentIds": [22]
+        },
+        {
+          "monthId": 6,
+          "tuitionCost": 115,
+          "amountPaid": 115,
+          "dueDate": "2026-06-05",
+          "status": "paid",
+          "paymentIds": [29]
+        },
+        {
+          "monthId": 7,
+          "tuitionCost": 115,
+          "amountPaid": 0,
+          "dueDate": "2026-07-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 8,
+          "tuitionCost": 115,
+          "amountPaid": 0,
+          "dueDate": "2026-08-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 9,
+          "tuitionCost": 115,
+          "amountPaid": 0,
+          "dueDate": "2026-09-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 10,
+          "tuitionCost": 115,
+          "amountPaid": 0,
+          "dueDate": "2026-10-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 11,
+          "tuitionCost": 115,
+          "amountPaid": 0,
+          "dueDate": "2026-11-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 12,
+          "tuitionCost": 115,
+          "amountPaid": 0,
+          "dueDate": "2026-12-05",
+          "status": "pending",
+          "paymentIds": []
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "enrollmentId": 4,
+      "tuitions": [
+        {
+          "monthId": 3,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-03-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 4,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-04-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 5,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-05-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 6,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-06-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 7,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-07-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 8,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-08-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 9,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-09-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 10,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-10-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 11,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-11-05",
+          "status": "pending",
+          "paymentIds": []
+        },
+        {
+          "monthId": 12,
+          "tuitionCost": 130,
+          "amountPaid": 0,
+          "dueDate": "2026-12-05",
+          "status": "pending",
+          "paymentIds": []
         }
       ]
     }
@@ -1119,7 +1712,9 @@
       "enrollmentId": 1,
       "amount": 4500,
       "paymentIds": [
-        5, 17, 12
+        5,
+        17,
+        12
       ],
       "status": "pending"
     }
