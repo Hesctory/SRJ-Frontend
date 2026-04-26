@@ -11,7 +11,7 @@ const LocationFormSelector = ({ sourcePrefix }: LocationFormSelectorProps) => {
     const base = sourcePrefix ? `${sourcePrefix}.` : "";
     const departmentId = useWatch({ name: `${base}departmentId` });
     const provinceId = useWatch({ name: `${base}provinceId` });
-
+/*
     useEffect(() => {
         setValue(`${base}provinceId`, null);
         setValue(`${base}districtId`, null);
@@ -20,7 +20,7 @@ const LocationFormSelector = ({ sourcePrefix }: LocationFormSelectorProps) => {
     useEffect(() => {
         setValue(`${base}districtId`, null);
     }, [provinceId]);
-
+*/
     return (
         <>
             <ReferenceInput source={`${base}departmentId`} reference="departments">

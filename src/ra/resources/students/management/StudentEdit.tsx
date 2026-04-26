@@ -1,14 +1,15 @@
-import { BooleanInput, Edit, DateInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
+import { BooleanInput, Edit, DateInput, NumberInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
 import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
 import DisabilityForm from "../../../../presentation/components/DisabilityForm";
 import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
 
+
 export const StudentEdit = () => {
     return (
         <Edit>
-            <TabbedForm >
+            <TabbedForm>
                 <TabbedForm.Tab label="Datos Personales">
 
                     <Box display="flex" gap={2} width="100%">
@@ -28,20 +29,30 @@ export const StudentEdit = () => {
                         <TextInput source="idDocumentNumber" label="Número de Documento" isRequired validate={required()} />
                     </Box>
 
-                    <ReferenceInput source="ethnicIdentificationId" reference="ethnic-self-identifications">
+                    <ReferenceInput source="ethnicSelfIdentificationId" reference="ethnic-self-identifications">
                         <SelectInput label="Autoidentificación Étnica" />
                     </ReferenceInput>
-                    <ReferenceInput source="nativeLanguageId" reference="languages">
-                        <SelectInput label="Lengua Materna" isRequired validate={required()} />
+                    <Box display="flex" gap={2} width="100%" alignItems="flex-start">
+                        <ReferenceInput source="nativeLanguageId" reference="languages">
+                            <SelectInput label="Lengua Materna" isRequired validate={required()} />
+                        </ReferenceInput>
+                        <SecondLanguagesFormSelector />
+                    </Box>
+
+                    <ReferenceInput source="religionId" reference="religions">
+                        <SelectInput label="Religión" />
                     </ReferenceInput>
-                    <SecondLanguagesFormSelector />
+                    <ReferenceInput source="civilStateId" reference="civil-states">
+                        <SelectInput label="Estado Civil" />
+                    </ReferenceInput>
+                    <NumberInput source="siblings" label="Número de Hermanos" min={0} />
 
                     <Typography variant="caption" color="text.secondary">
                         Solo si el estudiante es mayor de edad:
                     </Typography>
                     <Box display="flex" gap={2} width="100%">
-                        <TextInput source="cellphone" label="Celular" />
-                        <TextInput source="landlineNumber" label="Teléfono fijo" />
+                        <TextInput source="cellPhone" label="Celular" />
+                        <TextInput source="landlinePhone" label="Teléfono fijo" />
                         <TextInput source="email" label="Correo electrónico" />
                     </Box>
 
@@ -49,6 +60,9 @@ export const StudentEdit = () => {
 
                 <TabbedForm.Tab label="Datos de Nacimiento">
                     <DateInput source="birthDate" label="Fecha de Nacimiento" isRequired validate={required()} />
+                    <ReferenceInput source="childbirthTypeId" reference="childbirth-types">
+                        <SelectInput label="Tipo de Parto" />
+                    </ReferenceInput>
                     <Box display="flex" gap={2} width="100%">
                         <LocationFormSelector sourcePrefix="birthLocation" />
                     </Box>
