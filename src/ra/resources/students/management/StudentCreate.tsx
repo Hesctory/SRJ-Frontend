@@ -4,6 +4,15 @@ import LocationFormSelector from "../../../../presentation/components/LocationFo
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
 import DisabilityForm from "../../../../presentation/components/DisabilityForm";
 import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
+import { useFormState } from 'react-hook-form';
+
+const DebugErrors = () => {
+    const { errors } = useFormState();
+    console.log("FORM ERRORS:", errors);
+    return null;
+};
+
+
 
 export const StudentCreate = () => {
         return (
@@ -25,10 +34,10 @@ export const StudentCreate = () => {
                         <ReferenceInput source="documentTypeId" reference="document-types">
                             <SelectInput label="Tipo de Documento" isRequired validate={required()} />
                         </ReferenceInput>
-                        <TextInput source="idDocumentNumber" label="Número de Documento" isRequired validate={required()} />
+                        <TextInput source="DocumentNumber" label="Número de Documento" isRequired validate={required()} />
                     </Box>
 
-                    <ReferenceInput source="ethnicIdentificationId" reference="ethnic-self-identifications">
+                    <ReferenceInput source="ethnicSelfIdentificationId" reference="ethnic-self-identifications">
                         <SelectInput label="Autoidentificación Étnica"  />
                     </ReferenceInput>
                     <Box display="flex" gap={2} width="100%" alignItems="flex-start">
@@ -44,14 +53,14 @@ export const StudentCreate = () => {
                     <ReferenceInput source="civilStateId" reference="civil-states">
                         <SelectInput label="Estado Civil" />
                     </ReferenceInput>
-                    <NumberInput source="numberOfSiblings" label="Número de Hermanos" min={0} />
+                    <NumberInput source="siblings" label="Número de Hermanos" min={0} />
 
                     <Typography variant="caption" color="text.secondary">
                         Solo si el estudiante es mayor de edad:
                     </Typography>
                     <Box display="flex" gap={2} width="100%">
                         <TextInput source="cellphone" label="Celular" />
-                        <TextInput source="landlineNumber" label="Teléfono fijo" />
+                        <TextInput source="landlinePhone" label="Teléfono fijo" />
                         <TextInput source="email" label="Correo electrónico" />
                     </Box>
 
@@ -89,6 +98,8 @@ export const StudentCreate = () => {
                 <TabbedForm.Tab label="Discapacidad">
                     <DisabilityForm />
                 </TabbedForm.Tab>
+
+                <DebugErrors/>
             </TabbedForm>
         </Create>
     );

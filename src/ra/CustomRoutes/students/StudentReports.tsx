@@ -5,7 +5,7 @@ import { HubLayout } from "../../../presentation/components/HubLayout";
 
 export const StudentReports = () => (
     <HubLayout title="Reportes de Estudiantes">
-        <HubButton icon={<HowToRegIcon />} url="/students/reports/enrolled">
+        <HubButton icon={<HowToRegIcon />} url="/enrolled-students-report">
             <HubButtonTitle>Estudiantes Matriculados</HubButtonTitle>
             <HubButtonDescription>
                 Consulta el listado de estudiantes actualmente matriculados, con sus datos de grado y sección.

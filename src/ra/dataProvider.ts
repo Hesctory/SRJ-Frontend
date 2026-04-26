@@ -24,7 +24,7 @@ const simpleDataProvider = simpleRestProvider(API_URL, httpClient);
 const jsonDataProvider = jsonServerProvider(JSON_API_URL);
 
 // DataProvider tipado
-const dataProvider: DataProvider = jsonDataProvider;
+const dataProvider: DataProvider = simpleDataProvider;
 
 
 export { dataProvider, httpClient };

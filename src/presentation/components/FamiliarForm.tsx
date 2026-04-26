@@ -28,7 +28,7 @@ const FamiliarForm = ({ sourcePrefix }: FamiliarFormProps) => {
                 <ReferenceInput source={`${base}documentTypeId`} reference="document-types">
                     <SelectInput label="Tipo de Documento de Identidad" isRequired validate={required()} />
                 </ReferenceInput>
-                <TextInput source={`${base}documentNumber`} label="Número de Documento de Identidad" isRequired validate={required()} />
+                <TextInput source={`${base}idDocumentNumber`} label="Número de Documento de Identidad" isRequired validate={required()} />
             </Box>
 
             <ReferenceInput source={`${base}nativeLanguageId`} reference="languages">
@@ -36,7 +36,7 @@ const FamiliarForm = ({ sourcePrefix }: FamiliarFormProps) => {
             </ReferenceInput>
             <SecondLanguagesFormSelector sourcePrefix={sourcePrefix} />
 
-            <ReferenceInput source={`${base}ethnicIdentificationId`} reference="ethnic-self-identifications">
+            <ReferenceInput source={`${base}ethnicSelfIdentificationId`} reference="ethnic-self-identifications">
                 <SelectInput label="Autoidentificación Étnica" />
             </ReferenceInput>
 
@@ -63,10 +63,13 @@ const FamiliarForm = ({ sourcePrefix }: FamiliarFormProps) => {
             <Box display="flex" gap={2} width="100%">
                 <LocationFormSelector sourcePrefix={sourcePrefix ? `${sourcePrefix}.addressLocation` : "addressLocation"} />
             </Box>
-            <BooleanInput source={`${base}livesWithStudent`} label="Vive con el NNA" />
+            <Box display="flex" gap={2} alignItems="center">
+                <BooleanInput source={`${base}lives`} label="Vive" />
+                <BooleanInput source={`${base}livesWithStudent`} label="Vive con el NNA" />
+            </Box>
 
-            <TextInput source={`${base}landlineNumber`} label="Teléfono Fijo" />
-            <TextInput source={`${base}cellphone`} label="Número de Teléfono Celular" />
+            <TextInput source={`${base}landlinePhone`} label="Teléfono Fijo" />
+            <TextInput source={`${base}cellPhone`} label="Número de Teléfono Celular" />
             <TextInput source={`${base}email`} label="Correo Electrónico" />
         </>
     );

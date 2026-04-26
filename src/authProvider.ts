@@ -11,7 +11,6 @@ interface LoginParams {
 }
 
 const authProvider: AuthProvider = {
-    // Login: recibe datos del formulario
     login: async ({ username, password }: LoginParams) => {
         console.log(username);
         const authAPI = new AuthAPI();
@@ -20,42 +19,38 @@ const authProvider: AuthProvider = {
         try {
             const user = await loginUseCase.execute(username, password);
             console.log(localStorage.getItem('token'), localStorage.getItem('user'));
-            // Guarda token (aquí podrías usar JWT o similar)
             return Promise.resolve();
         } catch (error) {
             return Promise.reject(error instanceof Error ? error.message : 'Login failed');
         }
     },
 
-    // Logout: elimina token
     logout: async () => {
         localStorage.removeItem('token');
         return Promise.resolve();
     },
 
-    // CheckAuth: revisa si el usuario sigue logueado
     checkAuth: async () => {
         const token = localStorage.getItem('token');
-        if(DSession.getExpiresAtFromToken(token || '') < new Date() || !token) {
+        const expirationDate = DSession.getExpiresAtFromToken(token || '');
+        
+        if(!expirationDate || expirationDate < new Date() || !token) {
             localStorage.removeItem('token');
-            return Promise.reject({ redirectTo: '/login' });
+            return Promise.reject();
         }
         return Promise.resolve();
     },
 
-    // CheckError: maneja errores de auth (401, 403)
     checkError: async (error: any) => {
         const status = error.status || error.response?.status;
         if (status === 401 || status === 403) {
             localStorage.removeItem('token');
-            return Promise.reject({ redirectTo: '/login' });
+            return Promise.reject();
         }
         return Promise.resolve();
     },
 
-    // Permisos (roles)
     getPermissions: async () => {
-        // Si quieres manejar roles
         const role = localStorage.getItem('role');
         return role ? Promise.resolve(role) : Promise.resolve();
     },
