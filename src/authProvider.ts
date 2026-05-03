@@ -27,23 +27,27 @@ const authProvider: AuthProvider = {
 
     logout: async () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         return Promise.resolve();
     },
 
     checkAuth: async () => {
         const token = localStorage.getItem('token');
-        const expirationDate = DSession.getExpiresAtFromToken(token || '');
-        
-        if(!expirationDate || expirationDate < new Date() || !token) {
+        if (!token) return Promise.reject();
+
+        const expirationDate = DSession.getExpiresAtFromToken(token);
+        if (expirationDate && expirationDate < new Date()) {
             localStorage.removeItem('token');
+            localStorage.removeItem('user');
             return Promise.reject();
         }
+
         return Promise.resolve();
     },
 
     checkError: async (error: any) => {
         const status = error.status || error.response?.status;
-        if (status === 401 || status === 403) {
+        if (status === 401) {
             localStorage.removeItem('token');
             return Promise.reject();
         }
@@ -51,8 +55,14 @@ const authProvider: AuthProvider = {
     },
 
     getPermissions: async () => {
-        const role = localStorage.getItem('role');
-        return role ? Promise.resolve(role) : Promise.resolve();
+        const userJson = localStorage.getItem('user');
+        if (!userJson) return Promise.resolve(null);
+        try {
+            const user = JSON.parse(userJson);
+            return Promise.resolve(user.roles ?? null);
+        } catch {
+            return Promise.resolve(null);
+        }
     },
 };
 

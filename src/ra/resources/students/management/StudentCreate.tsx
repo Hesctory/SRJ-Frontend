@@ -1,4 +1,5 @@
 import { BooleanInput, Create, DateInput, NumberInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
+import { BackToListButton } from "../../../CustomButtons/BackToListButton";
 import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
@@ -16,7 +17,7 @@ const DebugErrors = () => {
 
 export const StudentCreate = () => {
         return (
-        <Create >
+        <Create actions={<BackToListButton />}>
             <TabbedForm >
                 <TabbedForm.Tab label="Datos Personales">
 
@@ -34,7 +35,7 @@ export const StudentCreate = () => {
                         <ReferenceInput source="documentTypeId" reference="document-types">
                             <SelectInput label="Tipo de Documento" isRequired validate={required()} />
                         </ReferenceInput>
-                        <TextInput source="DocumentNumber" label="Número de Documento" isRequired validate={required()} />
+                        <TextInput source="idDocumentNumber" label="Número de Documento" isRequired validate={required()} />
                     </Box>
 
                     <ReferenceInput source="ethnicSelfIdentificationId" reference="ethnic-self-identifications">

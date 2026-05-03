@@ -14,7 +14,7 @@ import {
     ProductsResource,
     SchoolYearsResource,
     AccountingPlansResource,
-    LegalEntitiesResource,
+    InstitutionsResource,
     LevelsResource,
     GradesResource,
     GradeOfferingsResource,
@@ -44,7 +44,7 @@ export const App = () =>
         {ProductsResource}
         {SchoolYearsResource}
         {AccountingPlansResource}
-        {LegalEntitiesResource}
+        {InstitutionsResource}
         {LevelsResource}
         {GradesResource}
         {GradeOfferingsResource}

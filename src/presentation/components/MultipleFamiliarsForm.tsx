@@ -60,8 +60,8 @@ const MultipleFamiliarsForm = () => {
             {fields.map((field, index) => {
                 const sourcePrefix = `familiars.${index}`;
                 return (
-                    <Accordion key={field.id} defaultExpanded={index === fields.length - 1}>
-                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Accordion key={field.id} defaultExpanded={index === fields.length - 1} sx={{ width: '100%' }}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} >
                             <FamiliarAccordionSummary sourcePrefix={sourcePrefix} />
                         </AccordionSummary>
                         <AccordionDetails>

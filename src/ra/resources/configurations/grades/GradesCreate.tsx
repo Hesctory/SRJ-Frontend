@@ -1,11 +1,12 @@
-import { Create, ReferenceInput, SelectInput, SimpleForm, TextInput } from "react-admin";
+import { Create, NumberInput, ReferenceInput, SelectInput, SimpleForm, TextInput } from "react-admin";
 
 export const GradesCreate = () => (
     <Create redirect="list">
         <SimpleForm>
-            <TextInput source="grade" label="Grado" />
+            <TextInput source="name" label="Grado" />
+            <NumberInput source="year" label="Año" />
             <ReferenceInput source="levelId" reference="levels">
-                <SelectInput optionText="level" label="Nivel" />
+                <SelectInput optionText="name" label="Nivel" />
             </ReferenceInput>
         </SimpleForm>
     </Create>

@@ -23,7 +23,6 @@ const httpClient = (url: string, options: fetchUtils.Options = {}) => {
 const simpleDataProvider = simpleRestProvider(API_URL, httpClient);
 const jsonDataProvider = jsonServerProvider(JSON_API_URL);
 
-// DataProvider tipado
 const dataProvider: DataProvider = simpleDataProvider;
 
 
