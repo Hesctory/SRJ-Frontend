@@ -192,8 +192,8 @@ export const modules: Module[] = [
             },
             {
                 id: 43,
-                name: "Entidades Legales",
-                path: "/legal-entities",
+                name: "Instituciones",
+                path: "/institutions",
                 permissions: [],
                 icon: <CorporateFareIcon />
             },

@@ -1,12 +1,13 @@
-import { Edit, SimpleForm, TextInput } from "react-admin";
+import { BooleanInput, DateInput, Edit, NumberInput, SimpleForm } from "react-admin";
 import { BackToListButton } from "../../../CustomButtons/BackToListButton";
 
 export const SchoolYearsEdit = () => (
     <Edit actions={<BackToListButton />}>
         <SimpleForm>
-            <TextInput source="schoolYear" label="Año Escolar" />
-            <TextInput source="date" label="Fecha de Inicio" />
-            <TextInput source="endDate" label="Fecha de Fin" />
+            <NumberInput source="year" label="Año" />
+            <DateInput source="startDate" label="Fecha de Inicio" />
+            <DateInput source="endDate" label="Fecha de Fin" />
+            <BooleanInput source="isActive" label="Activo" />
         </SimpleForm>
     </Edit>
 );

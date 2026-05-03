@@ -1,4 +1,6 @@
 import { BooleanInput, Edit, DateInput, NumberInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
+import PessimisticDeleteToolbar from "../../../layout/PessimisticDeleteToolbar";
+import { BackToListButton } from "../../../CustomButtons/BackToListButton";
 import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
@@ -8,8 +10,10 @@ import MultipleFamiliarsForm from "../../../../presentation/components/MultipleF
 
 export const StudentEdit = () => {
     return (
-        <Edit>
-            <TabbedForm>
+        <Edit >
+            <TabbedForm 
+                toolbar={<PessimisticDeleteToolbar />}
+            >
                 <TabbedForm.Tab label="Datos Personales">
 
                     <Box display="flex" gap={2} width="100%">
