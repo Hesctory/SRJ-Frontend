@@ -1,65 +1,62 @@
+import { useForm, FormProvider } from "react-hook-form";
 import {
   BooleanInput,
-  Edit,
   DateInput,
   NumberInput,
   ReferenceInput,
   SelectInput,
-  TabbedForm,
   TextInput,
-  required,
 } from "react-admin";
-import CRUDToolBar from "../../../layout/CRUDToolBar";
-import { BackToListButton } from "../../../CustomButtons/BackToListButton";
+import CRUDToolBar from "../../ra/layout/CRUDToolBar";
+import { EnrollButton } from "../../ra/CustomButtons/EnrollButton";
 import { Box, Typography } from "@mui/material";
-import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
-import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
-import DisabilityForm from "../../../../presentation/components/DisabilityForm";
-import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
+import LocationFormSelector from "../components/LocationFormSelector";
+import SecondLanguagesFormSelector from "../components/SecondLanguagesFormSelector";
+import DisabilityForm from "../components/DisabilityForm";
+import MultipleFamiliarsForm from "../components/MultipleFamiliarsForm";
 
-export const StudentEdit = () => {
+export const StudentEnrollPage = () => {
+  const methods = useForm({
+    defaultValues: { familiars: [] },
+  });
+
   return (
-    <Edit mutationMode="pessimistic">
-      <TabbedForm toolbar={<CRUDToolBar save delete />}>
-        <TabbedForm.Tab label="Datos Personales">
+    <FormProvider {...methods}>
+      <form onSubmit={() => {}}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}>
+          <Typography variant="h5" gutterBottom>
+            Nuevo Estudiante
+          </Typography>
+        </Box>
+
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Typography variant="h6">Datos Personales</Typography>
           <Box display="flex" gap={2} width="100%">
-            <TextInput
-              source="names"
-              label="Nombres"
-              isRequired
-              validate={required()}
-            />
+            <TextInput source="names" label="Nombres" required />
             <TextInput
               source="paternalLastname"
               label="Apellido Paterno"
-              isRequired
-              validate={required()}
+              required
             />
             <TextInput
               source="maternalLastname"
               label="Apellido Materno"
-              isRequired
-              validate={required()}
+              required
             />
           </Box>
 
           <ReferenceInput source="genderId" reference="genders">
-            <SelectInput label="Sexo" isRequired validate={required()} />
+            <SelectInput label="Sexo" required />
           </ReferenceInput>
 
           <Box display="flex" gap={2} width="100%">
             <ReferenceInput source="documentTypeId" reference="document-types">
-              <SelectInput
-                label="Tipo de Documento"
-                isRequired
-                validate={required()}
-              />
+              <SelectInput label="Tipo de Documento" required />
             </ReferenceInput>
             <TextInput
               source="idDocumentNumber"
               label="Número de Documento"
-              isRequired
-              validate={required()}
+              required
             />
           </Box>
 
@@ -71,11 +68,7 @@ export const StudentEdit = () => {
           </ReferenceInput>
           <Box display="flex" gap={2} width="100%" alignItems="flex-start">
             <ReferenceInput source="nativeLanguageId" reference="languages">
-              <SelectInput
-                label="Lengua Materna"
-                isRequired
-                validate={required()}
-              />
+              <SelectInput label="Lengua Materna" required />
             </ReferenceInput>
             <SecondLanguagesFormSelector />
           </Box>
@@ -92,19 +85,15 @@ export const StudentEdit = () => {
             Solo si el estudiante es mayor de edad:
           </Typography>
           <Box display="flex" gap={2} width="100%">
-            <TextInput source="cellPhone" label="Celular" />
+            <TextInput source="cellphone" label="Celular" />
             <TextInput source="landlinePhone" label="Teléfono fijo" />
             <TextInput source="email" label="Correo electrónico" />
           </Box>
-        </TabbedForm.Tab>
 
-        <TabbedForm.Tab label="Datos de Nacimiento">
-          <DateInput
-            source="birthDate"
-            label="Fecha de Nacimiento"
-            isRequired
-            validate={required()}
-          />
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Datos de Nacimiento
+          </Typography>
+          <DateInput source="birthDate" label="Fecha de Nacimiento" required />
           <ReferenceInput
             source="childbirthTypeId"
             reference="childbirth-types"
@@ -114,15 +103,11 @@ export const StudentEdit = () => {
           <Box display="flex" gap={2} width="100%">
             <LocationFormSelector sourcePrefix="birthLocation" />
           </Box>
-        </TabbedForm.Tab>
 
-        <TabbedForm.Tab label="Domicilio">
-          <TextInput
-            source="address"
-            label="Dirección"
-            isRequired
-            validate={required()}
-          />
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Domicilio
+          </Typography>
+          <TextInput source="address" label="Dirección" required />
           <Box display="flex" gap={2} width="100%">
             <LocationFormSelector sourcePrefix="addressLocation" />
           </Box>
@@ -134,16 +119,22 @@ export const StudentEdit = () => {
             source="hasInternetAccess"
             label="Cuenta con acceso a internet"
           />
-        </TabbedForm.Tab>
 
-        <TabbedForm.Tab label="Apoderados">
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Apoderados
+          </Typography>
           <MultipleFamiliarsForm />
-        </TabbedForm.Tab>
 
-        <TabbedForm.Tab label="Discapacidad">
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            Discapacidad
+          </Typography>
           <DisabilityForm />
-        </TabbedForm.Tab>
-      </TabbedForm>
-    </Edit>
+        </Box>
+
+        <CRUDToolBar resource="students">
+          <EnrollButton />
+        </CRUDToolBar>
+      </form>
+    </FormProvider>
   );
 };

@@ -5,12 +5,12 @@ import { HubLayout } from "../../../presentation/components/HubLayout";
 import { TuitionsButton } from "../../../presentation/components/TuitionsButton";
 
 export const IncomesExpensesEconomicManagement = () => {
-    return (
-        <HubLayout title="Gestión Económica">
-            <TuitionsButton />
-            <ExpensesButton />
-            <AccountStateButton />
-            <AccountManagementButton />
-        </HubLayout>
-    );
-}
+  return (
+    <HubLayout title="Gestión Económica">
+      <TuitionsButton />
+      <ExpensesButton />
+      <AccountStateButton />
+      <AccountManagementButton />
+    </HubLayout>
+  );
+};

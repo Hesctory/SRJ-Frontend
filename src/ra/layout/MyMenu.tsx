@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Menu } from "react-admin";
 import { modules } from "../../modules";
-import SubMenu from './SubMenu';
+import SubMenu from "./SubMenu";
 
 export const MyMenu = () => {
-  const [openStates, setOpenStates] = useState<{[key: number]: boolean}>({});
+  const [openStates, setOpenStates] = useState<{ [key: number]: boolean }>({});
 
   return (
     <Menu>
       <Menu.DashboardItem />
       {modules.map((module) => {
         const isOpen = openStates[module.id] || false;
-        const handleToggle = () => setOpenStates(prev => ({...prev, [module.id]: !prev[module.id]}));
+        const handleToggle = () =>
+          setOpenStates((prev) => ({ ...prev, [module.id]: !prev[module.id] }));
 
         if (module.children && module.children.length > 0) {
           return (
@@ -24,9 +25,9 @@ export const MyMenu = () => {
               name={module.name}
             >
               {module.children.map((child) => (
-                <Menu.Item 
-                  key={child.id} 
-                  to={child.path} 
+                <Menu.Item
+                  key={child.id}
+                  to={child.path}
                   primaryText={child.name}
                   leftIcon={child.icon}
                 />

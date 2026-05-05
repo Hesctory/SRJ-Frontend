@@ -11,18 +11,18 @@ import { useWatch, useFormContext } from "react-hook-form";
  * Must be called inside a <SimpleForm>.
  */
 export const useGradeOfferingForm = (): number | null => {
-    const { setValue } = useFormContext();
-    const levelId = useWatch({ name: "_levelId" }) ?? null;
-    const initialized = useRef(false);
+  const { setValue } = useFormContext();
+  const levelId = useWatch({ name: "_levelId" }) ?? null;
+  const initialized = useRef(false);
 
-    // Cascade: reset gradeId when level changes (skip first render)
-    useEffect(() => {
-        if (!initialized.current) {
-            initialized.current = true;
-            return;
-        }
-        setValue("gradeId", null);
-    }, [levelId, setValue]);
+  // Cascade: reset gradeId when level changes (skip first render)
+  useEffect(() => {
+    if (!initialized.current) {
+      initialized.current = true;
+      return;
+    }
+    setValue("gradeId", null);
+  }, [levelId, setValue]);
 
-    return levelId;
+  return levelId;
 };

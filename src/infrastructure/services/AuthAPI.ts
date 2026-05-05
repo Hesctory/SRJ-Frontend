@@ -1,12 +1,12 @@
-import { API_URL, httpClient } from '../../ra/dataProvider';
-import { LoginResponseData } from '../dtos/LoginResponseData';
+import { API_URL, httpClient } from "../../ra/dataProvider";
+import { LoginResponseData } from "../dtos/LoginResponseData";
 //import type { userData } from '../dtos/userData';
 
 export class AuthAPI {
   async login(email: string, password: string): Promise<LoginResponseData> {
     try {
       const response = await httpClient(`${API_URL}/login`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({ email, password }),
       });
 
@@ -14,7 +14,7 @@ export class AuthAPI {
 
       return loginResponse;
     } catch (error) {
-      throw new Error(error instanceof Error ? error.message : 'Login failed');
+      throw new Error(error instanceof Error ? error.message : "Login failed");
     }
   }
 }
