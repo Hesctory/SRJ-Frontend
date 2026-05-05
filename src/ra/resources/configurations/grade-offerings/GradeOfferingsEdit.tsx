@@ -1,5 +1,5 @@
 import { Edit, NumberInput, ReferenceInput, SelectInput, SimpleForm, useGetList, useGetOne, useRecordContext } from "react-admin";
-import { BackToListButton } from "../../../CustomButtons/BackToListButton";
+import CRUDToolBar from "../../../layout/CRUDToolBar";
 
 const DebugLogger = () => {
     const gradeOffering = useRecordContext();
@@ -29,8 +29,8 @@ const FullGradeSelectInput = () => {
 };
 
 export const GradeOfferingsEdit = () => (
-    <Edit actions={<BackToListButton />}>
-        <SimpleForm>
+    <Edit mutationMode="pessimistic">
+        <SimpleForm toolbar={<CRUDToolBar save delete />}>
             <DebugLogger />
             <ReferenceInput source="schoolYearId" reference="school-years">
                 <SelectInput optionText="year" label="Año Escolar" />

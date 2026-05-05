@@ -1,5 +1,6 @@
 import { BooleanInput, Create, DateInput, NumberInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
-import { BackToListButton } from "../../../CustomButtons/BackToListButton";
+import CRUDToolBar from "../../../layout/CRUDToolBar";
+import { EnrollButton } from "../../../CustomButtons/EnrollButton";
 import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
@@ -17,8 +18,8 @@ const DebugErrors = () => {
 
 export const StudentCreate = () => {
         return (
-        <Create actions={<BackToListButton />}>
-            <TabbedForm >
+        <Create mutationMode="pessimistic">
+            <TabbedForm defaultValues={{ familiars: [] }} toolbar={<CRUDToolBar><EnrollButton /></CRUDToolBar>}>
                 <TabbedForm.Tab label="Datos Personales">
 
                     <Box display="flex" gap={2} width="100%">
