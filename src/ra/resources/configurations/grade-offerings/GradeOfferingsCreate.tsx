@@ -1,8 +1,9 @@
 import { Create, NumberInput, ReferenceInput, SelectInput, SimpleForm } from "react-admin";
+import CRUDToolBar from "../../../layout/CRUDToolBar";
 
 export const GradeOfferingsCreate = () => (
-    <Create redirect="list">
-        <SimpleForm>
+    <Create redirect="list" mutationMode="pessimistic">
+        <SimpleForm toolbar={<CRUDToolBar save />}>
             <ReferenceInput source="schoolYearId" reference="school-years">
                 <SelectInput optionText="year" label="Año Escolar" />
             </ReferenceInput>

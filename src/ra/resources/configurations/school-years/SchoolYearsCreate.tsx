@@ -1,8 +1,9 @@
 import { BooleanInput, Create, DateInput, NumberInput, SimpleForm } from "react-admin";
+import CRUDToolBar from "../../../layout/CRUDToolBar";
 
 export const SchoolYearsCreate = () => (
-    <Create redirect="list">
-        <SimpleForm>
+    <Create redirect="list" mutationMode="pessimistic">
+        <SimpleForm toolbar={<CRUDToolBar save />}>
             <NumberInput source="year" label="Año" />
             <DateInput source="startDate" label="Fecha de Inicio" />
             <DateInput source="endDate" label="Fecha de Fin" />
