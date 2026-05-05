@@ -1,12 +1,17 @@
 import { useEffect, useRef } from "react";
-import { ReferenceInput, SelectInput, useGetOne, useRecordContext } from "react-admin";
+import {
+  ReferenceInput,
+  SelectInput,
+  useGetOne,
+  useRecordContext,
+} from "react-admin";
 import { useWatch, useFormContext } from "react-hook-form";
 
 const sectionChoices = [
-    { id: "A", name: "A" },
-    { id: "B", name: "B" },
-    { id: "C", name: "C" },
-    { id: "D", name: "D" },
+  { id: "A", name: "A" },
+  { id: "B", name: "B" },
+  { id: "C", name: "C" },
+  { id: "D", name: "D" },
 ];
 
 /**
@@ -15,21 +20,21 @@ const sectionChoices = [
  */
 
 const LevelInitializer = () => {
-    const record = useRecordContext();
-    const { setValue, getValues } = useFormContext();
-    const { data: grade } = useGetOne(
-        "grades",
-        { id: record?.gradeId },
-        { enabled: !!record?.gradeId }
-    );
+  const record = useRecordContext();
+  const { setValue, getValues } = useFormContext();
+  const { data: grade } = useGetOne(
+    "grades",
+    { id: record?.gradeId },
+    { enabled: !!record?.gradeId },
+  );
 
-    useEffect(() => {
-        if (grade?.levelId && !getValues("_levelId")) {
-            setValue("_levelId", grade.levelId);
-        }
-    }, [grade, setValue, getValues]);
+  useEffect(() => {
+    if (grade?.levelId && !getValues("_levelId")) {
+      setValue("_levelId", grade.levelId);
+    }
+  }, [grade, setValue, getValues]);
 
-    return null;
+  return null;
 };
 
 /**
@@ -38,45 +43,47 @@ const LevelInitializer = () => {
  */
 
 const GradeSelectInput = () => {
-    const { setValue } = useFormContext();
-    const levelId = useWatch({ name: "_levelId" });
-    const initialized = useRef(false);
+  const { setValue } = useFormContext();
+  const levelId = useWatch({ name: "_levelId" });
+  const initialized = useRef(false);
 
-    useEffect(() => {
-        if (!initialized.current) {
-            initialized.current = true;
-            return;
-        }
-        setValue("gradeId", null);
-    }, [levelId, setValue]);
+  useEffect(() => {
+    if (!initialized.current) {
+      initialized.current = true;
+      return;
+    }
+    setValue("gradeId", null);
+  }, [levelId, setValue]);
 
-    return (
-        <ReferenceInput
-            source="gradeId"
-            reference="grades"
-            filter={levelId ? { levelId } : {}}
-        >
-            <SelectInput optionText="grade" label="Grado" disabled={!levelId} />
-        </ReferenceInput>
-    );
+  return (
+    <ReferenceInput
+      source="gradeId"
+      reference="grades"
+      filter={levelId ? { levelId } : {}}
+    >
+      <SelectInput optionText="grade" label="Grado" disabled={!levelId} />
+    </ReferenceInput>
+  );
 };
 
 interface SectionFormFieldsProps {
-    isEdit?: boolean;
+  isEdit?: boolean;
 }
 
-export const SectionFormFields = ({ isEdit = false }: SectionFormFieldsProps) => (
-    <>
-        {isEdit && <LevelInitializer />}
-        <ReferenceInput source="_levelId" reference="levels">
-            <SelectInput optionText="level" label="Nivel" />
-        </ReferenceInput>
-        <GradeSelectInput />
-        <SelectInput source="section" label="Sección" choices={sectionChoices} />
-    </>
+export const SectionFormFields = ({
+  isEdit = false,
+}: SectionFormFieldsProps) => (
+  <>
+    {isEdit && <LevelInitializer />}
+    <ReferenceInput source="_levelId" reference="levels">
+      <SelectInput optionText="level" label="Nivel" />
+    </ReferenceInput>
+    <GradeSelectInput />
+    <SelectInput source="section" label="Sección" choices={sectionChoices} />
+  </>
 );
 
 export const sectionTransform = (data: Record<string, unknown>) => {
-    const { _levelId, ...rest } = data;
-    return rest;
+  const { _levelId, ...rest } = data;
+  return rest;
 };

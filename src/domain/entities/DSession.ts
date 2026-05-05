@@ -7,12 +7,11 @@ export class DSession {
   ) {}
 
   static create(user: User, token: string): DSession {
-    if (!token) 
-        throw new Error("Invalid token");
+    if (!token) throw new Error("Invalid token");
 
     return new DSession(user, token);
   }
-/*
+  /*
   static getExpiresAtFromToken(token: string): Date {
     const payloadBase64 = token.split('.')[1];
     const payloadJson = atob(payloadBase64);
@@ -29,13 +28,13 @@ export class DSession {
     try {
       if (!token || typeof token !== "string") return null;
 
-      const parts = token.split('.');
+      const parts = token.split(".");
       if (parts.length !== 3) return null;
 
       const payloadBase64 = parts[1];
 
       // Normalizar base64 (importante para JWT)
-      const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+      const base64 = payloadBase64.replace(/-/g, "+").replace(/_/g, "/");
 
       const payloadJson = atob(base64);
       const payload = JSON.parse(payloadJson);
@@ -47,7 +46,7 @@ export class DSession {
       return null;
     }
   }
-  
+
   getUser(): User {
     return this.user;
   }

@@ -16,6 +16,7 @@ export { InstitutionsResource } from "./configurations/institutions";
 export { LevelsResource } from "./configurations/levels";
 export { GradesResource } from "./configurations/grades";
 export { GradeOfferingsResource } from "./configurations/grade-offerings";
+export { SectionsResource } from "./configurations/sections";
 export { CostsResource } from "./configurations/costs";
 export { ClassroomsResource } from "./configurations/classrooms";
 export { WorkAreasResource } from "./configurations/work-areas";

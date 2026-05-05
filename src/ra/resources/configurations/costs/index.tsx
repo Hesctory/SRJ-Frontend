@@ -5,11 +5,11 @@ import { CostsCreate } from "./CostsCreate";
 import { CostsEdit } from "./CostsEdit";
 
 export const CostsResource = (
-    <Resource
-        name="costs"
-        list={CostsList}
-        create={CostsCreate}
-        edit={CostsEdit}
-        icon={AttachMoneyIcon}
-    />
+  <Resource
+    name="costs"
+    list={CostsList}
+    create={CostsCreate}
+    edit={CostsEdit}
+    icon={AttachMoneyIcon}
+  />
 );

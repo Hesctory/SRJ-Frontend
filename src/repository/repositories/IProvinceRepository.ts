@@ -1,5 +1,5 @@
 import { ProvinceData } from "../../infrastructure/dtos/provinceData";
 
 export interface IProvinceRepository {
-    getAll(filter?: any): Promise<ProvinceData[]>;
+  getAll(filter?: any): Promise<ProvinceData[]>;
 }

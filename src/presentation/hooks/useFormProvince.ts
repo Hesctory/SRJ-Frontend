@@ -6,21 +6,21 @@ import { ProvinceRepositoryImpl } from "../../repository/implementations/Provinc
 const provinceRepo = new ProvinceRepositoryImpl();
 
 export const useFormProvince = () => {
-    const departmentId = useWatch({ name: "departmentId" });
-    const [provinces, setProvinces] = useState<ProvinceData[]>([]);
-    const [loading, setLoading] = useState(false);
+  const departmentId = useWatch({ name: "departmentId" });
+  const [provinces, setProvinces] = useState<ProvinceData[]>([]);
+  const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (!departmentId) {
-            setProvinces([]);
-            return;
-        }
-        setLoading(true);
-        provinceRepo
-            .getAll({ departmentId })
-            .then(setProvinces)
-            .finally(() => setLoading(false));
-    }, [departmentId]);
+  useEffect(() => {
+    if (!departmentId) {
+      setProvinces([]);
+      return;
+    }
+    setLoading(true);
+    provinceRepo
+      .getAll({ departmentId })
+      .then(setProvinces)
+      .finally(() => setLoading(false));
+  }, [departmentId]);
 
-    return { provinces, loading };
+  return { provinces, loading };
 };

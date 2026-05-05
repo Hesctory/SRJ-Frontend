@@ -1,7 +1,6 @@
-import { LoginForm } from 'react-admin';
-import { Typography, Box } from '@mui/material';
-import logo from '../../../public/logoSRJ.png'; // tu logo en src o public
-
+import { LoginForm } from "react-admin";
+import { Typography, Box } from "@mui/material";
+import logo from "../../../public/logoSRJ.png"; // tu logo en src o public
 
 // Login personalizado
 const CustomLoginForm = () => (
@@ -12,8 +11,7 @@ const CustomLoginForm = () => (
         Bienvenido, por favor inicia sesión
       </Typography>
     </Box>
-    <LoginForm 
-    /> {/* aquí están los inputs por defecto */}
+    <LoginForm /> {/* aquí están los inputs por defecto */}
   </>
 );
 

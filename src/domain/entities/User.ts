@@ -1,32 +1,24 @@
 export class User {
-
   constructor(
     private id: number,
     private name: string,
     private email: string,
     private phone: string,
-    private roles: string [],
-  ) {
-  }
+    private roles: string[],
+  ) {}
 
   static create(
-    id: number, 
+    id: number,
     name: string,
     email: string,
     phone: string,
-    roles: string []
+    roles: string[],
   ): User {
     return new User(id, name, email, phone, roles);
   }
 
   static fromJSON(data: any): User {
-    return new User(
-      data.id, 
-      data.name,
-      data.email,
-      data.password,
-      data.roles
-    );
+    return new User(data.id, data.name, data.email, data.password, data.roles);
   }
 
   // Getters

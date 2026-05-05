@@ -5,11 +5,11 @@ import { WorkAreasCreate } from "./WorkAreasCreate";
 import { WorkAreasEdit } from "./WorkAreasEdit";
 
 export const WorkAreasResource = (
-    <Resource
-        name="work-areas"
-        list={WorkAreasList}
-        create={WorkAreasCreate}
-        edit={WorkAreasEdit}
-        icon={CategoryIcon}
-    />
+  <Resource
+    name="work-areas"
+    list={WorkAreasList}
+    create={WorkAreasCreate}
+    edit={WorkAreasEdit}
+    icon={CategoryIcon}
+  />
 );
