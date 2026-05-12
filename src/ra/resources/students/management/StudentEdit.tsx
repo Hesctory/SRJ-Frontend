@@ -1,18 +1,25 @@
 import { BooleanInput, Edit, DateInput, NumberInput, ReferenceInput, SelectInput, TabbedForm, TextInput, required } from "react-admin";
-import CRUDToolBar from "../../../layout/CRUDToolBar";
+import StudentEditToolbar from "./StudentEditToolbar";
 import { BackToListButton } from "../../../CustomButtons/BackToListButton";
 import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
 import DisabilityForm from "../../../../presentation/components/DisabilityForm";
 import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
+import { useFormContext } from "react-hook-form";
 
+const DebugForm = () => {
+    const { formState: { errors }, getValues } = useFormContext();
+    console.log("FORM ERRORS:", errors);
+    console.log("FORM VALUES:", getValues());
+    return null;
+};
 
 export const StudentEdit = () => {
     return (
-        <Edit mutationMode="pessimistic">
+        <Edit mutationMode="pessimistic" >
             <TabbedForm
-                toolbar={<CRUDToolBar save delete />}
+                toolbar={<StudentEditToolbar />}
             >
                 <TabbedForm.Tab label="Datos Personales">
 
@@ -94,6 +101,7 @@ export const StudentEdit = () => {
                 <TabbedForm.Tab label="Discapacidad">
                     <DisabilityForm />
                 </TabbedForm.Tab>
+                <DebugForm />
             </TabbedForm>
         </Edit>
     );

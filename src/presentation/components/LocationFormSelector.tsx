@@ -7,7 +7,7 @@ interface LocationFormSelectorProps {
 }
 
 const LocationFormSelector = ({ sourcePrefix }: LocationFormSelectorProps) => {
-    const { setValue } = useFormContext();
+
     const base = sourcePrefix ? `${sourcePrefix}.` : "";
     const departmentId = useWatch({ name: `${base}departmentId` });
     const provinceId = useWatch({ name: `${base}provinceId` });
