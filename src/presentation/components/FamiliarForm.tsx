@@ -66,6 +66,7 @@ const FamiliarForm = ({ sourcePrefix }: FamiliarFormProps) => {
             <Box display="flex" gap={2} alignItems="center">
                 <BooleanInput source={`${base}lives`} label="Vive" />
                 <BooleanInput source={`${base}livesWithStudent`} label="Vive con el NNA" />
+                <BooleanInput source={`${base}isGuardian`} label="Es Tutor" />
             </Box>
 
             <TextInput source={`${base}landlinePhone`} label="Teléfono Fijo" />

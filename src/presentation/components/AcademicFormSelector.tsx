@@ -30,7 +30,7 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                 <ReferenceInput
                     source={`${base}gradeId`}
                     reference="grades"
-                    filter={{ levelId }}
+                    filter={{ schoolYearId, levelId }}
                 >
                     <SelectInput label="Grado" isRequired validate={required()} />
                 </ReferenceInput>
@@ -42,7 +42,7 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                 <ReferenceInput
                     source={`${base}shiftId`}
                     reference="shifts"
-                    filter={{ gradeId }}
+                    filter={{ schoolYearId, gradeId }}
                 >
                     <SelectInput label="Turno" isRequired validate={required()} />
                 </ReferenceInput>

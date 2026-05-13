@@ -1,10 +1,10 @@
-import { BooleanField, DataTable, DateField, EditButton, List, NumberField } from "react-admin";
+import { BooleanField, DataTable, DateField, EditButton, List, NumberField, TextField } from "react-admin";
 
 export const SchoolYearsList = () => (
     <List>
         <DataTable>
             <DataTable.Col source="year" label="Año" sx={{ width: "10%" }}>
-                <NumberField source="year" />
+                <TextField source="year" />
             </DataTable.Col>
             <DataTable.Col source="startDate" label="Fecha de Inicio" sx={{ width: "35%" }}>
                 <DateField source="startDate" />
