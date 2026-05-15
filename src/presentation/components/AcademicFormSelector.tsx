@@ -1,5 +1,6 @@
 import { ReferenceInput, SelectInput, required } from "react-admin";
-import { useWatch } from "react-hook-form";
+import { FORM_DOWNSTREAM } from "../hooks/academicCascade";
+import { useAcademicFormSelector } from "../hooks/useAcademicFormSelector";
 
 interface AcademicFormSelectorProps {
     sourcePrefix?: string;
@@ -7,20 +8,28 @@ interface AcademicFormSelectorProps {
 
 const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
     const base = sourcePrefix ? `${sourcePrefix}.` : "";
-    const schoolYearId = useWatch({ name: `${base}schoolYearId` });
-    const levelId = useWatch({ name: `${base}levelId` });
-    const gradeId = useWatch({ name: `${base}gradeId` });
-    const shiftId = useWatch({ name: `${base}shiftId` });
+    const { schoolYearId, levelId, gradeId, shiftId, clearFields } = useAcademicFormSelector(base);
 
     return (
         <>
             <ReferenceInput source={`${base}schoolYearId`} reference="school-years">
-                <SelectInput label="Año Escolar" optionText="year" isRequired validate={required()} />
+                <SelectInput
+                    label="Año Escolar"
+                    optionText="year"
+                    isRequired
+                    validate={required()}
+                    onChange={() => clearFields(FORM_DOWNSTREAM.schoolYearId)}
+                />
             </ReferenceInput>
 
             {schoolYearId ? (
                 <ReferenceInput source={`${base}levelId`} reference="levels">
-                    <SelectInput label="Nivel" isRequired validate={required()} />
+                    <SelectInput
+                        label="Nivel"
+                        isRequired
+                        validate={required()}
+                        onChange={() => clearFields(FORM_DOWNSTREAM.levelId)}
+                    />
                 </ReferenceInput>
             ) : (
                 <SelectInput source={`${base}levelId`} label="Nivel" choices={[]} disabled isRequired validate={required()} />
@@ -32,7 +41,12 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                     reference="grades"
                     filter={{ schoolYearId, levelId }}
                 >
-                    <SelectInput label="Grado" isRequired validate={required()} />
+                    <SelectInput
+                        label="Grado"
+                        isRequired
+                        validate={required()}
+                        onChange={() => clearFields(FORM_DOWNSTREAM.gradeId)}
+                    />
                 </ReferenceInput>
             ) : (
                 <SelectInput source={`${base}gradeId`} label="Grado" choices={[]} disabled isRequired validate={required()} />
@@ -44,7 +58,12 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                     reference="shifts"
                     filter={{ schoolYearId, gradeId }}
                 >
-                    <SelectInput label="Turno" isRequired validate={required()} />
+                    <SelectInput
+                        label="Turno"
+                        isRequired
+                        validate={required()}
+                        onChange={() => clearFields(FORM_DOWNSTREAM.shiftId)}
+                    />
                 </ReferenceInput>
             ) : (
                 <SelectInput source={`${base}shiftId`} label="Turno" choices={[]} disabled isRequired validate={required()} />
