@@ -23,7 +23,24 @@ const httpClient = (url: string, options: fetchUtils.Options = {}) => {
 const simpleDataProvider = simpleRestProvider(API_URL, httpClient);
 const jsonDataProvider = jsonServerProvider(JSON_API_URL);
 
-const dataProvider: DataProvider = simpleDataProvider;
+const extendedSimpleDataProvider: DataProvider = {
+    ...simpleDataProvider,
+    getList: async (resource, params) => {
+        if (resource === "students-report") {
+            const { filter = {} } = params;
+            const query = new URLSearchParams();
+            Object.entries(filter).forEach(([k, v]) => {
+                if (v !== undefined && v !== "") query.set(k, String(v));
+            });
+            const url = `${API_URL}/students/report?${query.toString()}`;
+            const { json } = await httpClient(url);
+            const data = Array.isArray(json) ? json : (json.data ?? []);
+            return { data, total: data.length };
+        }
+        return simpleDataProvider.getList(resource, params);
+    },
+};
 
+const dataProvider: DataProvider = extendedSimpleDataProvider;
 
 export { dataProvider, httpClient };

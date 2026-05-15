@@ -18,7 +18,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { PDFViewer } from "@react-pdf/renderer";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Title, useDataProvider, useGetList } from "react-admin";
 import { EnrolledStudentsReport } from "../../../../../presentation/components/EnrolledStudentsReport";
 
@@ -32,6 +32,7 @@ export const EnrolledStudentsReportList = () => {
 
     const [pdfOpen, setPdfOpen] = useState(false);
     const [reportStudents, setReportStudents] = useState<any[]>([]);
+    const [reportSchoolYear, setReportSchoolYear] = useState("Todos");
     const [generating, setGenerating] = useState(false);
 
     const { data: schoolYears = [] } = useGetList("school-years", {
@@ -84,29 +85,29 @@ export const EnrolledStudentsReportList = () => {
 
         const filter: Record<string, any> = {};
         if (selectedYear) filter.schoolyearId = Number(selectedYear);
-        if (selectedLevel) {
-            const match = levels.find((l: any) => String(l.id) === selectedLevel);
-            if (match) filter.level = (match as any).level;
-        }
-        if (selectedGrade) {
-            const match = grades.find((g: any) => String(g.id) === selectedGrade);
-            if (match) filter.grade = (match as any).grade;
-        }
+        if (selectedLevel) filter.levelId = Number(selectedLevel);
+        if (selectedGrade) filter.gradeId = Number(selectedGrade);
         if (selectedSection) filter.section = selectedSection;
 
-        const { data } = await dataProvider.getList("students", {
+        const { data } = await dataProvider.getList("students-report", {
             pagination: { page: 1, perPage: 1000 },
             sort: { field: "fullName", order: "ASC" },
             filter,
         });
 
+        const schoolYearLabel =
+            (schoolYears.find((sy: any) => String(sy.id) === selectedYear) as any)?.schoolYear ?? "Todos";
+
         setReportStudents(data);
+        setReportSchoolYear(schoolYearLabel);
         setGenerating(false);
         setPdfOpen(true);
     };
 
-    const selectedSchoolYear =
-        (schoolYears.find((sy: any) => String(sy.id) === selectedYear) as any)?.schoolYear ?? "Todos";
+    const pdfDocument = useMemo(
+        () => <EnrolledStudentsReport students={reportStudents} schoolYear={reportSchoolYear} />,
+        [reportStudents, reportSchoolYear]
+    );
 
     return (
         <>
@@ -128,7 +129,7 @@ export const EnrolledStudentsReportList = () => {
                                 <MenuItem value=""><em>Todos</em></MenuItem>
                                 {schoolYears.map((sy: any) => (
                                     <MenuItem key={sy.id} value={String(sy.id)}>
-                                        {sy.schoolYear}
+                                        {sy.year}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -141,7 +142,7 @@ export const EnrolledStudentsReportList = () => {
                                 <MenuItem value=""><em>Todos</em></MenuItem>
                                 {levels.map((lv: any) => (
                                     <MenuItem key={lv.id} value={String(lv.id)}>
-                                        {lv.level}
+                                        {lv.name}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -154,7 +155,7 @@ export const EnrolledStudentsReportList = () => {
                                 <MenuItem value=""><em>Todos</em></MenuItem>
                                 {grades.map((g: any) => (
                                     <MenuItem key={g.id} value={String(g.id)}>
-                                        {g.grade}
+                                        {g.name}
                                     </MenuItem>
                                 ))}
                             </Select>
@@ -207,10 +208,7 @@ export const EnrolledStudentsReportList = () => {
                 </DialogTitle>
                 <DialogContent sx={{ p: 0, height: "80vh" }}>
                     <PDFViewer width="100%" height="100%" style={{ border: "none" }}>
-                        <EnrolledStudentsReport
-                            students={reportStudents}
-                            schoolYear={selectedSchoolYear}
-                        />
+                        {pdfDocument}
                     </PDFViewer>
                 </DialogContent>
             </Dialog>
