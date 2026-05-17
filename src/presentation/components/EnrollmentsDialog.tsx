@@ -1,149 +1,92 @@
 import { useState } from "react";
 import {
     Dialog,
-    DialogTitle,
-    DialogContent,
     DialogActions,
+    DialogContent,
+    DialogTitle,
     Button,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Typography,
     Box,
-    Chip,
+    Typography,
+    CircularProgress,
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Form } from "react-admin";
-import EnrollmentFormInputs from "./EnrollmentFormInputs";
-
-interface MockEnrollment {
-    id: number;
-    summaryLabel: string;
-    defaultValues: Record<string, unknown>;
-}
-
-const MOCK_ENROLLMENTS: MockEnrollment[] = [
-    {
-        id: 1,
-        summaryLabel: "2025 — Primaria · 3° A",
-        defaultValues: {
-            schoolYearId: 3,
-            levelId: 1,
-            gradeId: 3,
-            shiftId: 1,
-            sectionId: 1,
-            schoolFeeConceptId: 1,
-            previousSchool: "Colegio San José",
-        },
-    },
-    {
-        id: 2,
-        summaryLabel: "2024 — Primaria · 2° B",
-        defaultValues: {
-            schoolYearId: 2,
-            levelId: 1,
-            gradeId: 2,
-            shiftId: 1,
-            sectionId: 2,
-            schoolFeeConceptId: 1,
-            previousSchool: "Colegio San José",
-        },
-    },
-    {
-        id: 3,
-        summaryLabel: "2023 — Primaria · 1° A",
-        defaultValues: {
-            schoolYearId: 1,
-            levelId: 1,
-            gradeId: 1,
-            shiftId: 1,
-            sectionId: 1,
-            schoolFeeConceptId: 2,
-            previousSchool: "",
-        },
-    },
-];
+import { Identifier, useDataProvider, useGetList, useNotify } from "react-admin";
+import { EnrollmentAccordionItem } from "./EnrollmentAccordionItem";
+import { EnrollmentSummary } from "../../types/enrollment";
 
 interface EnrollmentsDialogProps {
     open: boolean;
     onClose: () => void;
+    studentId: Identifier;
 }
 
-export const EnrollmentsDialog = ({ open, onClose }: EnrollmentsDialogProps) => {
-    const [enrollments, setEnrollments] = useState<MockEnrollment[]>(MOCK_ENROLLMENTS);
-    const [pendingDeleteId, setPendingDeleteId] = useState<number | null>(null);
+export const EnrollmentsDialog = ({ open, onClose, studentId }: EnrollmentsDialogProps) => {
+    const [expandedId, setExpandedId] = useState<Identifier | null>(null);
+    const dataProvider = useDataProvider();
+    const notify = useNotify();
 
-    const handleDelete = (id: number) => {
-        setEnrollments((prev) => prev.filter((e) => e.id !== id));
-        setPendingDeleteId(null);
+    const { data: enrollments = [], isLoading, refetch } = useGetList<EnrollmentSummary>(
+        "enrollments",
+        {
+            filter: { studentId },
+            pagination: { page: 1, perPage: 100 },
+            sort: { field: "year", order: "DESC" },
+        },
+        { enabled: open }
+    );
+
+    const handleSave = async (
+        id: Identifier,
+        data: Record<string, unknown>,
+        previousData: Record<string, unknown>
+    ) => {
+        try {
+            await dataProvider.update("enrollments", { id, data, previousData });
+            notify("Matrícula actualizada", { type: "success" });
+            refetch();
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Error desconocido";
+            notify(`Error al guardar: ${message}`, { type: "error" });
+        }
     };
 
-    const handleSave = (id: number, data: Record<string, unknown>) => {
-        console.log("Save enrollment", id, data);
+    const handleDelete = async (id: Identifier) => {
+        try {
+            await dataProvider.delete("enrollments", { id, previousData: { id } });
+            notify("Matrícula eliminada", { type: "success" });
+            setExpandedId(null);
+            refetch();
+        } catch (error) {
+            const message = error instanceof Error ? error.message : "Error desconocido";
+            notify(`Error al eliminar: ${message}`, { type: "error" });
+        }
     };
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
             <DialogTitle>Matrículas del Estudiante</DialogTitle>
             <DialogContent>
-                <Box mt={1} display="flex" flexDirection="column" gap={1}>
-                    {enrollments.length === 0 ? (
-                        <Typography color="text.secondary">No hay matrículas registradas.</Typography>
-                    ) : (
-                        enrollments.map((enrollment) => (
-                            <Accordion key={enrollment.id}>
-                                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                    <Box display="flex" alignItems="center" gap={1}>
-                                        <Chip label="Matrícula" color="primary" size="small" />
-                                        <Typography>{enrollment.summaryLabel}</Typography>
-                                    </Box>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Form
-                                        defaultValues={enrollment.defaultValues}
-                                        onSubmit={(data: Record<string, unknown>) => handleSave(enrollment.id, data)}
-                                    >
-                                        <EnrollmentFormInputs />
-                                        <Box display="flex" justifyContent="flex-end" alignItems="center" gap={1} mt={2}>
-                                            {pendingDeleteId === enrollment.id ? (
-                                                <>
-                                                    <Typography variant="body2" color="error">
-                                                        ¿Confirmar eliminación?
-                                                    </Typography>
-                                                    <Button size="small" onClick={() => setPendingDeleteId(null)}>
-                                                        No
-                                                    </Button>
-                                                    <Button
-                                                        size="small"
-                                                        variant="contained"
-                                                        color="error"
-                                                        onClick={() => handleDelete(enrollment.id)}
-                                                    >
-                                                        Sí
-                                                    </Button>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Button
-                                                        size="small"
-                                                        color="error"
-                                                        variant="outlined"
-                                                        onClick={() => setPendingDeleteId(enrollment.id)}
-                                                    >
-                                                        Eliminar
-                                                    </Button>
-                                                    <Button size="small" variant="contained" color="primary" type="submit">
-                                                        Guardar cambios
-                                                    </Button>
-                                                </>
-                                            )}
-                                        </Box>
-                                    </Form>
-                                </AccordionDetails>
-                            </Accordion>
-                        ))
-                    )}
-                </Box>
+                {isLoading ? (
+                    <Box display="flex" justifyContent="center" mt={2}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    <Box mt={1} display="flex" flexDirection="column" gap={1}>
+                        {enrollments.length === 0 ? (
+                            <Typography color="text.secondary">No hay matrículas registradas.</Typography>
+                        ) : (
+                            enrollments.map((enrollment) => (
+                                <EnrollmentAccordionItem
+                                    key={enrollment.id}
+                                    enrollment={enrollment}
+                                    expanded={expandedId === enrollment.id}
+                                    onExpandChange={(id, expanding) => setExpandedId(expanding ? id : null)}
+                                    onSave={handleSave}
+                                    onDelete={handleDelete}
+                                />
+                            ))
+                        )}
+                    </Box>
+                )}
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Cerrar</Button>
