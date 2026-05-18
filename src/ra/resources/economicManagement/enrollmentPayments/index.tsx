@@ -4,10 +4,10 @@ import { EnrollmentPaymentsList } from "./EnrollmentPaymentsList";
 import { EnrollmentPaymentsEdit } from "./EnrollmentPaymentsEdit";
 
 export const EnrollmentPaymentsResource = (
-    <Resource
-        name="enrollment-payments"
-        list={EnrollmentPaymentsList}
-        edit={EnrollmentPaymentsEdit}
-        icon={PaymentIcon}
-    />
+  <Resource
+    name="enrollment-payments"
+    list={EnrollmentPaymentsList}
+    edit={EnrollmentPaymentsEdit}
+    icon={PaymentIcon}
+  />
 );

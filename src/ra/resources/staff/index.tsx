@@ -5,11 +5,11 @@ import { StaffEdit } from "./StaffEdit";
 import { StaffCreate } from "./StaffCreate";
 
 export const StaffResource = (
-    <Resource
-        name="staff"
-        list={StaffList}
-        edit={StaffEdit}
-        create={StaffCreate}
-        icon={GroupIcon}
-    />
+  <Resource
+    name="staff"
+    list={StaffList}
+    edit={StaffEdit}
+    create={StaffCreate}
+    icon={GroupIcon}
+  />
 );

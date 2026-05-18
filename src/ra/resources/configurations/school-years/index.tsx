@@ -5,11 +5,11 @@ import { SchoolYearsEdit } from "./SchoolYearsEdit";
 import { SchoolYearsCreate } from "./SchoolYearsCreate";
 
 export const SchoolYearsResource = (
-    <Resource
-        name="school-years"
-        list={SchoolYearsList}
-        edit={SchoolYearsEdit}
-        create={SchoolYearsCreate}
-        icon={CalendarTodayIcon}
-    />
+  <Resource
+    name="school-years"
+    list={SchoolYearsList}
+    edit={SchoolYearsEdit}
+    create={SchoolYearsCreate}
+    icon={CalendarTodayIcon}
+  />
 );

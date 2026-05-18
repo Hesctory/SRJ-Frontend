@@ -5,11 +5,11 @@ import { LevelsCreate } from "./LevelsCreate";
 import { LevelsEdit } from "./LevelsEdit";
 
 export const LevelsResource = (
-    <Resource
-        name="levels"
-        list={LevelsList}
-        create={LevelsCreate}
-        edit={LevelsEdit}
-        icon={AccountTreeIcon}
-    />
+  <Resource
+    name="levels"
+    list={LevelsList}
+    create={LevelsCreate}
+    edit={LevelsEdit}
+    icon={AccountTreeIcon}
+  />
 );

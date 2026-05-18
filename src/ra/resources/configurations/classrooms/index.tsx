@@ -5,11 +5,11 @@ import { ClassroomsCreate } from "./ClassroomsCreate";
 import { ClassroomsEdit } from "./ClassroomsEdit";
 
 export const ClassroomsResource = (
-    <Resource
-        name="classrooms"
-        list={ClassroomsList}
-        create={ClassroomsCreate}
-        edit={ClassroomsEdit}
-        icon={MeetingRoomIcon}
-    />
+  <Resource
+    name="classrooms"
+    list={ClassroomsList}
+    create={ClassroomsCreate}
+    edit={ClassroomsEdit}
+    icon={MeetingRoomIcon}
+  />
 );
