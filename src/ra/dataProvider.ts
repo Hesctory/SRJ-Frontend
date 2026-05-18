@@ -1,7 +1,7 @@
 import simpleRestProvider from 'ra-data-simple-rest';
 import jsonServerProvider from 'ra-data-json-server';
 import { fetchUtils, DataProvider } from 'react-admin';
-    
+
 export const JSON_API_URL = 'http://localhost:3000';
 export const API_URL = 'http://localhost:4000/api';
 
@@ -23,16 +23,30 @@ const httpClient = (url: string, options: fetchUtils.Options = {}) => {
 const simpleDataProvider = simpleRestProvider(API_URL, httpClient);
 const jsonDataProvider = jsonServerProvider(JSON_API_URL);
 
+// Map of report-only resources to their backend URL builders.
+// Each entry receives the filter object and returns the full URL.
+// Add a new entry here whenever a new report endpoint is needed.
+const REPORT_ENDPOINTS: Record<string, (filter: Record<string, string>) => string> = {
+    "students-enrolled-report": (filter) => {
+        const q = new URLSearchParams();
+        Object.entries(filter).forEach(([k, v]) => { if (v) q.set(k, v); });
+        return `${API_URL}/students/report?${q.toString()}`;
+    },
+    // Future examples:
+    // "students-registration-form": (filter) => `${API_URL}/students/${filter.id}/registration`,
+    // "students-attendance-report": (filter) => { ... },
+};
+
 const extendedSimpleDataProvider: DataProvider = {
     ...simpleDataProvider,
     getList: async (resource, params) => {
-        if (resource === "students-report") {
-            const { filter = {} } = params;
-            const query = new URLSearchParams();
-            Object.entries(filter).forEach(([k, v]) => {
-                if (v !== undefined && v !== "") query.set(k, String(v));
+        const reportBuilder = REPORT_ENDPOINTS[resource];
+        if (reportBuilder) {
+            const filter: Record<string, string> = {};
+            Object.entries(params.filter ?? {}).forEach(([k, v]) => {
+                if (v !== undefined && v !== "") filter[k] = String(v);
             });
-            const url = `${API_URL}/students/report?${query.toString()}`;
+            const url = reportBuilder(filter);
             const { json } = await httpClient(url);
             const data = Array.isArray(json) ? json : (json.data ?? []);
             return { data, total: data.length };

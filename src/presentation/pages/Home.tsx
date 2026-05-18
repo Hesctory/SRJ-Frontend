@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Typography, Box, Button, Grid } from '@mui/material';
-import { User } from '../../domain/entities/User';
 import { modules, type Module } from '../../modules';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,8 +7,7 @@ export const Home: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const userData : any = JSON.parse(localStorage.getItem('user') || 'null');
-  const user = User.fromJSON(userData);
+  const userData = JSON.parse(localStorage.getItem('user') || 'null');
 
   const handleModuleClick = (module: Module) => {
     // Save the selected module to localStorage
@@ -23,7 +21,7 @@ export const Home: React.FC = () => {
     <Container>
       <Box sx={{ mt: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          ¡Bienvenido, {user.getName()}!
+          ¡Bienvenido, {userData?.name}!
         </Typography>
         <Typography variant="body1">
           Has iniciado sesión correctamente.

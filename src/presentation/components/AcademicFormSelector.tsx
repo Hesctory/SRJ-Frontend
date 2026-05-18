@@ -4,11 +4,14 @@ import { useAcademicFormSelector } from "../hooks/useAcademicFormSelector";
 
 interface AcademicFormSelectorProps {
     sourcePrefix?: string;
+    required?: boolean;
 }
 
-const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
+const AcademicFormSelector = ({ sourcePrefix, required: isFieldRequired = true }: AcademicFormSelectorProps) => {
     const base = sourcePrefix ? `${sourcePrefix}.` : "";
     const { schoolYearId, levelId, gradeId, shiftId, clearFields } = useAcademicFormSelector(base);
+
+    const req = isFieldRequired ? { isRequired: true, validate: required() } : {};
 
     return (
         <>
@@ -16,9 +19,8 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                 <SelectInput
                     label="Año Escolar"
                     optionText="year"
-                    isRequired
-                    validate={required()}
                     onChange={() => clearFields(FORM_DOWNSTREAM.schoolYearId)}
+                    {...req}
                 />
             </ReferenceInput>
 
@@ -26,13 +28,12 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                 <ReferenceInput source={`${base}levelId`} reference="levels">
                     <SelectInput
                         label="Nivel"
-                        isRequired
-                        validate={required()}
                         onChange={() => clearFields(FORM_DOWNSTREAM.levelId)}
+                        {...req}
                     />
                 </ReferenceInput>
             ) : (
-                <SelectInput source={`${base}levelId`} label="Nivel" choices={[]} disabled isRequired validate={required()} />
+                <SelectInput source={`${base}levelId`} label="Nivel" choices={[]} disabled {...req} />
             )}
 
             {levelId ? (
@@ -43,13 +44,12 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                 >
                     <SelectInput
                         label="Grado"
-                        isRequired
-                        validate={required()}
                         onChange={() => clearFields(FORM_DOWNSTREAM.gradeId)}
+                        {...req}
                     />
                 </ReferenceInput>
             ) : (
-                <SelectInput source={`${base}gradeId`} label="Grado" choices={[]} disabled isRequired validate={required()} />
+                <SelectInput source={`${base}gradeId`} label="Grado" choices={[]} disabled {...req} />
             )}
 
             {gradeId ? (
@@ -60,13 +60,12 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                 >
                     <SelectInput
                         label="Turno"
-                        isRequired
-                        validate={required()}
                         onChange={() => clearFields(FORM_DOWNSTREAM.shiftId)}
+                        {...req}
                     />
                 </ReferenceInput>
             ) : (
-                <SelectInput source={`${base}shiftId`} label="Turno" choices={[]} disabled isRequired validate={required()} />
+                <SelectInput source={`${base}shiftId`} label="Turno" choices={[]} disabled {...req} />
             )}
 
             {shiftId ? (
@@ -75,10 +74,10 @@ const AcademicFormSelector = ({ sourcePrefix }: AcademicFormSelectorProps) => {
                     reference="sections"
                     filter={{ schoolYearId, levelId, gradeId, shiftId }}
                 >
-                    <SelectInput label="Sección" optionText="section" isRequired validate={required()} />
+                    <SelectInput label="Sección" optionText="section" {...req} />
                 </ReferenceInput>
             ) : (
-                <SelectInput source={`${base}sectionId`} label="Sección" choices={[]} disabled isRequired validate={required()} />
+                <SelectInput source={`${base}sectionId`} label="Sección" choices={[]} disabled {...req} />
             )}
         </>
     );

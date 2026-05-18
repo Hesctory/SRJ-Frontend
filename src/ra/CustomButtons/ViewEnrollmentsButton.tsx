@@ -1,10 +1,13 @@
 import { useState } from "react";
-import { Button } from "react-admin";
+import { Button, useRecordContext } from "react-admin";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { EnrollmentsDialog } from "../../presentation/components/EnrollmentsDialog";
 
 export const ViewEnrollmentsButton = () => {
     const [open, setOpen] = useState(false);
+    const record = useRecordContext();
+
+    if (!record) return null;
 
     return (
         <>
@@ -16,7 +19,7 @@ export const ViewEnrollmentsButton = () => {
             >
                 <ListAltIcon />
             </Button>
-            <EnrollmentsDialog open={open} onClose={() => setOpen(false)} />
+            <EnrollmentsDialog open={open} onClose={() => setOpen(false)} studentId={record.id} />
         </>
     );
 };

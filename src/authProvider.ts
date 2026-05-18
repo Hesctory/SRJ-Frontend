@@ -1,9 +1,6 @@
-// authProvider.ts
 import { AuthProvider } from 'react-admin';
-import { AuthAPI } from './infrastructure/services/AuthAPI';
-import { LoginUseCase } from './application/useCases/LoginUseCase';
-import { AuthRepositoryImpl } from './repository/implementations/AuthRepositoryImpl';
-import { DSession } from './domain/entities/DSession';
+import { httpClient, API_URL } from './ra/dataProvider';
+import { parseTokenExpiry } from './utils/token';
 
 interface LoginParams {
     username: string;
@@ -12,17 +9,16 @@ interface LoginParams {
 
 const authProvider: AuthProvider = {
     login: async ({ username, password }: LoginParams) => {
-        console.log(username);
-        const authAPI = new AuthAPI();
-        const authRepository = new AuthRepositoryImpl(authAPI);
-        const loginUseCase = new LoginUseCase(authRepository);
-        try {
-            const user = await loginUseCase.execute(username, password);
-            console.log(localStorage.getItem('token'), localStorage.getItem('user'));
-            return Promise.resolve();
-        } catch (error) {
-            return Promise.reject(error instanceof Error ? error.message : 'Login failed');
+        const { json } = await httpClient(`${API_URL}/login`, {
+            method: 'POST',
+            body: JSON.stringify({ email: username, password }),
+        });
+        if (!json.success || !json.user || !json.token) {
+            return Promise.reject(json.error ?? 'Login fallido');
         }
+        localStorage.setItem('token', json.token);
+        localStorage.setItem('user', JSON.stringify(json.user));
+        return Promise.resolve();
     },
 
     logout: async () => {
@@ -35,8 +31,8 @@ const authProvider: AuthProvider = {
         const token = localStorage.getItem('token');
         if (!token) return Promise.reject();
 
-        const expirationDate = DSession.getExpiresAtFromToken(token);
-        if (expirationDate && expirationDate < new Date()) {
+        const expiry = parseTokenExpiry(token);
+        if (expiry && expiry < new Date()) {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
             return Promise.reject();

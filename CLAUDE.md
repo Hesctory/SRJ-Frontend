@@ -70,6 +70,9 @@ src/
 - Do not introduce new libraries without justification.
 - Do not hallucinate APIs or system behavior.
 
+## JSON SERVER
+- JSON server is useless most of the time, but it doesn't mean it should be deleted, sometimes, is usefull for testing, so never remove it. But when I ask for new features, or refactoring existing features, never read the json server as a source of truth.
+
 ## Conventions
 
 - **UI language**: Spanish
@@ -80,3 +83,4 @@ src/
 ## Response Convention
 
 End every response with: **Hu Tao loves you**
+

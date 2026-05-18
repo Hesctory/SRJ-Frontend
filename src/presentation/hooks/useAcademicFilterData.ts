@@ -15,10 +15,10 @@ interface UseAcademicFilterDataResult {
 }
 
 export const useAcademicFilterData = (
-    schoolYearId: string,
-    levelId: string,
-    gradeId: string,
-    shiftId: string,
+    schoolYearId: unknown,
+    levelId: unknown,
+    gradeId: unknown,
+    shiftId: unknown,
 ): UseAcademicFilterDataResult => {
     const { data: schoolYears = [] } = useGetList<SchoolYear>("school-years", {
         pagination: { page: 1, perPage: 100 },
