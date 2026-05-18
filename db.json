@@ -1711,5 +1711,52 @@
       ],
       "status": "pending"
     }
+  ],
+  "students-enrolled-report": [
+    {
+      "id": 1,
+      "studentCode": "20240001",
+      "dni": "12345678",
+      "fullName": "Juan Pérez Gómez",
+      "level": "Secundaria",
+      "grade": "3ro",
+      "section": "A"
+    },
+    {
+      "id": 2,
+      "studentCode": "20240002",
+      "dni": "87654321",
+      "fullName": "María López Torres",
+      "level": "Secundaria",
+      "grade": "3ro",
+      "section": "A"
+    },
+    {
+      "id": 3,
+      "studentCode": "20240003",
+      "dni": "45678912",
+      "fullName": "Carlos Ruiz Díaz",
+      "level": "Secundaria",
+      "grade": "3ro",
+      "section": "B"
+    },
+    {
+      "id": 4,
+      "studentCode": "20240004",
+      "dni": "78912345",
+      "fullName": "Ana Martínez Flores",
+      "level": "Primaria",
+      "grade": "5to",
+      "section": "C"
+    },
+    {
+      "id": 5,
+      "studentCode": "20240005",
+      "dni": "32165498",
+      "fullName": "Luis Fernández Rojas",
+      "level": "Primaria",
+      "grade": "4to",
+      "section": "B"
+    }
   ]
 }

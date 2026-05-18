@@ -2,6 +2,7 @@ import { CustomRoutes } from "react-admin";
 import { Route } from "react-router-dom";
 
 import { StudentReports } from "./students/StudentReports";
+import { EnrolledStudentsPage } from "../resources/students/reports/enrolled-students/EnrolledStudentsPage";
 import { StaffReports } from "./staff/StaffReports";
 import { PurchasesSalesEconomicManagement } from "./purchases-sales/EconomicManagement";
 import { PaymentTracking } from "./purchases-sales/PaymentTracking";
@@ -27,6 +28,7 @@ export const AppCustomRoutes = (
     <CustomRoutes>
         {/* Students */}
         <Route path="/students/reports" element={<StudentReports />} />
+        <Route path="/students/reports/enrolled" element={<EnrolledStudentsPage />} />
         {/* Staff */}
         <Route path="/staff/reports" element={<StaffReports />} />
         {/* Purchases & Sales */}
