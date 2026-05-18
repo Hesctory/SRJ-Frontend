@@ -5,11 +5,11 @@ import { InstitutionsEdit } from "./InstitutionsEdit";
 import { InstitutionsCreate } from "./InstitutionsCreate";
 
 export const InstitutionsResource = (
-    <Resource
-        name="institutions"
-        list={InstitutionsList}
-        edit={InstitutionsEdit}
-        create={InstitutionsCreate}
-        icon={CorporateFareIcon}
-    />
+  <Resource
+    name="institutions"
+    list={InstitutionsList}
+    edit={InstitutionsEdit}
+    create={InstitutionsCreate}
+    icon={CorporateFareIcon}
+  />
 );

@@ -4,22 +4,30 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import { EnrollmentsDialog } from "../../presentation/components/EnrollmentsDialog";
 
 export const ViewEnrollmentsButton = () => {
-    const [open, setOpen] = useState(false);
-    const record = useRecordContext();
+  const [open, setOpen] = useState(false);
+  const record = useRecordContext();
 
-    if (!record) return null;
+  if (!record) return null;
 
-    return (
-        <>
-            <Button
-                label="Ver matrículas"
-                onClick={() => setOpen(true)}
-                size="large"
-                sx={{ backgroundColor: "info.main", color: "white", "&:hover": { backgroundColor: "info.dark" } }}
-            >
-                <ListAltIcon />
-            </Button>
-            <EnrollmentsDialog open={open} onClose={() => setOpen(false)} studentId={record.id} />
-        </>
-    );
+  return (
+    <>
+      <Button
+        label="Ver matrículas"
+        onClick={() => setOpen(true)}
+        size="large"
+        sx={{
+          backgroundColor: "info.main",
+          color: "white",
+          "&:hover": { backgroundColor: "info.dark" },
+        }}
+      >
+        <ListAltIcon />
+      </Button>
+      <EnrollmentsDialog
+        open={open}
+        onClose={() => setOpen(false)}
+        studentId={record.id}
+      />
+    </>
+  );
 };

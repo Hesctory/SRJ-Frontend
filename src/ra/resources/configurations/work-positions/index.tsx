@@ -5,11 +5,11 @@ import { WorkPositionsCreate } from "./WorkPositionsCreate";
 import { WorkPositionsEdit } from "./WorkPositionsEdit";
 
 export const WorkPositionsResource = (
-    <Resource
-        name="work-positions"
-        list={WorkPositionsList}
-        create={WorkPositionsCreate}
-        edit={WorkPositionsEdit}
-        icon={WorkIcon}
-    />
+  <Resource
+    name="work-positions"
+    list={WorkPositionsList}
+    create={WorkPositionsCreate}
+    edit={WorkPositionsEdit}
+    icon={WorkIcon}
+  />
 );

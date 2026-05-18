@@ -5,11 +5,11 @@ import { GradeOfferingsCreate } from "./GradeOfferingsCreate";
 import { GradeOfferingsEdit } from "./GradeOfferingsEdit";
 
 export const GradeOfferingsResource = (
-    <Resource
-        name="grade-offerings"
-        list={GradeOfferingsList}
-        create={GradeOfferingsCreate}
-        edit={GradeOfferingsEdit}
-        icon={ViewModuleIcon}
-    />
+  <Resource
+    name="grade-offerings"
+    list={GradeOfferingsList}
+    create={GradeOfferingsCreate}
+    edit={GradeOfferingsEdit}
+    icon={ViewModuleIcon}
+  />
 );

@@ -7,53 +7,61 @@ import { Home } from "./presentation/pages/Home";
 import { createTheme } from "@mui/material";
 import { AppCustomRoutes } from "./ra/CustomRoutes";
 import {
-    StaffResource,
-    StudentsResource,
-    PublishersResource,
-    ProductsResource,
-    SchoolYearsResource,
-    AccountingPlansResource,
-    InstitutionsResource,
-    LevelsResource,
-    GradesResource,
-    GradeOfferingsResource,
-    CostsResource,
-    ClassroomsResource,
-    WorkAreasResource,
-    WorkPositionsResource,
-    DebitCreditSeriesResource,
-    LunchCategoriesResource,
-    LunchesResource,
-    EnrollmentPaymentsResource,
+  StaffResource,
+  StudentsResource,
+  PublishersResource,
+  ProductsResource,
+  SchoolYearsResource,
+  AccountingPlansResource,
+  InstitutionsResource,
+  LevelsResource,
+  GradesResource,
+  GradeOfferingsResource,
+  CostsResource,
+  ClassroomsResource,
+  WorkAreasResource,
+  WorkPositionsResource,
+  DebitCreditSeriesResource,
+  LunchCategoriesResource,
+  LunchesResource,
+  EnrollmentPaymentsResource,
 } from "./ra/resources";
 
 const lightTheme = createTheme({
-    ...defaultTheme,
-    palette: {
-        mode: 'light',
-    },
+  ...defaultTheme,
+  palette: {
+    mode: "light",
+  },
 });
 
-export const App = () =>
-    <Admin theme={lightTheme} dataProvider={dataProvider} authProvider={authProvider} layout={MyLayout} loginPage={CustomLogin} dashboard={Home}>
-        {StaffResource}
-        {StudentsResource}
-        {PublishersResource}
-        {ProductsResource}
-        {SchoolYearsResource}
-        {AccountingPlansResource}
-        {InstitutionsResource}
-        {LevelsResource}
-        {GradesResource}
-        {GradeOfferingsResource}
-        {CostsResource}
-        {ClassroomsResource}
-        {WorkAreasResource}
-        {WorkPositionsResource}
-        {DebitCreditSeriesResource}
-        {LunchCategoriesResource}
-        {LunchesResource}
-        {EnrollmentPaymentsResource}
+export const App = () => (
+  <Admin
+    theme={lightTheme}
+    dataProvider={dataProvider}
+    authProvider={authProvider}
+    layout={MyLayout}
+    loginPage={CustomLogin}
+    dashboard={Home}
+  >
+    {StaffResource}
+    {StudentsResource}
+    {PublishersResource}
+    {ProductsResource}
+    {SchoolYearsResource}
+    {AccountingPlansResource}
+    {InstitutionsResource}
+    {LevelsResource}
+    {GradesResource}
+    {GradeOfferingsResource}
+    {CostsResource}
+    {ClassroomsResource}
+    {WorkAreasResource}
+    {WorkPositionsResource}
+    {DebitCreditSeriesResource}
+    {LunchCategoriesResource}
+    {LunchesResource}
+    {EnrollmentPaymentsResource}
 
-        {AppCustomRoutes}
-    </Admin>;
+    {AppCustomRoutes}
+  </Admin>
+);
