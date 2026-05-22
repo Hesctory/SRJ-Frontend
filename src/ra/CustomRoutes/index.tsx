@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 
 import { StudentReports } from "./students/StudentReports";
 import { EnrolledStudentsPage } from "../resources/students/reports/enrolled-students/EnrolledStudentsPage";
+import { RegistrationCardPage } from "../resources/students/reports/registration-card/RegistrationCardPage";
 import { StaffReports } from "./staff/StaffReports";
 import { PurchasesSalesEconomicManagement } from "./purchases-sales/EconomicManagement";
 import { PaymentTracking } from "./purchases-sales/PaymentTracking";
@@ -21,8 +22,9 @@ import { LunchesReports } from "./lunches/Reports";
 import { LunchesEconomicManagement } from "./lunches/EconomicManagement";
 import { LunchesRenditions } from "./lunches/Renditions";
 import { DailyCash } from "./daily-cash/DailyCash";
-import { EnrollmentSelectorPage } from "./enrollmentPayments/EnrollmentSelectorPage";
-import { EnrollmentPaymentsEdit } from "../resources/economicManagement/enrollmentPayments/EnrollmentPaymentsEdit";
+import { StudentSelectionPage } from "../resources/economicManagement/enrollmentPayments/StudentSelectionPage";
+import { EnrollmentSelectionPage } from "../resources/economicManagement/enrollmentPayments/EnrollmentSelectionPage";
+import { DebtsPage } from "../resources/economicManagement/enrollmentPayments/DebtsPage";
 
 export const AppCustomRoutes = (
   <CustomRoutes>
@@ -31,6 +33,10 @@ export const AppCustomRoutes = (
     <Route
       path="/students/reports/enrolled"
       element={<EnrolledStudentsPage />}
+    />
+    <Route
+      path="/students/reports/registration-card"
+      element={<RegistrationCardPage />}
     />
     {/* Staff */}
     <Route path="/staff/reports" element={<StaffReports />} />
@@ -85,13 +91,14 @@ export const AppCustomRoutes = (
     />
     <Route path="/lunches/renditions" element={<LunchesRenditions />} />
     {/* Enrollment Payments */}
+    <Route path="/enrollment-payments" element={<StudentSelectionPage />} />
     <Route
-      path="/enrollment-selector/:id"
-      element={<EnrollmentSelectorPage />}
+      path="/enrollment-payments/:studentId/enrollments"
+      element={<EnrollmentSelectionPage />}
     />
     <Route
-      path="/enrollment-payments/:studentId/:enrollmentId"
-      element={<EnrollmentPaymentsEdit />}
+      path="/enrollment-payments/:studentId/:enrollmentId/debts"
+      element={<DebtsPage />}
     />
     {/* Daily Cash */}
     <Route path="/daily-cash" element={<DailyCash />} />

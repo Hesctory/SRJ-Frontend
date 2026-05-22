@@ -7,4 +7,5 @@ export interface EnrollmentSummary {
   grade: string;
   shift: string;
   section: string;
+  state: string;
 }

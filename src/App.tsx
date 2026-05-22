@@ -1,4 +1,4 @@
-import { Admin, defaultTheme } from "react-admin";
+import { Admin, defaultTheme, Resource } from "react-admin";
 import { MyLayout } from "./ra/layout/MyLayout";
 import { dataProvider } from "./ra/dataProvider";
 import authProvider from "./authProvider";
@@ -24,7 +24,6 @@ import {
   DebitCreditSeriesResource,
   LunchCategoriesResource,
   LunchesResource,
-  EnrollmentPaymentsResource,
 } from "./ra/resources";
 
 const lightTheme = createTheme({
@@ -60,7 +59,9 @@ export const App = () => (
     {DebitCreditSeriesResource}
     {LunchCategoriesResource}
     {LunchesResource}
-    {EnrollmentPaymentsResource}
+    <Resource name="enrollment-debts" />
+    <Resource name="debt-installments" />
+    <Resource name="payment-methods" />
 
     {AppCustomRoutes}
   </Admin>

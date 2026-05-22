@@ -1,4 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useEffect } from "react";
 import { useListFilterContext } from "react-admin";
 import { FILTER_DOWNSTREAM } from "../hooks/academicCascade";
 import { useAcademicFilterData } from "../hooks/useAcademicFilterData";
@@ -13,6 +14,15 @@ const AcademicFilterSelector = () => {
 
   const { schoolYears, levels, grades, shifts, sections } =
     useAcademicFilterData(schoolYearId, levelId, gradeId, shiftId);
+
+  useEffect(() => {
+    if (schoolYears.length === 0 || filterValues.schoolYearId) return;
+    const currentYear = new Date().getFullYear();
+    console.log(currentYear)
+    const match = schoolYears.find((sy) => Number(sy.year) === currentYear);
+    if (!match) return;
+    setFilters({ ...filterValues, schoolYearId: match.id }, displayedFilters);
+  }, [schoolYears]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const apply = (field: string, value: string) => {
     const next = { ...filterValues, [field]: value !== "" ? value : undefined };
@@ -29,9 +39,6 @@ const AcademicFilterSelector = () => {
           label="Año Escolar"
           onChange={(e) => apply("schoolYearId", e.target.value)}
         >
-          <MenuItem value="">
-            <em>Todos</em>
-          </MenuItem>
           {schoolYears.map((sy) => (
             <MenuItem key={sy.id} value={sy.id}>
               {sy.year}
