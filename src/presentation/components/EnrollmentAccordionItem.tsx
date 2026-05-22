@@ -24,7 +24,21 @@ interface EnrollmentAccordionItemProps {
     data: Record<string, unknown>,
     previousData: Record<string, unknown>,
   ) => Promise<void>;
-  onDelete: (id: Identifier) => Promise<void>;
+  onCancel: (
+    id: Identifier,
+    data: Record<string, unknown>,
+    previousData: Record<string, unknown>,
+  ) => Promise<void>;
+  onWithdraw: (
+    id: Identifier,
+    data: Record<string, unknown>,
+    previousData: Record<string, unknown>,
+  ) => Promise<void>;
+  onReactivate: (
+    id: Identifier,
+    data: Record<string, unknown>,
+    previousData: Record<string, unknown>,
+  ) => Promise<void>;
 }
 
 export const EnrollmentAccordionItem = ({
@@ -32,9 +46,12 @@ export const EnrollmentAccordionItem = ({
   expanded,
   onExpandChange,
   onSave,
-  onDelete,
+  onCancel,
+  onWithdraw,
+  onReactivate,
 }: EnrollmentAccordionItemProps) => {
   const [pendingDelete, setPendingDelete] = useState(false);
+  const [pendingWithdraw, setPendingWithdraw] = useState(false);
   const { detail, isLoading, fetchDetail, updateDetail } = useEnrollmentDetail(
     enrollment.id,
   );
@@ -55,8 +72,26 @@ export const EnrollmentAccordionItem = ({
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Box display="flex" alignItems="center" gap={1}>
-          <Chip label={enrollment.year} color="primary" size="small" />
-          <Typography>
+          <Chip
+            label={enrollment.year + " - " + enrollment.state}
+            color={
+              enrollment.state === "Cancelada"
+                ? "error"
+                : enrollment.state === "Retirada"
+                  ? "warning"
+                  : "primary"
+            }
+            size="small"
+          />
+          <Typography
+            color={
+              enrollment.state === "Cancelada"
+                ? "error"
+                : enrollment.state === "Retirada"
+                  ? "warning.main"
+                  : "inherit"
+            }
+          >
             {enrollment.grade} {enrollment.section}, {enrollment.level}{" "}
             {enrollment.shift}
           </Typography>
@@ -77,10 +112,28 @@ export const EnrollmentAccordionItem = ({
               gap={1}
               mt={2}
             >
-              {pendingDelete ? (
+              {enrollment.state === "Cancelada" ? (
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="success"
+                  onClick={() => onReactivate(enrollment.id, detail!, detail!)}
+                >
+                  Reactivar
+                </Button>
+              ) : enrollment.state === "Retirada" ? (
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="success"
+                  onClick={() => onReactivate(enrollment.id, detail!, detail!)}
+                >
+                  Restaurar
+                </Button>
+              ) : pendingDelete ? (
                 <>
                   <Typography variant="body2" color="error">
-                    ¿Confirmar eliminación?
+                    ¿Confirmar cancelación?
                   </Typography>
                   <Button size="small" onClick={() => setPendingDelete(false)}>
                     No
@@ -89,7 +142,24 @@ export const EnrollmentAccordionItem = ({
                     size="small"
                     variant="contained"
                     color="error"
-                    onClick={() => onDelete(enrollment.id)}
+                    onClick={() => onCancel(enrollment.id, detail!, detail!)}
+                  >
+                    Sí
+                  </Button>
+                </>
+              ) : pendingWithdraw ? (
+                <>
+                  <Typography variant="body2" color="warning.main">
+                    ¿Confirmar retiro?
+                  </Typography>
+                  <Button size="small" onClick={() => setPendingWithdraw(false)}>
+                    No
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    color="warning"
+                    onClick={() => onWithdraw(enrollment.id, detail!, detail!)}
                   >
                     Sí
                   </Button>
@@ -99,10 +169,18 @@ export const EnrollmentAccordionItem = ({
                   <Button
                     size="small"
                     color="error"
-                    variant="outlined"
+                    variant="contained"
                     onClick={() => setPendingDelete(true)}
                   >
-                    Eliminar
+                    Cancelar
+                  </Button>
+                  <Button
+                    size="small"
+                    color="warning"
+                    variant="contained"
+                    onClick={() => setPendingWithdraw(true)}
+                  >
+                    Retirar
                   </Button>
                   <Button
                     size="small"

@@ -28,4 +28,3 @@ export { LunchCategoriesResource } from "./lunches/categories";
 export { LunchesResource } from "./lunches/lunches";
 
 // Economic Management
-export { EnrollmentPaymentsResource } from "./economicManagement/enrollmentPayments";

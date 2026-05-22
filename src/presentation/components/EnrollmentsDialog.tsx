@@ -54,6 +54,7 @@ export const EnrollmentsDialog = ({
   ) => {
     try {
       await dataProvider.update("enrollments", { id, data, previousData });
+      console.log("Matrícula actualizada:", { id, data, previousData });
       notify("Matrícula actualizada", { type: "success" });
       refetch();
     } catch (error) {
@@ -63,16 +64,65 @@ export const EnrollmentsDialog = ({
     }
   };
 
-  const handleDelete = async (id: Identifier) => {
+  const handleCancel = async (
+    id: Identifier,
+    data: Record<string, unknown>,
+    previousData: Record<string, unknown>,
+  ) => {
     try {
-      await dataProvider.delete("enrollments", { id, previousData: { id } });
-      notify("Matrícula eliminada", { type: "success" });
+      await dataProvider.update("enrollments", {
+        id,
+        data: { ...data, stateName: "Cancelada" },
+        previousData,
+      });
+      notify("Matrícula cancelada", { type: "success" });
       setExpandedId(null);
       refetch();
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Error desconocido";
-      notify(`Error al eliminar: ${message}`, { type: "error" });
+      notify(`Error al cancelar: ${message}`, { type: "error" });
+    }
+  };
+
+  const handleWithdraw = async (
+    id: Identifier,
+    data: Record<string, unknown>,
+    previousData: Record<string, unknown>,
+  ) => {
+    try {
+      await dataProvider.update("enrollments", {
+        id,
+        data: { ...data, stateName: "Retirada" },
+        previousData,
+      });
+      notify("Estudiante retirado", { type: "success" });
+      setExpandedId(null);
+      refetch();
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Error desconocido";
+      notify(`Error al retirar: ${message}`, { type: "error" });
+    }
+  };
+
+  const handleReactivate = async (
+    id: Identifier,
+    data: Record<string, unknown>,
+    previousData: Record<string, unknown>,
+  ) => {
+    try {
+      await dataProvider.update("enrollments", {
+        id,
+        data: { ...data, stateName: "Activa" },
+        previousData,
+      });
+      notify("Matrícula reactivada", { type: "success" });
+      refetch();
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Error desconocido";
+      notify(`Error al reactivar: ${message}`, { type: "error" });
     }
   };
 
@@ -100,7 +150,9 @@ export const EnrollmentsDialog = ({
                     setExpandedId(expanding ? id : null)
                   }
                   onSave={handleSave}
-                  onDelete={handleDelete}
+                  onCancel={handleCancel}
+                  onWithdraw={handleWithdraw}
+                  onReactivate={handleReactivate}
                 />
               ))
             )}

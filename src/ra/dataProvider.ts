@@ -37,9 +37,13 @@ const REPORT_ENDPOINTS: Record<
     });
     return `${API_URL}/students/report?${q.toString()}`;
   },
-  // Future examples:
-  // "students-registration-form": (filter) => `${API_URL}/students/${filter.id}/registration`,
-  // "students-attendance-report": (filter) => { ... },
+  "students-registration-card-report": (filter) => {
+    const q = new URLSearchParams();
+    Object.entries(filter).forEach(([k, v]) => {
+      if (v) q.set(k, v);
+    });
+    return `${API_URL}/students/registration-card?${q.toString()}`;
+  },
 };
 
 const extendedSimpleDataProvider: DataProvider = {

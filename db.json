@@ -1758,5 +1758,135 @@
       "grade": "4to",
       "section": "B"
     }
+  ],
+  "students-registration-card-report": [
+    {
+      "id": 1,
+      "enrollmentCode": "MAT-2025-001",
+      "enrollmentDate": "2025-03-10",
+      "schoolYear": "2025",
+      "level": "Primaria",
+      "grade": "3ro",
+      "section": "A",
+      "shift": "Mañana",
+      "paternalLastName": "García",
+      "maternalLastName": "López",
+      "firstName": "Ana María",
+      "birthDate": "2016-05-14",
+      "birthPlace": "Lima",
+      "birthCountry": "Perú",
+      "gender": "Femenino",
+      "religion": "Católica",
+      "dni": "12345678",
+      "siblings": 2,
+      "siblingPosition": 1,
+      "disability": "Ninguna",
+      "previousSchool": "I.E. San Martín de Porres",
+      "address": "Av. Los Pinos 345",
+      "district": "Surco",
+      "mother": {
+        "paternalLastName": "López",
+        "maternalLastName": "Ramírez",
+        "firstName": "Carmen Rosa",
+        "dni": "43210987",
+        "phone": "987654321",
+        "email": "carmen.lopez@gmail.com",
+        "educationLevel": "Superior",
+        "occupation": "Enfermera",
+        "maritalStatus": "Casada"
+      },
+      "father": {
+        "paternalLastName": "García",
+        "maternalLastName": "Torres",
+        "firstName": "José Luis",
+        "dni": "32109876",
+        "phone": "976543210",
+        "email": "jose.garcia@gmail.com",
+        "educationLevel": "Superior",
+        "occupation": "Ingeniero",
+        "maritalStatus": "Casado"
+      },
+      "guardian": {
+        "relationship": "Madre",
+        "paternalLastName": "López",
+        "maternalLastName": "Ramírez",
+        "firstName": "Carmen Rosa",
+        "dni": "43210987",
+        "phone": "987654321",
+        "email": "carmen.lopez@gmail.com"
+      },
+      "fees": {
+        "registrationFee": 150,
+        "registrationDiscount": 0,
+        "enrollmentFee": 300,
+        "enrollmentDiscount": 0,
+        "tuition": 450,
+        "tuitionDiscount": 0
+      }
+    },
+    {
+      "id": 2,
+      "enrollmentCode": "MAT-2025-002",
+      "enrollmentDate": "2025-03-11",
+      "schoolYear": "2025",
+      "level": "Primaria",
+      "grade": "3ro",
+      "section": "A",
+      "shift": "Mañana",
+      "paternalLastName": "Rodríguez",
+      "maternalLastName": "Pérez",
+      "firstName": "Carlos Andrés",
+      "birthDate": "2015-11-22",
+      "birthPlace": "Arequipa",
+      "birthCountry": "Perú",
+      "gender": "Masculino",
+      "religion": "Católica",
+      "dni": "87654321",
+      "siblings": 1,
+      "siblingPosition": 2,
+      "disability": "Ninguna",
+      "previousSchool": "I.E. Nuestra Señora del Carmen",
+      "address": "Jr. Las Flores 120",
+      "district": "Miraflores",
+      "mother": {
+        "paternalLastName": "Pérez",
+        "maternalLastName": "Vega",
+        "firstName": "Lucía Isabel",
+        "dni": "56781234",
+        "phone": "965432187",
+        "email": "lucia.perez@hotmail.com",
+        "educationLevel": "Técnica",
+        "occupation": "Contadora",
+        "maritalStatus": "Casada"
+      },
+      "father": {
+        "paternalLastName": "Rodríguez",
+        "maternalLastName": "Díaz",
+        "firstName": "Miguel Ángel",
+        "dni": "45678123",
+        "phone": "954321876",
+        "email": "miguel.rodriguez@gmail.com",
+        "educationLevel": "Superior",
+        "occupation": "Abogado",
+        "maritalStatus": "Casado"
+      },
+      "guardian": {
+        "relationship": "Padre",
+        "paternalLastName": "Rodríguez",
+        "maternalLastName": "Díaz",
+        "firstName": "Miguel Ángel",
+        "dni": "45678123",
+        "phone": "954321876",
+        "email": "miguel.rodriguez@gmail.com"
+      },
+      "fees": {
+        "registrationFee": 150,
+        "registrationDiscount": 20,
+        "enrollmentFee": 300,
+        "enrollmentDiscount": 0,
+        "tuition": 450,
+        "tuitionDiscount": 50
+      }
+    }
   ]
 }

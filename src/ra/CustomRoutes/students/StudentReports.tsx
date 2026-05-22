@@ -18,7 +18,7 @@ export const StudentReports = () => (
     </HubButton>
     <HubButton
       icon={<AssignmentIndIcon />}
-      url="/students/reports/registration"
+      url="/students/reports/registration-card"
     >
       <HubButtonTitle>Ficha de Matrícula</HubButtonTitle>
       <HubButtonDescription>
