@@ -186,7 +186,7 @@ export const modules: Module[] = [
       {
         id: 42,
         name: "Planes contables",
-        path: "/accounting-plans",
+        path: "/accounting-plan",
         permissions: [],
         icon: <SavingsIcon />,
       },

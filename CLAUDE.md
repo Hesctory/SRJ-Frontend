@@ -25,22 +25,10 @@ npm run format       # Prettier formatting
 
 The backend data server is expected at `http://localhost:3000` (JSON Server).
 
-## Architecture
-
-The project follows **Clean Architecture** organized by feature/module:
+## Project structure
 
 ```
 src/
-├── application/useCases/    # Business logic (use cases)
-├── domain/
-│   ├── entities/            # Core domain entities
-│   └── valueObjects/        # Value objects with validation
-├── infrastructure/
-│   ├── dtos/                # Data transfer objects
-│   └── services/            # HTTP/external service calls
-├── repository/
-│   ├── repositories/        # Repository interfaces
-│   └── implementations/     # Concrete implementations
 ├── presentation/
 │   ├── components/          # Reusable UI components
 │   ├── hooks/               # Custom React hooks
@@ -71,6 +59,7 @@ src/
 - Do not hallucinate APIs or system behavior.
 
 ## JSON SERVER
+
 - JSON server is useless most of the time, but it doesn't mean it should be deleted, sometimes, is usefull for testing, so never remove it. But when I ask for new features, or refactoring existing features, never read the json server as a source of truth.
 
 ## Conventions

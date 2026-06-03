@@ -12,7 +12,7 @@ import {
   PublishersResource,
   ProductsResource,
   SchoolYearsResource,
-  AccountingPlansResource,
+  AccountingPlanResource,
   InstitutionsResource,
   LevelsResource,
   GradesResource,
@@ -35,6 +35,7 @@ const lightTheme = createTheme({
 
 export const App = () => (
   <Admin
+
     theme={lightTheme}
     dataProvider={dataProvider}
     authProvider={authProvider}
@@ -47,7 +48,7 @@ export const App = () => (
     {PublishersResource}
     {ProductsResource}
     {SchoolYearsResource}
-    {AccountingPlansResource}
+    {AccountingPlanResource}
     {InstitutionsResource}
     {LevelsResource}
     {GradesResource}
