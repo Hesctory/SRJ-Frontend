@@ -1,11 +1,11 @@
 import { Identifier } from "react-admin";
 
 export type DebtStatus =
-  | "pending"
-  | "partially_paid"
-  | "overdue"
-  | "paid"
-  | "cancelled";
+  | "PENDING"
+  | "PARTIALLY_PAID"
+  | "OVERDUE"
+  | "PAID"
+  | "CANCELLED";
 
 export type DrawerMode = "pay" | "details" | "quickPay";
 

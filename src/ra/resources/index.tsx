@@ -10,7 +10,7 @@ export { ProductsResource } from "./purchases-sales/products";
 
 // Configurations
 export { SchoolYearsResource } from "./configurations/school-years";
-export { AccountingPlansResource } from "./configurations/accounting-plans";
+export { AccountingPlanResource } from "./configurations/accounting-plan";
 export { InstitutionsResource } from "./configurations/institutions";
 export { LevelsResource } from "./configurations/levels";
 export { GradesResource } from "./configurations/grades";

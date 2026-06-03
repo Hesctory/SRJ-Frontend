@@ -18,6 +18,8 @@
     "json-server": "^0.17.4",
     "ra-data-json-server": "^5.14.5",
     "ra-data-simple-rest": "^5.14.5",
+    "ra-i18n-polyglot": "^5.14.7",
+    "ra-language-spanish": "^1.0.0",
     "react": "^18.2.0",
     "react-admin": "^5.14.0",
     "react-dom": "^18.2.0",

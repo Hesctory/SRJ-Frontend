@@ -17,26 +17,26 @@ import usePaymentDrawer from "../../../../presentation/hooks/usePaymentDrawer";
 import { DebtStatus, EnrollmentDebt } from "../../../../types/payment";
 
 const STATUS_LABEL: Record<DebtStatus, string> = {
-  pending: "Pendiente",
-  partially_paid: "Pago parcial",
-  overdue: "Vencido",
-  paid: "Pagado",
-  cancelled: "Anulado",
+  PENDING: "Pendiente",
+  PARTIALLY_PAID: "Pago parcial",
+  OVERDUE: "Vencido",
+  PAID: "Pagado",
+  CANCELLED: "Anulado",
 };
 
 const STATUS_COLOR: Record<
   DebtStatus,
   "default" | "success" | "error" | "warning" | "info"
 > = {
-  pending: "warning",
-  partially_paid: "info",
-  overdue: "error",
-  paid: "success",
-  cancelled: "default",
+  PENDING: "warning",
+  PARTIALLY_PAID: "info",
+  OVERDUE: "error",
+  PAID: "success",
+  CANCELLED: "default",
 };
 
 const isActionable = (status: DebtStatus) =>
-  status === "pending" || status === "partially_paid" || status === "overdue";
+  status === "PENDING" || status === "PARTIALLY_PAID" || status === "OVERDUE";
 
 export const DebtsPage = () => {
   const { studentId: studentIdParam, enrollmentId: enrollmentIdParam } = useParams<{

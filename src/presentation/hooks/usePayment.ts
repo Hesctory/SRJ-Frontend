@@ -30,10 +30,12 @@ const usePayment = (enrollmentId: Identifier) => {
       };
       if (debtId !== undefined) body.enrollmentDebtId = debtId;
 
+      console.log("[payment-preview] POST body:", body);
       const { json } = await httpClient(`${API_URL}/payment-preview`, {
         method: "POST",
         body: JSON.stringify(body),
       });
+      console.log("[payment-preview] response:", json);
       setPreviewData(json as PaymentPreviewResponse);
     } catch {
       notify("Error al generar el plan de pago", { type: "error" });
@@ -46,10 +48,12 @@ const usePayment = (enrollmentId: Identifier) => {
     if (!previewData) return null;
     setIsConfirming(true);
     try {
+      console.log("[payments] POST body:", { previewToken: previewData.previewToken });
       const { json } = await httpClient(`${API_URL}/payments`, {
         method: "POST",
         body: JSON.stringify({ previewToken: previewData.previewToken }),
       });
+      console.log("[payments] response:", json);
       notify("Pago registrado correctamente", { type: "success" });
       refresh();
       setPreviewData(null);
