@@ -1,9 +1,9 @@
 import { Create, SimpleForm, TextInput } from "react-admin";
 
-export const WorkPositionsCreate = () => (
+export const JobPositionsCreate = () => (
   <Create redirect="list">
     <SimpleForm>
-      <TextInput source="position" label="Cargo" />
+      <TextInput source="name" label="Cargo" />
     </SimpleForm>
   </Create>
 );
