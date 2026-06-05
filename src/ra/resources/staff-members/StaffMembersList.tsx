@@ -1,12 +1,10 @@
 import {
   DataTable,
   EditButton,
-  FunctionField,
   List,
-  ReferenceField,
 } from "react-admin";
 
-export const StaffList = () => (
+export const StaffMembersList = () => (
   <List>
     <DataTable>
       <DataTable.Col source="staffCode" label="Código de Personal" />

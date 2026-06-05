@@ -1,6 +1,6 @@
 import { Create, SimpleForm, TextInput } from "react-admin";
 
-export const StaffCreate = () => (
+export const StaffMembersCreate = () => (
   <Create redirect="list">
     <SimpleForm>
       <TextInput source="staffCode" label="Código de Personal" />

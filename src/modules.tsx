@@ -97,15 +97,15 @@ export const modules: Module[] = [
   },
   {
     id: 2,
-    name: "Staff",
-    path: "/staff",
+    name: "Miembros de Personal",
+    path: "/staff-members",
     permissions: [],
     icon: <GroupIcon />,
     children: [
       {
         id: 21,
         name: "Gestión de Staff",
-        path: "/staff",
+        path: "/staff-members",
         permissions: [],
         icon: <PersonAddIcon />,
       },
@@ -242,7 +242,7 @@ export const modules: Module[] = [
       {
         id: 410,
         name: "Cargos de Trabajo",
-        path: "/work-positions",
+        path: "/job-positions",
         permissions: [],
         icon: <WorkIcon />,
       },

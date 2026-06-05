@@ -4,7 +4,7 @@ import { BackToListButton } from "../../../CustomButtons/BackToListButton";
 export const WorkAreasEdit = () => (
   <Edit actions={<BackToListButton />}>
     <SimpleForm>
-      <TextInput source="area" label="Área" />
+      <TextInput source="name" label="Área" />
     </SimpleForm>
   </Edit>
 );
