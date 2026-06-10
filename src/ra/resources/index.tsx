@@ -24,7 +24,7 @@ export { JobPositionsResource } from "./configurations/job-positions";
 export { DebitCreditSeriesResource } from "./e-billing/debit-credit-series";
 
 // Lunches
-export { LunchCategoriesResource } from "./lunches/categories";
+export { LunchCategoriesResource } from "./lunches/lunch-categories";
 export { LunchesResource } from "./lunches/lunches";
 
 // Economic Management

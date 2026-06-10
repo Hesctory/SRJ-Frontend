@@ -11,5 +11,6 @@ export const StudentsResource = (
     create={StudentCreate}
     edit={StudentEdit}
     icon={SchoolIcon}
+    options={{ label: "Estudiantes" }}
   />
 );

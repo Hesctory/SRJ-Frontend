@@ -8,7 +8,11 @@ const studentsFilters = [
 ];
 
 export const StudentsList = () => (
-  <List filters={studentsFilters} debounce={500}>
+  <List
+    title={<span style={{ fontWeight: 700, fontSize: "1.4rem" }}>Estudiantes</span>}
+    filters={studentsFilters}
+    debounce={500}
+  >
     <Datagrid
       bulkActionButtons={false}
       sx={{

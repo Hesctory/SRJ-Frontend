@@ -1,29 +1,16 @@
-import {
-  DataTable,
-  EditButton,
-  List,
-  ReferenceField,
-  TextField,
-} from "react-admin";
+import { Datagrid, EditButton, List, NumberField, ReferenceField, TextField } from "react-admin";
 
 export const LunchesList = () => (
   <List>
-    <DataTable>
-      <DataTable.Col source="lunch" label="Almuerzo" sx={{ width: "60%" }}>
-        <TextField source="lunch" />
-      </DataTable.Col>
-      <DataTable.Col
-        source="categoryId"
-        label="Categoría"
-        sx={{ width: "30%" }}
-      >
-        <ReferenceField source="categoryId" reference="categories" link={false}>
-          <TextField source="category" />
-        </ReferenceField>
-      </DataTable.Col>
-      <DataTable.Col label="" sx={{ width: 1, whiteSpace: "nowrap" }}>
-        <EditButton />
-      </DataTable.Col>
-    </DataTable>
+    <Datagrid bulkActionButtons={false}>
+      <ReferenceField source="lunchCategoryId" reference="lunch-categories" label="Categoría" link={false}>
+        <TextField source="name" />
+      </ReferenceField>
+      <TextField source="lunchName" label="Nombre" />
+      <NumberField source="costPrice" label="Precio de Costo" options={{ style: "currency", currency: "PEN" }} />
+      <NumberField source="salePrice" label="Precio de Venta" options={{ style: "currency", currency: "PEN" }} />
+      <TextField source="comment" label="Comentario" />
+      <EditButton />
+    </Datagrid>
   </List>
 );

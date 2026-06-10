@@ -1,0 +1,144 @@
+================================================================================
+  STAFF MEMBER — API FORMAT REFERENCE
+================================================================================
+
+--------------------------------------------------------------------------------
+  POST /api/staff-members  (policy: staff-member.create)
+  Expected JSON body
+--------------------------------------------------------------------------------
+
+{
+  // --- Personal data (PersonDataDTO) ---
+  "names": "María",                        // required
+  "paternalLastname": "García",            // required
+  "maternalLastname": "López",             // required
+  "genderId": 1,                           // required — FK to Gender lookup
+  "birthDate": "1985-03-22",              // required — ISO 8601 date (YYYY-MM-DD)
+  "documentTypeId": 1,                     // required — FK to DocumentType lookup
+  "idDocumentNumber": "12345678",          // required
+  "religionId": null,                      // optional — FK to Religion lookup
+  "civilStateId": null,                    // optional — FK to CivilState lookup
+  "address": "Av. Principal 123",          // optional
+  "addressLocation": {                     // optional
+    "departmentId": 15,
+    "provinceId": 1501,
+    "districtId": 150101
+  },
+  "email": "maria.garcia@example.com",     // optional
+  "landlinePhone": null,                   // optional
+  "cellPhone": "987654321",               // optional
+
+  // --- Staff-specific fields (all optional) ---
+  "levelOfEducationId": 3,                 // optional — FK to LevelOfEducation lookup
+  "professionalTitle": "Lic. en Educación",// optional
+  "employeeCode": "EMP-001",               // optional
+  "previousInstitution": "Colegio San Marcos", // optional
+  "spouseName": null,                      // optional
+  "spouseDocumentNumber": null,            // optional
+  "spouseOccupation": null,               // optional
+  "numberOfChildren": 2,                   // optional — short (0–32767)
+  "comment": null,                         // optional
+
+  // --- Initial employment contract (required object) ---
+  "contract": {
+    "institutionId": 1,                    // required — FK to Institution
+    "schoolYearId": 5,                     // required — FK to SchoolYear
+    "jobPositionId": 2,                    // required — FK to JobPosition
+    "areaId": null,                        // optional — FK to Area
+    "startDate": "2026-03-01",            // required — ISO 8601 date
+    "endDate": null,                       // optional — ISO 8601 date
+    "salary": 1800.00                      // optional — decimal
+  }
+}
+
+--------------------------------------------------------------------------------
+  GET /api/staff-members  (policy: staff-member.read)
+  Response: JSON array of StaffMemberListDTO
+  Header:   Content-Range: staff-members {start}-{end}/{total}
+  Query params:
+    range=[0,99]
+    filter={"fullName":"...","documentNumber":"...","employeeCode":"...",
+            "isActive":true,"isArchived":false}
+--------------------------------------------------------------------------------
+
+[
+  {
+    "id": 42,
+    "fullName": "María García López",
+    "documentNumber": "12345678",
+    "employeeCode": "EMP-001",          // nullable
+    "professionalTitle": "Lic. en Educación"  // nullable
+  }
+]
+
+================================================================================
+  TYPESCRIPT TYPES (frontend reference)
+================================================================================
+
+// ── Shared ───────────────────────────────────────────────────────────────────
+
+interface LocationDTO {
+  departmentId: number;
+  provinceId: number;
+  districtId: number;
+}
+
+interface ContractDetailsDTO {
+  institutionId: number;
+  schoolYearId: number;
+  jobPositionId: number;
+  areaId?: number | null;
+  startDate: string;        // "YYYY-MM-DD"
+  endDate?: string | null;  // "YYYY-MM-DD"
+  salary?: number | null;
+}
+
+// ── POST /api/staff-members ──────────────────────────────────────────────────
+
+interface CreateStaffMemberDTO {
+  // PersonDataDTO
+  names: string;
+  paternalLastname: string;
+  maternalLastname: string;
+  genderId: number;
+  birthDate: string;           // "YYYY-MM-DD"
+  documentTypeId: number;
+  idDocumentNumber: string;
+  religionId?: number | null;
+  civilStateId?: number | null;
+  address?: string | null;
+  addressLocation?: LocationDTO | null;
+  email?: string | null;
+  landlinePhone?: string | null;
+  cellPhone?: string | null;
+
+  // Staff-specific
+  levelOfEducationId?: number | null;
+  professionalTitle?: string | null;
+  employeeCode?: string | null;
+  previousInstitution?: string | null;
+  spouseName?: string | null;
+  spouseDocumentNumber?: string | null;
+  spouseOccupation?: string | null;
+  numberOfChildren?: number | null;   // short — safe as number in JS
+  comment?: string | null;
+
+  // Required contract
+  contract: ContractDetailsDTO;
+}
+
+// ── GET /api/staff-members — list item ──────────────────────────────────────
+
+interface StaffMemberListDTO {
+  id: number;
+  fullName: string;
+  documentNumber: string;
+  employeeCode: string | null;
+  professionalTitle: string | null;
+}
+
+// Paginated list response helper (Content-Range parsed separately)
+interface StaffMemberListResponse {
+  items: StaffMemberListDTO[];
+  total: number;   // parsed from Content-Range header: "staff-members start-end/total"
+}

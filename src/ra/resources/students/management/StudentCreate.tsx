@@ -1,5 +1,7 @@
+import { useState } from "react";
 import {
   BooleanInput,
+  Button,
   Create,
   DateInput,
   NumberInput,
@@ -8,30 +10,99 @@ import {
   TabbedForm,
   TextInput,
   required,
+  useDataProvider,
+  useNotify,
+  useRedirect,
 } from "react-admin";
+import { useFormContext } from "react-hook-form";
+import {
+  Box,
+  Button as MuiButton,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Typography,
+} from "@mui/material";
+import SchoolIcon from "@mui/icons-material/School";
 import CRUDToolBar from "../../../layout/CRUDToolBar";
-import { EnrollButton } from "../../../CustomButtons/EnrollButton";
-import { Box, Typography } from "@mui/material";
 import LocationFormSelector from "../../../../presentation/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "../../../../presentation/components/SecondLanguagesFormSelector";
 import DisabilityForm from "../../../../presentation/components/DisabilityForm";
 import MultipleFamiliarsForm from "../../../../presentation/components/MultipleFamiliarsForm";
-import { useFormState } from "react-hook-form";
+import EnrollmentFormInputs from "../../../../presentation/components/EnrollmentFormInputs";
 
-const DebugErrors = () => {
-  const { errors } = useFormState();
-  console.log("FORM ERRORS:", errors);
-  return null;
+const ConfirmCreateStudentButton = () => {
+  const [open, setOpen] = useState(false);
+  const { trigger, getValues } = useFormContext();
+  const dataProvider = useDataProvider();
+  const notify = useNotify();
+  const redirect = useRedirect();
+
+  const handleClick = async () => {
+    const isValid = await trigger();
+    if (!isValid) return;
+    setOpen(true);
+  };
+
+  const handleConfirm = async () => {
+    try {
+      await dataProvider.create("students", { data: getValues() });
+      notify("Estudiante creado exitosamente", { type: "success" });
+      redirect("list", "students");
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Error desconocido";
+      notify(`Error al crear estudiante: ${message}`, { type: "error" });
+    } finally {
+      setOpen(false);
+    }
+  };
+
+  return (
+    <>
+      <Button
+        label="Matricular"
+        onClick={handleClick}
+        size="large"
+        sx={{
+          backgroundColor: "success.main",
+          color: "white",
+          "&:hover": { backgroundColor: "success.dark" },
+        }}
+      >
+        <SchoolIcon />
+      </Button>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Confirmar creación</DialogTitle>
+        <DialogContent>
+          <Typography>
+            ¿Confirmar la creación del estudiante y su matrícula?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <MuiButton onClick={() => setOpen(false)}>Cancelar</MuiButton>
+          <MuiButton
+            variant="contained"
+            color="success"
+            onClick={handleConfirm}
+          >
+            Confirmar
+          </MuiButton>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 };
 
 export const StudentCreate = () => {
   return (
-    <Create mutationMode="pessimistic">
+    <Create mutationMode="pessimistic" title={<span style={{ fontWeight: 700, fontSize: "1.4rem" }}>Crear Estudiante</span>}>
       <TabbedForm
         defaultValues={{ familiars: [] }}
         toolbar={
           <CRUDToolBar>
-            <EnrollButton />
+            <ConfirmCreateStudentButton />
           </CRUDToolBar>
         }
       >
@@ -158,7 +229,9 @@ export const StudentCreate = () => {
           <DisabilityForm />
         </TabbedForm.Tab>
 
-        <DebugErrors />
+        <TabbedForm.Tab label="Matrícula">
+          <EnrollmentFormInputs sourcePrefix="enrollment" />
+        </TabbedForm.Tab>
       </TabbedForm>
     </Create>
   );

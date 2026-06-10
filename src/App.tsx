@@ -62,6 +62,7 @@ export const App = () => (
       {DebitCreditSeriesResource}
       {LunchCategoriesResource}
       {LunchesResource}
+      <Resource name="employment-contracts" />
       <Resource name="enrollment-debts" />
       <Resource name="debt-installments" />
       <Resource name="payment-methods" />
