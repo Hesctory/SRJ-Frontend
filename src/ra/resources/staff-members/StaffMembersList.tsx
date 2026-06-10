@@ -1,22 +1,34 @@
 import {
-  DataTable,
+  Datagrid,
   EditButton,
   List,
+  TextField,
+  TextInput,
 } from "react-admin";
 
+const staffFilters = [
+  <TextInput key="fullName" source="fullName" label="Nombre" alwaysOn />,
+  <TextInput
+    key="documentNumber"
+    source="documentNumber"
+    label="N° Documento"
+    alwaysOn
+  />,
+  <TextInput
+    key="employeeCode"
+    source="employeeCode"
+    label="Código Empleado"
+  />,
+];
+
 export const StaffMembersList = () => (
-  <List>
-    <DataTable>
-      <DataTable.Col source="staffCode" label="Código de Personal" />
-      <DataTable.Col
-        label="Nombre Completo"
-        render={(record) =>
-          `${record.names} ${record.paternalLastName} ${record.maternalLastName}`
-        }
-      />
-      <DataTable.Col source="positionId" label="Posición" />
-      <DataTable.Col source="areaId" label="Área" />
+  <List filters={staffFilters} debounce={500}>
+    <Datagrid bulkActionButtons={false}>
+      <TextField source="fullName" label="Nombre Completo" />
+      <TextField source="documentNumber" label="N° Documento" />
+      <TextField source="employeeCode" label="Código Empleado" />
+      <TextField source="professionalTitle" label="Título Profesional" />
       <EditButton />
-    </DataTable>
+    </Datagrid>
   </List>
 );

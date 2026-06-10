@@ -332,7 +332,7 @@ export const modules: Module[] = [
       {
         id: 71,
         name: "Categorías",
-        path: "/categories",
+        path: "/lunch-categories",
         permissions: [],
         icon: <RestaurantIcon />,
       },

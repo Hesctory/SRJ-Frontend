@@ -7,6 +7,12 @@
       "skillPath": "plugins/architecture-patterns/skills/architecture-patterns/SKILL.md",
       "computedHash": "7285580552b6b94630e6fc2c57ebc907c47e55deedc8d167738ebe375db982c0"
     },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
+    },
     "react-admin": {
       "source": "marmelab/react-admin",
       "sourceType": "github",
