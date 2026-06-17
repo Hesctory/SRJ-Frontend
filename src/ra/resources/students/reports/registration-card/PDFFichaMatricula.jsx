@@ -5,12 +5,12 @@ export default function PDFFichaMatricula({ alumno }) {
   const { Datos, Madre, Padre, Apoderado, Matricula } = alumno;
 
   const td = "border border-gray-400 px-2 py-1 text-xs";
-  const th = "bg-gray-200 border border-gray-400 px-2 py-1 text-xs font-semibold bg-gray-100";
+  const th =
+    "bg-gray-200 border border-gray-400 px-2 py-1 text-xs font-semibold bg-gray-100";
   const title = "font-bold text-sm mb-1";
 
   return (
     <div className="p-6 text-black font-sans text-xs bg-white">
-
       {/* HEADER */}
       <div className="text-center font-bold text-base mb-2">
         FICHA DE MATRÍCULA
@@ -67,11 +67,15 @@ export default function PDFFichaMatricula({ alumno }) {
           </tr>
           <tr>
             <td className={th}>Colegio Procedencia</td>
-            <td className={td} colSpan={5}>{Datos.colegioProcedencia}</td>
+            <td className={td} colSpan={5}>
+              {Datos.colegioProcedencia}
+            </td>
           </tr>
           <tr>
             <td className={th}>Dirección</td>
-            <td className={td} colSpan={3}>{Datos.direccion}</td>
+            <td className={td} colSpan={3}>
+              {Datos.direccion}
+            </td>
             <td className={th}>Distrito</td>
             <td className={td}>{Datos.distrito}</td>
           </tr>
@@ -216,8 +220,8 @@ export default function PDFFichaMatricula({ alumno }) {
               "Partida de Nacimiento",
               "Libreta de Notas",
               "Resolución de Traslado",
-              "Fotos"
-            ].map(doc => (
+              "Fotos",
+            ].map((doc) => (
               <tr key={doc}>
                 <td className={td}>{doc}</td>
                 <td className={td}></td>
@@ -240,7 +244,9 @@ export default function PDFFichaMatricula({ alumno }) {
           </div>
           <div className="text-center">
             <div className="border-t border-black w-40 mb-1"></div>
-            Firma Apoderado<br />DNI:
+            Firma Apoderado
+            <br />
+            DNI:
           </div>
         </div>
       </div>
@@ -248,17 +254,18 @@ export default function PDFFichaMatricula({ alumno }) {
   );
 }
 
-
 // Versión con PDFLayout integrado
-export function PDFFichaMatriculaPage({ 
-  alumno, 
+export function PDFFichaMatriculaPage({
+  alumno,
   title = "FICHA DE MATRÍCULA",
   subtitle = "",
   showMargins = false,
-  pageSize = "A4"
+  pageSize = "A4",
 }) {
   return (
-    <div className={`${showMargins ? 'border border-dashed border-gray-300' : ''} p-8`}>
+    <div
+      className={`${showMargins ? "border border-dashed border-gray-300" : ""} p-8`}
+    >
       {/* Opcional: Incluir PDFHeader si se necesita */}
       {(title || subtitle) && (
         <div className="mb-4 text-center">
@@ -266,7 +273,7 @@ export function PDFFichaMatriculaPage({
           {subtitle && <h2 className="text-sm text-gray-600">{subtitle}</h2>}
         </div>
       )}
-      
+
       <PDFFichaMatricula alumno={alumno} />
     </div>
   );

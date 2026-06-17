@@ -116,12 +116,11 @@ export const StaffMembersCreate = () => (
       </TabbedForm.Tab>
 
       <TabbedForm.Tab label="Contrato Inicial">
-        <ReferenceInput source="contract.institutionId" reference="institutions">
-          <SelectInput
-            label="Institución"
-            isRequired
-            validate={required()}
-          />
+        <ReferenceInput
+          source="contract.institutionId"
+          reference="institutions"
+        >
+          <SelectInput label="Institución" isRequired validate={required()} />
         </ReferenceInput>
 
         <ReferenceInput source="contract.schoolYearId" reference="school-years">
@@ -133,7 +132,10 @@ export const StaffMembersCreate = () => (
           />
         </ReferenceInput>
 
-        <ReferenceInput source="contract.jobPositionId" reference="job-positions">
+        <ReferenceInput
+          source="contract.jobPositionId"
+          reference="job-positions"
+        >
           <SelectInput label="Cargo" isRequired validate={required()} />
         </ReferenceInput>
 

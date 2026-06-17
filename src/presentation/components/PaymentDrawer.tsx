@@ -29,8 +29,14 @@ const PaymentDrawer = ({
   onPaymentConfirmed,
 }: PaymentDrawerProps) => {
   const { open, mode, debtId } = drawerState;
-  const { previewData, isPreviewing, isConfirming, preview, confirm, resetPreview } =
-    usePayment(enrollmentId);
+  const {
+    previewData,
+    isPreviewing,
+    isConfirming,
+    preview,
+    confirm,
+    resetPreview,
+  } = usePayment(enrollmentId);
 
   const handleFormSubmit = (values: PaymentFormValues) => {
     preview(values, debtId ?? undefined);
@@ -50,10 +56,13 @@ const PaymentDrawer = ({
         onClose={onClose}
         sx={{ "& .MuiDrawer-paper": { width: DRAWER_WIDTH, p: 3 } }}
       >
-        <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
-          <Typography variant="h6">
-            {mode ? DrawerTitle[mode] : ""}
-          </Typography>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          mb={2}
+        >
+          <Typography variant="h6">{mode ? DrawerTitle[mode] : ""}</Typography>
           <IconButton onClick={onClose} size="small">
             <CloseIcon fontSize="small" />
           </IconButton>
@@ -63,7 +72,10 @@ const PaymentDrawer = ({
 
         <Box display="flex" flexDirection="column" gap={3} overflow="auto">
           {(mode === "pay" || mode === "quickPay") && (
-            <PaymentForm onSubmit={handleFormSubmit} submitting={isPreviewing} />
+            <PaymentForm
+              onSubmit={handleFormSubmit}
+              submitting={isPreviewing}
+            />
           )}
 
           {(mode === "pay" || mode === "details") && debtId !== null && (

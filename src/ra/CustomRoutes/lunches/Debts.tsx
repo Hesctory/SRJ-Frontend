@@ -81,7 +81,13 @@ export const LunchesDebts = () => {
         overflow: "hidden",
       }}
     >
-      <Box display="flex" gap={2} mb={2} alignItems="center" sx={{ flexShrink: 0 }}>
+      <Box
+        display="flex"
+        gap={2}
+        mb={2}
+        alignItems="center"
+        sx={{ flexShrink: 0 }}
+      >
         <FormControl size="small" sx={{ width: 180 }}>
           <InputLabel>Tipo de persona</InputLabel>
           <Select

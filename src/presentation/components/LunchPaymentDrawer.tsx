@@ -18,7 +18,10 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import { useNotify, useRefresh } from "react-admin";
 import { API_URL, httpClient } from "../../ra/dataProvider";
-import { LunchDebtSummary, LunchPaymentResult } from "../../types/lunchAssignment";
+import {
+  LunchDebtSummary,
+  LunchPaymentResult,
+} from "../../types/lunchAssignment";
 import { todayLocal } from "../../utils/date";
 
 const DRAWER_WIDTH = 480;
@@ -29,7 +32,11 @@ interface LunchPaymentDrawerProps {
   onClose: () => void;
 }
 
-const LunchPaymentDrawer = ({ open, person, onClose }: LunchPaymentDrawerProps) => {
+const LunchPaymentDrawer = ({
+  open,
+  person,
+  onClose,
+}: LunchPaymentDrawerProps) => {
   const notify = useNotify();
   const refresh = useRefresh();
 

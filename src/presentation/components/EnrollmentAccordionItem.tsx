@@ -152,7 +152,10 @@ export const EnrollmentAccordionItem = ({
                   <Typography variant="body2" color="warning.main">
                     ¿Confirmar retiro?
                   </Typography>
-                  <Button size="small" onClick={() => setPendingWithdraw(false)}>
+                  <Button
+                    size="small"
+                    onClick={() => setPendingWithdraw(false)}
+                  >
                     No
                   </Button>
                   <Button

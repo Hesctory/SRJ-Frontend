@@ -1,5 +1,10 @@
 import { Box, TextField } from "@mui/material";
-import { Datagrid, ListBase, TextField as RaTextField, useListFilterContext } from "react-admin";
+import {
+  Datagrid,
+  ListBase,
+  TextField as RaTextField,
+  useListFilterContext,
+} from "react-admin";
 import AcademicFilterSelector from "../../../../presentation/components/AcademicFilterSelector";
 
 const StudentTextFilters = () => {
@@ -14,7 +19,7 @@ const StudentTextFilters = () => {
         onChange={(e) =>
           setFilters(
             { ...filterValues, dni: e.target.value || undefined },
-            displayedFilters
+            displayedFilters,
           )
         }
         sx={{ minWidth: 140 }}
@@ -26,7 +31,7 @@ const StudentTextFilters = () => {
         onChange={(e) =>
           setFilters(
             { ...filterValues, fullName: e.target.value || undefined },
-            displayedFilters
+            displayedFilters,
           )
         }
         sx={{ minWidth: 200 }}

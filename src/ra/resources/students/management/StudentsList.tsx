@@ -9,7 +9,19 @@ const studentsFilters = [
 
 export const StudentsList = () => (
   <List
-    title={<span style={{ fontWeight: 600, fontSize: "1.1rem", letterSpacing: "0.05em", textTransform: "uppercase", color: "#fff" }}>Estudiantes</span>}
+    title={
+      <span
+        style={{
+          fontWeight: 600,
+          fontSize: "1.1rem",
+          letterSpacing: "0.05em",
+          textTransform: "uppercase",
+          color: "#fff",
+        }}
+      >
+        Estudiantes
+      </span>
+    }
     filters={studentsFilters}
     debounce={500}
   >

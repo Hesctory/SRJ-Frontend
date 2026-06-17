@@ -1,10 +1,4 @@
-import {
-  Datagrid,
-  EditButton,
-  List,
-  TextField,
-  TextInput,
-} from "react-admin";
+import { Datagrid, EditButton, List, TextField, TextInput } from "react-admin";
 
 const staffFilters = [
   <TextInput key="fullName" source="fullName" label="Nombre" alwaysOn />,

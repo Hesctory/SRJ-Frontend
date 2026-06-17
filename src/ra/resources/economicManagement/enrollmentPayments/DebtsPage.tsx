@@ -39,12 +39,15 @@ const isActionable = (status: DebtStatus) =>
   status === "PENDING" || status === "PARTIALLY_PAID" || status === "OVERDUE";
 
 export const DebtsPage = () => {
-  const { studentId: studentIdParam, enrollmentId: enrollmentIdParam } = useParams<{
-    studentId: string;
-    enrollmentId: string;
-  }>();
+  const { studentId: studentIdParam, enrollmentId: enrollmentIdParam } =
+    useParams<{
+      studentId: string;
+      enrollmentId: string;
+    }>();
   const studentId = studentIdParam ? Number(studentIdParam) : undefined;
-  const enrollmentId = enrollmentIdParam ? Number(enrollmentIdParam) : undefined;
+  const enrollmentId = enrollmentIdParam
+    ? Number(enrollmentIdParam)
+    : undefined;
   const navigate = useNavigate();
 
   const { drawerState, openPay, openDetails, openQuickPay, closeDrawer } =
@@ -53,13 +56,13 @@ export const DebtsPage = () => {
   const { data: student, isLoading: loadingStudent } = useGetOne(
     "students",
     { id: studentId! },
-    { enabled: !!studentId }
+    { enabled: !!studentId },
   );
 
   const { data: enrollment, isLoading: loadingEnrollment } = useGetOne(
     "enrollments",
     { id: enrollmentId! },
-    { enabled: !!enrollmentId }
+    { enabled: !!enrollmentId },
   );
 
   const { data: debts, isLoading: loadingDebts } = useGetList<EnrollmentDebt>(
@@ -68,7 +71,7 @@ export const DebtsPage = () => {
       filter: { enrollmentId },
       sort: { field: "dueDate", order: "ASC" },
       pagination: { page: 1, perPage: 100 },
-    }
+    },
   );
 
   if (loadingStudent || loadingEnrollment || loadingDebts) {
@@ -84,7 +87,9 @@ export const DebtsPage = () => {
       <Box p={3}>
         <Button
           startIcon={<ArrowBackIcon />}
-          onClick={() => navigate(`/enrollment-payments/${studentId}/enrollments`)}
+          onClick={() =>
+            navigate(`/enrollment-payments/${studentId}/enrollments`)
+          }
           sx={{ mb: 2 }}
         >
           Volver
@@ -107,10 +112,7 @@ export const DebtsPage = () => {
               {enrollment?.shift} {enrollment?.section}
             </Typography>
           </Box>
-          <Button
-            variant="outlined"
-            onClick={openQuickPay}
-          >
+          <Button variant="outlined" onClick={openQuickPay}>
             Pago rápido
           </Button>
         </Box>
@@ -134,7 +136,9 @@ export const DebtsPage = () => {
                   gap={1}
                 >
                   <Box>
-                    <Typography variant="subtitle2">{debt.description}</Typography>
+                    <Typography variant="subtitle2">
+                      {debt.description}
+                    </Typography>
                     <Typography variant="body2" color="text.secondary">
                       Vence: {debt.dueDate}
                     </Typography>

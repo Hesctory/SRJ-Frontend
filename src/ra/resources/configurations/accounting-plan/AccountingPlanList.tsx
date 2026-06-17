@@ -100,7 +100,9 @@ export const AccountingPlanList = () => {
         open={drawerState.open}
         onClose={handleClose}
         parentId={drawerState.parentId}
-        record={drawerState.mode === "edit" ? drawerState.editRecord : undefined}
+        record={
+          drawerState.mode === "edit" ? drawerState.editRecord : undefined
+        }
       />
     </>
   );

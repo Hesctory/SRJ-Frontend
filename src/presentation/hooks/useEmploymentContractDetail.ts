@@ -20,7 +20,9 @@ export const useEmploymentContractDetail = (
     if (detail) return;
     setIsLoading(true);
     try {
-      const { data } = await dataProvider.getOne("employment-contracts", { id });
+      const { data } = await dataProvider.getOne("employment-contracts", {
+        id,
+      });
       setDetail(data as Record<string, unknown>);
     } catch (error) {
       const message =

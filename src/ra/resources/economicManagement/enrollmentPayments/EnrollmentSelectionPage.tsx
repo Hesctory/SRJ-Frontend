@@ -14,14 +14,12 @@ import { useGetList, useGetOne } from "react-admin";
 import { useNavigate, useParams } from "react-router-dom";
 import { EnrollmentSummary } from "../../../../types/enrollment";
 
-const STATE_COLOR: Record<
-  string,
-  "success" | "error" | "warning" | "default"
-> = {
-  Activa: "success",
-  Cancelada: "error",
-  Retirada: "warning",
-};
+const STATE_COLOR: Record<string, "success" | "error" | "warning" | "default"> =
+  {
+    Activa: "success",
+    Cancelada: "error",
+    Retirada: "warning",
+  };
 
 export const EnrollmentSelectionPage = () => {
   const { studentId: studentIdParam } = useParams<{ studentId: string }>();
@@ -31,7 +29,7 @@ export const EnrollmentSelectionPage = () => {
   const { data: student, isLoading: loadingStudent } = useGetOne(
     "students",
     { id: studentId! },
-    { enabled: !!studentId }
+    { enabled: !!studentId },
   );
 
   const { data: enrollments, isLoading: loadingEnrollments } =
@@ -78,7 +76,7 @@ export const EnrollmentSelectionPage = () => {
                 <CardActionArea
                   onClick={() =>
                     navigate(
-                      `/enrollment-payments/${studentId}/${enrollment.id}/debts`
+                      `/enrollment-payments/${studentId}/${enrollment.id}/debts`,
                     )
                   }
                 >
@@ -100,7 +98,8 @@ export const EnrollmentSelectionPage = () => {
                     </Box>
                     <Typography variant="body2">{enrollment.level}</Typography>
                     <Typography variant="body2">
-                      {enrollment.grade} — {enrollment.shift} — {enrollment.section}
+                      {enrollment.grade} — {enrollment.shift} —{" "}
+                      {enrollment.section}
                     </Typography>
                   </CardContent>
                 </CardActionArea>

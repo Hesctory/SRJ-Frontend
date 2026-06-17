@@ -91,10 +91,7 @@ export const AppCustomRoutes = (
       element={<LunchAssignmentForm />}
     />
     <Route path="/lunches/queries" element={<LunchesQueries />} />
-    <Route
-      path="/lunches/queries/:personId"
-      element={<PersonHistoryPage />}
-    />
+    <Route path="/lunches/queries/:personId" element={<PersonHistoryPage />} />
     <Route path="/lunches/debts" element={<LunchesDebts />} />
     <Route path="/lunches/reports" element={<LunchesReports />} />
     <Route

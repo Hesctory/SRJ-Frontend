@@ -11,14 +11,15 @@ const usePayment = (enrollmentId: Identifier) => {
   const notify = useNotify();
   const refresh = useRefresh();
 
-  const [previewData, setPreviewData] =
-    useState<PaymentPreviewResponse | null>(null);
+  const [previewData, setPreviewData] = useState<PaymentPreviewResponse | null>(
+    null,
+  );
   const [isPreviewing, setIsPreviewing] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
   const preview = async (
     values: PaymentFormValues,
-    debtId?: Identifier
+    debtId?: Identifier,
   ): Promise<void> => {
     setIsPreviewing(true);
     try {
@@ -48,7 +49,9 @@ const usePayment = (enrollmentId: Identifier) => {
     if (!previewData) return null;
     setIsConfirming(true);
     try {
-      console.log("[payments] POST body:", { previewToken: previewData.previewToken });
+      console.log("[payments] POST body:", {
+        previewToken: previewData.previewToken,
+      });
       const { json } = await httpClient(`${API_URL}/payments`, {
         method: "POST",
         body: JSON.stringify({ previewToken: previewData.previewToken }),

@@ -30,7 +30,22 @@ const DebugForm = () => {
 
 export const StudentEdit = () => {
   return (
-    <Edit mutationMode="pessimistic" title={<span style={{ fontWeight: 600, fontSize: "1.1rem", letterSpacing: "0.05em", textTransform: "uppercase", color: "#fff" }}>Editar Estudiante</span>}>
+    <Edit
+      mutationMode="pessimistic"
+      title={
+        <span
+          style={{
+            fontWeight: 600,
+            fontSize: "1.1rem",
+            letterSpacing: "0.05em",
+            textTransform: "uppercase",
+            color: "#fff",
+          }}
+        >
+          Editar Estudiante
+        </span>
+      }
+    >
       <TabbedForm toolbar={<StudentEditToolbar />}>
         <TabbedForm.Tab label="Datos Personales">
           <Box display="flex" gap={2} width="100%">

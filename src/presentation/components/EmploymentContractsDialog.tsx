@@ -59,7 +59,11 @@ export const EmploymentContractsDialog = ({
     previousData: Record<string, unknown>,
   ) => {
     try {
-      await dataProvider.update("employment-contracts", { id, data, previousData });
+      await dataProvider.update("employment-contracts", {
+        id,
+        data,
+        previousData,
+      });
       notify("Contrato actualizado", { type: "success" });
       refetch();
     } catch (error) {
@@ -116,7 +120,13 @@ export const EmploymentContractsDialog = ({
               {showAddForm ? "Cancelar" : "Agregar Contrato"}
             </Button>
             <Collapse in={showAddForm}>
-              <Box mt={2} p={2} border={1} borderColor="divider" borderRadius={1}>
+              <Box
+                mt={2}
+                p={2}
+                border={1}
+                borderColor="divider"
+                borderRadius={1}
+              >
                 <Typography variant="subtitle2" mb={1}>
                   Nuevo Contrato
                 </Typography>

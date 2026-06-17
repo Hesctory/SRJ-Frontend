@@ -29,12 +29,7 @@ const EmploymentContractFormInputs = () => (
     </ReferenceInput>
 
     <ReferenceInput source="jobPositionId" reference="job-positions">
-      <SelectInput
-        label="Cargo"
-        isRequired
-        validate={required()}
-        fullWidth
-      />
+      <SelectInput label="Cargo" isRequired validate={required()} fullWidth />
     </ReferenceInput>
 
     <ReferenceInput source="areaId" reference="work-areas">

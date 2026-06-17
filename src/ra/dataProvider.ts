@@ -77,9 +77,9 @@ const dataProvider: DataProvider = {
       // Backend returns { ids: [1, 2, 3] }; return a minimal record to satisfy React Admin
       //return { data: { id: (json as { ids: number[] }).ids[0] } };
       return {
-          data: {
-              id: (json as { ids: number[] }).ids[0],
-          } as any,
+        data: {
+          id: (json as { ids: number[] }).ids[0],
+        } as any,
       };
     }
     return extendedSimpleDataProvider.create(resource, params);

@@ -49,8 +49,12 @@ const PaymentPlanModal = ({
             {plan.lines.map((line) => (
               <TableRow key={String(line.debtId)}>
                 <TableCell>{line.description}</TableCell>
-                <TableCell align="right">S/ {line.allocated.toFixed(2)}</TableCell>
-                <TableCell align="right">S/ {line.remaining.toFixed(2)}</TableCell>
+                <TableCell align="right">
+                  S/ {line.allocated.toFixed(2)}
+                </TableCell>
+                <TableCell align="right">
+                  S/ {line.remaining.toFixed(2)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

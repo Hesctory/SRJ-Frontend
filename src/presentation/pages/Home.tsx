@@ -1,55 +1,113 @@
 import React from "react";
-import { Container, Typography, Box, Button, Grid } from "@mui/material";
-import { modules, type Module } from "../../modules";
-import { useNavigate } from "react-router-dom";
+import { Box, Card, Typography, Avatar } from "@mui/material";
+import logoSRJ from "../../../public/logoSRJ.png";
+
+/** "Buenos días / tardes / noches" based on the local hour. */
+const getGreeting = (): string => {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Buenos días";
+  if (hour < 19) return "Buenas tardes";
+  return "Buenas noches";
+};
+
+/** Today as e.g. "martes, 17 de junio de 2026" (capitalized). */
+const getLongDate = (): string => {
+  const formatted = new Intl.DateTimeFormat("es-PE", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date());
+  return formatted.charAt(0).toUpperCase() + formatted.slice(1);
+};
 
 export const Home: React.FC = () => {
-  const navigate = useNavigate();
-
   const userData = JSON.parse(localStorage.getItem("user") || "null");
-
-  const handleModuleClick = (module: Module) => {
-    // Save the selected module to localStorage
-    localStorage.setItem("selectedModule", JSON.stringify(module));
-    console.log(localStorage.getItem("token"));
-    // Navigate to the module path
-    navigate(module.path);
-  };
+  const name: string =
+    userData?.name ??
+    userData?.fullName ??
+    userData?.names ??
+    userData?.username ??
+    "";
 
   return (
-    <Container>
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          ¡Bienvenido, {userData?.name}!
-        </Typography>
-        <Typography variant="body1">
-          Has iniciado sesión correctamente.
-        </Typography>
-      </Box>
-
-      <Grid
-        container
-        spacing={3}
-        sx={{ maxWidth: "800px", mx: "auto", width: "100%" }}
+    <Box
+      sx={{
+        minHeight: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        px: 2,
+        py: 6,
+      }}
+    >
+      <Card
+        sx={{
+          width: "100%",
+          maxWidth: 640,
+          overflow: "hidden",
+          textAlign: "center",
+        }}
       >
-        {modules.map((module, index) => (
-          <Grid size={{ xs: 12, sm: 6 }} key={index}>
-            <Button
-              onClick={() => handleModuleClick(module)}
-              color="primary"
-              variant="contained"
-              fullWidth
-              sx={{
-                py: 3,
-                fontSize: "1.25rem",
-                fontWeight: "bold",
-              }}
+        {/* Royal-blue accent strip */}
+        <Box sx={{ height: 6, bgcolor: "primary.main" }} />
+
+        <Box
+          sx={{
+            px: { xs: 3, sm: 6 },
+            py: { xs: 5, sm: 7 },
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2.5,
+          }}
+        >
+          <Avatar
+            src={logoSRJ}
+            alt="SRJ"
+            variant="rounded"
+            sx={{
+              width: 88,
+              height: 88,
+              bgcolor: "transparent",
+              "& img": { objectFit: "contain" },
+            }}
+          />
+
+          <Box>
+            <Typography
+              variant="h3"
+              component="h1"
+              sx={{ fontWeight: 700, color: "text.primary" }}
             >
-              {module.name}
-            </Button>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+              {getGreeting()}
+              {name ? `, ${name}` : ""}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ mt: 1, color: "text.secondary", fontWeight: 500 }}
+            >
+              Sistema de gestión escolar SRJ
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              mt: 1,
+              px: 2.5,
+              py: 1,
+              borderRadius: 2,
+              border: "1px solid",
+              borderColor: "divider",
+              bgcolor: "background.default",
+            }}
+          >
+            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+              {getLongDate()}
+            </Typography>
+          </Box>
+        </Box>
+      </Card>
+    </Box>
   );
 };

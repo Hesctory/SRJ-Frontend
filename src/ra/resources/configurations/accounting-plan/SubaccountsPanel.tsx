@@ -60,7 +60,7 @@ const SubaccountsPanel = ({ onEdit, onAdd }: SubaccountsPanelProps) => {
           notify("Error al eliminar subcuenta", { type: "error" });
           setDeleteTarget(null);
         },
-      }
+      },
     );
   };
 
@@ -68,8 +68,8 @@ const SubaccountsPanel = ({ onEdit, onAdd }: SubaccountsPanelProps) => {
 
   return (
     <>
-    <Box sx={{ p: 2, pl: 6, bgcolor: "background.default" }}>
-      {/*<Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+      <Box sx={{ p: 2, pl: 6, bgcolor: "background.default" }}>
+        {/*<Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
         <Typography variant="subtitle2" color="text.secondary">
           Subcuentas
         </Typography>
@@ -83,75 +83,75 @@ const SubaccountsPanel = ({ onEdit, onAdd }: SubaccountsPanelProps) => {
         </Button>
       </Box>*/}
 
-      {isLoading ? (
-        <Box display="flex" justifyContent="center" p={2}>
-          <CircularProgress size={20} />
-        </Box>
-      ) : !data || data.length === 0 ? (
-        <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
-          Sin subcuentas. Usa el botón de arriba para agregar la primera.
-        </Typography>
-      ) : (
-        <>
-          <TableContainer component={Paper} variant="outlined">
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ width: "15%" }}>Código</TableCell>
-                  <TableCell sx={{ width: "15%" }}>Cód. Impresión</TableCell>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell align="right" sx={{ width: "10%" }} />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {data.map((sub) => (
-                  <TableRow key={sub.id} hover>
-                    <TableCell>{sub.code}</TableCell>
-                    <TableCell>{sub.printCode}</TableCell>
-                    <TableCell>{sub.name}</TableCell>
-                    <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
-                      <IconButton
-                        size="small"
-                        title="Editar"
-                        onClick={() => onEdit(sub)}
-                      >
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        title="Eliminar"
-                        onClick={() => setDeleteTarget(sub)}
-                        disabled={isDeleting}
-                      >
-                        <DeleteIcon fontSize="small" color="error" />
-                      </IconButton>
-                    </TableCell>
+        {isLoading ? (
+          <Box display="flex" justifyContent="center" p={2}>
+            <CircularProgress size={20} />
+          </Box>
+        ) : !data || data.length === 0 ? (
+          <Typography variant="body2" color="text.secondary" sx={{ py: 1 }}>
+            Sin subcuentas. Usa el botón de arriba para agregar la primera.
+          </Typography>
+        ) : (
+          <>
+            <TableContainer component={Paper} variant="outlined">
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ width: "15%" }}>Código</TableCell>
+                    <TableCell sx={{ width: "15%" }}>Cód. Impresión</TableCell>
+                    <TableCell>Nombre</TableCell>
+                    <TableCell align="right" sx={{ width: "10%" }} />
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {data.map((sub) => (
+                    <TableRow key={sub.id} hover>
+                      <TableCell>{sub.code}</TableCell>
+                      <TableCell>{sub.printCode}</TableCell>
+                      <TableCell>{sub.name}</TableCell>
+                      <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                        <IconButton
+                          size="small"
+                          title="Editar"
+                          onClick={() => onEdit(sub)}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          title="Eliminar"
+                          onClick={() => setDeleteTarget(sub)}
+                          disabled={isDeleting}
+                        >
+                          <DeleteIcon fontSize="small" color="error" />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-          {total !== undefined && total > 15 && (
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ mt: 1, display: "block" }}
-            >
-              Mostrando 15 de {total} subcuentas
-            </Typography>
-          )}
-        </>
-      )}
-    </Box>
+            {total !== undefined && total > 15 && (
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mt: 1, display: "block" }}
+              >
+                Mostrando 15 de {total} subcuentas
+              </Typography>
+            )}
+          </>
+        )}
+      </Box>
 
-    <Confirm
-      isOpen={!!deleteTarget}
-      title="Eliminar subcuenta"
-      content={`¿Estás seguro de que deseas eliminar "${deleteTarget?.name}"? Esta acción no se puede deshacer.`}
-      onConfirm={handleDeleteConfirm}
-      onClose={() => setDeleteTarget(null)}
-    />
+      <Confirm
+        isOpen={!!deleteTarget}
+        title="Eliminar subcuenta"
+        content={`¿Estás seguro de que deseas eliminar "${deleteTarget?.name}"? Esta acción no se puede deshacer.`}
+        onConfirm={handleDeleteConfirm}
+        onClose={() => setDeleteTarget(null)}
+      />
     </>
   );
 };

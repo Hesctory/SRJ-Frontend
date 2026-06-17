@@ -28,7 +28,11 @@ const SubaccountFormDrawer = ({
   record,
 }: SubaccountFormDrawerProps) => {
   const isEditing = !!record;
-  const [formData, setFormData] = useState({ code: "", printCode: "", name: "" });
+  const [formData, setFormData] = useState({
+    code: "",
+    printCode: "",
+    name: "",
+  });
   const [create, { isPending: isCreating }] = useCreate();
   const [update, { isPending: isUpdating }] = useUpdate();
   const notify = useNotify();
@@ -38,8 +42,12 @@ const SubaccountFormDrawer = ({
     if (open) {
       setFormData(
         record
-          ? { code: record.code, printCode: record.printCode, name: record.name }
-          : { code: "", printCode: "", name: "" }
+          ? {
+              code: record.code,
+              printCode: record.printCode,
+              name: record.name,
+            }
+          : { code: "", printCode: "", name: "" },
       );
     }
   }, [open, record]);
@@ -55,8 +63,9 @@ const SubaccountFormDrawer = ({
             refresh();
             onClose();
           },
-          onError: () => notify("Error al actualizar subcuenta", { type: "error" }),
-        }
+          onError: () =>
+            notify("Error al actualizar subcuenta", { type: "error" }),
+        },
       );
     } else {
       create(
@@ -69,7 +78,7 @@ const SubaccountFormDrawer = ({
             onClose();
           },
           onError: () => notify("Error al crear subcuenta", { type: "error" }),
-        }
+        },
       );
     }
   };
@@ -81,7 +90,12 @@ const SubaccountFormDrawer = ({
       onClose={onClose}
       sx={{ "& .MuiDrawer-paper": { width: DRAWER_WIDTH, p: 3 } }}
     >
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        mb={2}
+      >
         <Typography variant="h6">
           {isEditing ? "Editar subcuenta" : "Nueva subcuenta"}
         </Typography>
@@ -96,7 +110,9 @@ const SubaccountFormDrawer = ({
         <TextField
           label="Código"
           value={formData.code}
-          onChange={(e) => setFormData((prev) => ({ ...prev, code: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, code: e.target.value }))
+          }
           fullWidth
           size="small"
         />
@@ -112,7 +128,9 @@ const SubaccountFormDrawer = ({
         <TextField
           label="Nombre"
           value={formData.name}
-          onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, name: e.target.value }))
+          }
           fullWidth
           size="small"
         />
@@ -122,7 +140,9 @@ const SubaccountFormDrawer = ({
         <Button
           variant="contained"
           onClick={handleSave}
-          disabled={isCreating || isUpdating || !formData.code || !formData.name}
+          disabled={
+            isCreating || isUpdating || !formData.code || !formData.name
+          }
           fullWidth
         >
           {isCreating || isUpdating ? "Guardando..." : "Guardar"}
