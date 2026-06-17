@@ -40,7 +40,7 @@ const lightTheme = createTheme({
       main: "#4a6fa5",
     },
     background: {
-      default: "#e5e3d8",
+      default: "#d8e2e5",
     },
   },
   typography: {
