@@ -358,6 +358,13 @@ export const modules: Module[] = [
         icon: <SearchIcon />,
       },
       {
+        id: 78,
+        name: "Deudas",
+        path: "/lunches/debts",
+        permissions: [],
+        icon: <PaymentIcon />,
+      },
+      {
         id: 75,
         name: "Reportes",
         path: "/lunches/reports",

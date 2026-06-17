@@ -1,5 +1,1 @@
-import { PlaceholderPage } from "../../../presentation/pages/PlaceholderPage";
-
-export const LunchesAssignment = () => (
-  <PlaceholderPage title="Asignación de Loncheras" />
-);
+export { PersonSelectionPage as LunchesAssignment } from "./assignment/PersonSelectionPage";

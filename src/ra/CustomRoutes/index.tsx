@@ -17,7 +17,10 @@ import { VouchersReceipts } from "./incomes-expenses/VouchersReceipts";
 import { IncomesExpensesReports } from "./incomes-expenses/Reports";
 import { PensionReceiptsReconciliation } from "./incomes-expenses/PensionReceiptsReconciliation";
 import { LunchesAssignment } from "./lunches/Assignment";
+import { LunchAssignmentForm } from "./lunches/assignment/LunchAssignmentForm";
 import { LunchesQueries } from "./lunches/Queries";
+import { PersonHistoryPage } from "./lunches/queries/PersonHistoryPage";
+import { LunchesDebts } from "./lunches/Debts";
 import { LunchesReports } from "./lunches/Reports";
 import { LunchesEconomicManagement } from "./lunches/EconomicManagement";
 import { LunchesRenditions } from "./lunches/Renditions";
@@ -83,7 +86,16 @@ export const AppCustomRoutes = (
     />
     {/* Lunches */}
     <Route path="/lunches/assignment" element={<LunchesAssignment />} />
+    <Route
+      path="/lunches/assignment/:personId"
+      element={<LunchAssignmentForm />}
+    />
     <Route path="/lunches/queries" element={<LunchesQueries />} />
+    <Route
+      path="/lunches/queries/:personId"
+      element={<PersonHistoryPage />}
+    />
+    <Route path="/lunches/debts" element={<LunchesDebts />} />
     <Route path="/lunches/reports" element={<LunchesReports />} />
     <Route
       path="/lunches/economic-management"

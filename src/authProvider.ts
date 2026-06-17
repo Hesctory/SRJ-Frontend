@@ -29,13 +29,13 @@ const authProvider: AuthProvider = {
 
   checkAuth: async () => {
     const token = localStorage.getItem("token");
-    if (!token) return Promise.reject();
+    if (!token) return Promise.reject({ redirectTo: "/login" });
 
     const expiry = parseTokenExpiry(token);
     if (expiry && expiry < new Date()) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      return Promise.reject();
+      return Promise.reject({ redirectTo: "/login" });
     }
 
     return Promise.resolve();
@@ -43,8 +43,9 @@ const authProvider: AuthProvider = {
 
   checkError: async (error: any) => {
     const status = error.status || error.response?.status;
-    if (status === 401) {
+    if (status === 401 || status === 403) {
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       return Promise.reject();
     }
     return Promise.resolve();

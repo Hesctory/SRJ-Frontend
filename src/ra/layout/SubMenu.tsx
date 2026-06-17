@@ -27,11 +27,11 @@ const SubMenu = (props: Props) => {
   const [sidebarIsOpen] = useSidebarState();
 
   const header = (
-    <MenuItem dense={dense} onClick={handleToggle}>
-      <ListItemIcon sx={{ minWidth: 5 }}>
+    <MenuItem dense={dense} onClick={handleToggle} sx={{ color: "rgba(255,255,255,0.72)" }}>
+      <ListItemIcon sx={{ minWidth: 5, color: "inherit" }}>
         {isOpen ? <ExpandMore /> : icon}
       </ListItemIcon>
-      <Typography variant="inherit" color="textSecondary">
+      <Typography variant="inherit" color="inherit">
         {translate(name)}
       </Typography>
     </MenuItem>

@@ -64,6 +64,26 @@ const extendedSimpleDataProvider: DataProvider = {
   },
 };
 
-const dataProvider: DataProvider = extendedSimpleDataProvider;
+const BATCH_CREATE_RESOURCES = new Set(["lunch-assignments"]);
+
+const dataProvider: DataProvider = {
+  ...extendedSimpleDataProvider,
+  create: async (resource, params) => {
+    if (BATCH_CREATE_RESOURCES.has(resource)) {
+      const { json } = await httpClient(`${API_URL}/${resource}`, {
+        method: "POST",
+        body: JSON.stringify(params.data),
+      });
+      // Backend returns { ids: [1, 2, 3] }; return a minimal record to satisfy React Admin
+      //return { data: { id: (json as { ids: number[] }).ids[0] } };
+      return {
+          data: {
+              id: (json as { ids: number[] }).ids[0],
+          } as any,
+      };
+    }
+    return extendedSimpleDataProvider.create(resource, params);
+  },
+};
 
 export { dataProvider, httpClient };

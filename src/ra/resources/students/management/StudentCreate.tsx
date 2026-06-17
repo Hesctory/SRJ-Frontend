@@ -97,7 +97,7 @@ const ConfirmCreateStudentButton = () => {
 
 export const StudentCreate = () => {
   return (
-    <Create mutationMode="pessimistic" title={<span style={{ fontWeight: 700, fontSize: "1.4rem" }}>Crear Estudiante</span>}>
+    <Create mutationMode="pessimistic" title={<span style={{ fontWeight: 600, fontSize: "1.1rem", letterSpacing: "0.05em", textTransform: "uppercase", color: "#fff" }}>Crear Estudiante</span>}>
       <TabbedForm
         defaultValues={{ familiars: [] }}
         toolbar={
