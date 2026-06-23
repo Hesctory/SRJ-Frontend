@@ -52,6 +52,17 @@ const authProvider: AuthProvider = {
   },
 
   getPermissions: async () => {
+    // Yield one macrotask before resolving. React Admin's logout flow
+    // (LogoutOnMount -> useLogout) navigates to /login and then resets the
+    // store/query cache on a setTimeout(0) to win a race against re-rendering.
+    // If getPermissions resolves *synchronously*, the usePermissions query
+    // re-resolves within the same commit, re-rendering CoreAdminRoutes and
+    // remounting <LogoutOnMount>, which calls logout() again -> infinite loop
+    // ("Maximum update depth exceeded"). React 19's scheduling made this race
+    // reproducible. Deferring the resolution by a macrotask lets the redirect
+    // commit first and breaks the cycle.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
     const userJson = localStorage.getItem("user");
     if (!userJson) return Promise.resolve(null);
     try {
