@@ -1,6 +1,6 @@
 import { Admin, Resource } from "react-admin";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import spanishMessages from "ra-language-spanish";
+import spanishMessages from "./i18n/es";
 import { MyLayout } from "./ra/layout/MyLayout";
 import { theme } from "./ra/theme";
 import { dataProvider } from "./ra/dataProvider";

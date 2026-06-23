@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import ExpandMore from "@mui/icons-material/ExpandMore";
-import { useTranslate, useSidebarState } from "react-admin";
+import { useSidebarState } from "react-admin";
 
 interface Props {
   dense: boolean;
@@ -22,8 +22,6 @@ interface Props {
 
 const SubMenu = (props: Props) => {
   const { handleToggle, isOpen, name, icon, children, dense } = props;
-  const translate = useTranslate();
-
   const [sidebarIsOpen] = useSidebarState();
 
   const header = (
@@ -48,7 +46,7 @@ const SubMenu = (props: Props) => {
           noWrap
           sx={{ fontWeight: 500, flexGrow: 1 }}
         >
-          {translate(name)}
+          {name}
         </Typography>
       )}
     </MenuItem>
@@ -59,7 +57,7 @@ const SubMenu = (props: Props) => {
       {sidebarIsOpen || isOpen ? (
         header
       ) : (
-        <Tooltip title={translate(name)} placement="right">
+        <Tooltip title={name} placement="right">
           {header}
         </Tooltip>
       )}
