@@ -23,9 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 
-# Claude Code
+# Claude Code / GitHub config
 .claude/
 skills-lock.json
+CLAUDE.md
+.github/
 
 # Internal scratch / planning files
 plan.md
