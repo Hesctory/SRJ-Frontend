@@ -1,0 +1,10 @@
+import { Edit, SimpleForm, TextInput } from "react-admin";
+import { BackToListButton } from "@/shared/buttons/BackToListButton";
+
+export const WorkAreasEdit = () => (
+  <Edit actions={<BackToListButton />}>
+    <SimpleForm>
+      <TextInput source="name" label="Área" />
+    </SimpleForm>
+  </Edit>
+);
