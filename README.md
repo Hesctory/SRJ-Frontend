@@ -20,7 +20,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/Hesctory/SRJ-Backend  # backend — set it up first
-git clone <this-repo-url>
+git clone https://github.com/Hesctory/SRJ-Frontend.git
 cd srjsystemfrontend
 npm install
 ```
