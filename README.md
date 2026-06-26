@@ -19,9 +19,7 @@ Admin dashboard for a school management system. It covers student enrollment, tu
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/Hesctory/SRJ-Backend  # backend — set it up first
 git clone https://github.com/Hesctory/SRJ-Frontend.git
-cd srjsystemfrontend
 npm install
 ```
 
