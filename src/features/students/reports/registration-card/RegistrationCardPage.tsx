@@ -8,7 +8,7 @@ import {
   CircularProgress,
   Typography,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Datagrid,
   Form,
@@ -23,11 +23,16 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { pdf } from "@react-pdf/renderer";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
 import {
+  loadReportFilters,
+  ReportFiltersPersistence,
+} from "@/shared/hooks/useReportFilters";
+import {
   RegistrationCardDocument,
   type RegistrationCardStudent,
 } from "./RegistrationCardDocument";
 
 const PDF_FILENAME = "Ficha-Matricula.pdf";
+const REPORT_KEY = "registration-card";
 
 const GenerateActions = () => {
   const dataProvider = useDataProvider();
@@ -200,6 +205,7 @@ const RegistrationCardForm = () => {
 
   return (
     <>
+      <ReportFiltersPersistence reportKey={REPORT_KEY} />
       <Box
         sx={{
           display: "flex",
@@ -235,18 +241,23 @@ const RegistrationCardForm = () => {
   );
 };
 
-export const RegistrationCardPage = () => (
-  <>
-    <Title title="Reporte: Ficha de Matrícula" />
-    <Card sx={{ mt: 2 }}>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Ficha de Matrícula
-        </Typography>
-        <Form>
-          <RegistrationCardForm />
-        </Form>
-      </CardContent>
-    </Card>
-  </>
-);
+export const RegistrationCardPage = () => {
+  // Seed the form once per mount; restored values survive RA's initial reset.
+  const defaultValues = useMemo(() => loadReportFilters(REPORT_KEY), []);
+
+  return (
+    <>
+      <Title title="Reporte: Ficha de Matrícula" />
+      <Card sx={{ mt: 2 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            Ficha de Matrícula
+          </Typography>
+          <Form defaultValues={defaultValues}>
+            <RegistrationCardForm />
+          </Form>
+        </CardContent>
+      </Card>
+    </>
+  );
+};

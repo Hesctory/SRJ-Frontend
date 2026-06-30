@@ -9,17 +9,22 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { pdf } from "@react-pdf/renderer";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Form, Title, useDataProvider } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
 import { useAcademicFilterData } from "@/shared/hooks/useAcademicFilterData";
+import {
+  loadReportFilters,
+  ReportFiltersPersistence,
+} from "@/shared/hooks/useReportFilters";
 import {
   EnrolledStudentsDocument,
   type EnrolledStudent,
 } from "./EnrolledStudentsDocument";
 
 const PDF_FILENAME = "Estudiantes-Matriculados.pdf";
+const REPORT_KEY = "enrolled-students";
 
 // Inner component — must live inside <Form> to access the form context.
 // Reads current field values via useWatch, fetches labels for the PDF header,
@@ -138,40 +143,46 @@ const GenerateActions = () => {
   );
 };
 
-export const EnrolledStudentsPage = () => (
-  <>
-    <Title title="Reporte: Estudiantes Matriculados" />
-    <Card sx={{ mt: 2 }}>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Filtros
-        </Typography>
-        <Form>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 1.5,
-              mt: 1,
-              // Override RA/MUI defaults: make inputs compact and horizontal
-              "& .MuiFormControl-root": {
-                flex: "1 1 160px",
-                mt: 0,
-                mb: 0,
-              },
-            }}
-          >
-            <AcademicFormSelector
-              required={false}
-              requireYear
-              defaultCurrentYear
-            />
-          </Box>
-          <Box sx={{ mt: 3 }}>
-            <GenerateActions />
-          </Box>
-        </Form>
-      </CardContent>
-    </Card>
-  </>
-);
+export const EnrolledStudentsPage = () => {
+  // Seed the form once per mount; restored values survive RA's initial reset.
+  const defaultValues = useMemo(() => loadReportFilters(REPORT_KEY), []);
+
+  return (
+    <>
+      <Title title="Reporte: Estudiantes Matriculados" />
+      <Card sx={{ mt: 2 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            Filtros
+          </Typography>
+          <Form defaultValues={defaultValues}>
+            <ReportFiltersPersistence reportKey={REPORT_KEY} />
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 1.5,
+                mt: 1,
+                // Override RA/MUI defaults: make inputs compact and horizontal
+                "& .MuiFormControl-root": {
+                  flex: "1 1 160px",
+                  mt: 0,
+                  mb: 0,
+                },
+              }}
+            >
+              <AcademicFormSelector
+                required={false}
+                requireYear
+                defaultCurrentYear
+              />
+            </Box>
+            <Box sx={{ mt: 3 }}>
+              <GenerateActions />
+            </Box>
+          </Form>
+        </CardContent>
+      </Card>
+    </>
+  );
+};

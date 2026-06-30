@@ -9,14 +9,19 @@ import {
 import DownloadIcon from "@mui/icons-material/Download";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { pdf } from "@react-pdf/renderer";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Form, Title, useDataProvider } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
 import { useAcademicFilterData } from "@/shared/hooks/useAcademicFilterData";
+import {
+  loadReportFilters,
+  ReportFiltersPersistence,
+} from "@/shared/hooks/useReportFilters";
 import { BirthdaysDocument, type BirthdayStudent } from "./BirthdaysDocument";
 
 const PDF_FILENAME = "Cumpleanos-Estudiantes.pdf";
+const REPORT_KEY = "birthdays";
 
 /** Sort key: month*100 + day, so the list reads as a calendar of birthdays
  *  regardless of birth year. Unparseable dates sink to the bottom. */
@@ -147,35 +152,41 @@ const GenerateActions = () => {
   );
 };
 
-export const BirthdaysPage = () => (
-  <>
-    <Title title="Reporte: Cumpleaños" />
-    <Card sx={{ mt: 2 }}>
-      <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Filtros
-        </Typography>
-        <Form>
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 1.5,
-              mt: 1,
-              "& .MuiFormControl-root": { flex: "1 1 160px", mt: 0, mb: 0 },
-            }}
-          >
-            <AcademicFormSelector
-              required={false}
-              requireYear
-              defaultCurrentYear
-            />
-          </Box>
-          <Box sx={{ mt: 3 }}>
-            <GenerateActions />
-          </Box>
-        </Form>
-      </CardContent>
-    </Card>
-  </>
-);
+export const BirthdaysPage = () => {
+  // Seed the form once per mount; restored values survive RA's initial reset.
+  const defaultValues = useMemo(() => loadReportFilters(REPORT_KEY), []);
+
+  return (
+    <>
+      <Title title="Reporte: Cumpleaños" />
+      <Card sx={{ mt: 2 }}>
+        <CardContent>
+          <Typography variant="h6" gutterBottom>
+            Filtros
+          </Typography>
+          <Form defaultValues={defaultValues}>
+            <ReportFiltersPersistence reportKey={REPORT_KEY} />
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 1.5,
+                mt: 1,
+                "& .MuiFormControl-root": { flex: "1 1 160px", mt: 0, mb: 0 },
+              }}
+            >
+              <AcademicFormSelector
+                required={false}
+                requireYear
+                defaultCurrentYear
+              />
+            </Box>
+            <Box sx={{ mt: 3 }}>
+              <GenerateActions />
+            </Box>
+          </Form>
+        </CardContent>
+      </Card>
+    </>
+  );
+};
