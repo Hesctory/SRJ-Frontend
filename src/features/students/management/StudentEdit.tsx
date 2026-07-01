@@ -16,17 +16,6 @@ import LocationFormSelector from "@/shared/components/LocationFormSelector";
 import SecondLanguagesFormSelector from "@/features/students/components/SecondLanguagesFormSelector";
 import DisabilityForm from "@/features/students/components/DisabilityForm";
 import MultipleFamiliarsForm from "@/features/students/components/MultipleFamiliarsForm";
-import { useFormContext } from "react-hook-form";
-
-const DebugForm = () => {
-  const {
-    formState: { errors },
-    getValues,
-  } = useFormContext();
-  console.log("FORM ERRORS:", errors);
-  console.log("FORM VALUES:", getValues());
-  return null;
-};
 
 export const StudentEdit = () => {
   return (
@@ -169,7 +158,6 @@ export const StudentEdit = () => {
         <TabbedForm.Tab label="Discapacidad">
           <DisabilityForm />
         </TabbedForm.Tab>
-        <DebugForm />
       </TabbedForm>
     </Edit>
   );

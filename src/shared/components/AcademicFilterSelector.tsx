@@ -21,7 +21,6 @@ const AcademicFilterSelector = (_props: {
   useEffect(() => {
     if (schoolYears.length === 0 || filterValues.schoolYearId) return;
     const currentYear = new Date().getFullYear();
-    console.log(currentYear);
     const match = schoolYears.find((sy) => Number(sy.year) === currentYear);
     if (!match) return;
     setFilters({ ...filterValues, schoolYearId: match.id }, displayedFilters);

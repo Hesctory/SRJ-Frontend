@@ -5,24 +5,8 @@ import {
   SelectInput,
   SimpleForm,
   useGetList,
-  useGetOne,
-  useRecordContext,
 } from "react-admin";
 import CRUDToolBar from "@/app/layout/CRUDToolBar";
-
-const DebugLogger = () => {
-  const gradeOffering = useRecordContext();
-  const { data: grade } = useGetOne(
-    "grades",
-    { id: gradeOffering?.gradeId },
-    { enabled: !!gradeOffering?.gradeId },
-  );
-
-  console.log("gradeOffering:", gradeOffering);
-  console.log("grade:", grade);
-
-  return null;
-};
 
 const FullGradeSelectInput = () => {
   const { data: grades = [] } = useGetList("grades", {
@@ -44,7 +28,6 @@ const FullGradeSelectInput = () => {
 export const GradeOfferingsEdit = () => (
   <Edit mutationMode="pessimistic">
     <SimpleForm toolbar={<CRUDToolBar save delete />}>
-      <DebugLogger />
       <ReferenceInput source="schoolYearId" reference="school-years">
         <SelectInput optionText="year" label="Año Escolar" />
       </ReferenceInput>

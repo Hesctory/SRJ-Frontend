@@ -8,21 +8,11 @@ import {
   SelectInput,
   TextField,
   useGetList,
-  useListContext,
   useRecordContext,
 } from "react-admin";
 
-const DebugLogger = () => {
-  const { data } = useListContext();
-  console.log("gradeOfferings:", data);
-  const grade = useRecordContext();
-  console.log("grade:", grade);
-  return null;
-};
-
 const GradeName = () => {
   const grade = useRecordContext();
-  console.log("grade:", grade);
   if (!grade) return null;
   return (
     <span>
@@ -54,7 +44,6 @@ const GradeOfferingsListContent = ({
     filters={gradeOfferingsFilters}
     filterDefaultValues={{ schoolYearId: defaultSchoolYearId }}
   >
-    <DebugLogger />
     <DataTable>
       <DataTable.Col
         source="schoolYearId"
@@ -91,7 +80,6 @@ const GradeOfferingsListContent = ({
 
 export const GradeOfferingsList = () => {
   const currentYear = new Date().getFullYear();
-  console.log(currentYear);
   const { data, isLoading } = useGetList("school-years", {
     filter: { year: currentYear },
     pagination: { page: 1, perPage: 1 },
@@ -100,7 +88,6 @@ export const GradeOfferingsList = () => {
   if (isLoading) return <Loading />;
 
   const defaultSchoolYearId = data?.[0]?.id;
-  console.log(data);
   return (
     <GradeOfferingsListContent defaultSchoolYearId={defaultSchoolYearId} />
   );

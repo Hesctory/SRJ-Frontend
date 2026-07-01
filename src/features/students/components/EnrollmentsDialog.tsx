@@ -54,7 +54,6 @@ export const EnrollmentsDialog = ({
   ) => {
     try {
       await dataProvider.update("enrollments", { id, data, previousData });
-      console.log("Matrícula actualizada:", { id, data, previousData });
       notify("Matrícula actualizada", { type: "success" });
       refetch();
     } catch (error) {

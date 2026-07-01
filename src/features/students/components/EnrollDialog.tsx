@@ -36,11 +36,9 @@ export const EnrollDialog = ({
     try {
       if (studentId) {
         const payload = { studentId: studentId, ...enrollmentData };
-        console.log("POST /enrollments payload:", payload);
         await dataProvider.create("enrollments", { data: payload });
       } else if (studentData) {
         const payload = { ...studentData, enrollment: enrollmentData };
-        console.log("POST /students payload:", payload);
         await dataProvider.create("students", { data: payload });
       }
       notify("Estudiante matriculado exitosamente", { type: "success" });

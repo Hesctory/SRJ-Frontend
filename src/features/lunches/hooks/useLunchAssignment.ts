@@ -10,10 +10,6 @@ const useLunchAssignment = () => {
   const create = async (payload: CreateLunchAssignment): Promise<boolean> => {
     setSubmitting(true);
     try {
-      console.log(
-        "[lunch-assignments] POST body:",
-        JSON.stringify(payload, null, 2),
-      );
       await dataProvider.create("lunch-assignments", { data: payload });
       notify("Loncheras asignadas correctamente", { type: "success" });
       return true;
