@@ -10,7 +10,7 @@ import DownloadIcon from "@mui/icons-material/Download";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import { pdf } from "@react-pdf/renderer";
 import { useMemo, useState } from "react";
-import { Form, Title, useDataProvider } from "react-admin";
+import { Form, Title, useDataProvider, useNotify } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
 import { useAcademicFilterData } from "@/shared/hooks/useAcademicFilterData";
@@ -37,6 +37,7 @@ const dayMonthKey = (s: BirthdayStudent): number => {
 // Inner component — must live inside <Form> to access the form context.
 const GenerateActions = () => {
   const dataProvider = useDataProvider();
+  const notify = useNotify();
   const { handleSubmit } = useFormContext();
   const [busy, setBusy] = useState<"open" | "download" | null>(null);
 
@@ -62,6 +63,9 @@ const GenerateActions = () => {
       sort: { field: "fullName", order: "ASC" },
       filter,
     });
+
+    // Don't produce a blank PDF — let the caller surface an empty-state notice.
+    if (!data || data.length === 0) return null;
 
     const students = [...(data as BirthdayStudent[])].sort(
       (a, b) =>
@@ -90,12 +94,19 @@ const GenerateActions = () => {
     handleSubmit(async () => {
       setBusy("open");
       try {
-        const url = URL.createObjectURL(await buildBlob());
+        const blob = await buildBlob();
+        if (!blob) {
+          win?.close();
+          notify("Sin resultados para estos filtros", { type: "warning" });
+          return;
+        }
+        const url = URL.createObjectURL(blob);
         if (win) win.location.href = url;
         else window.open(url, "_blank");
         setTimeout(() => URL.revokeObjectURL(url), 60_000);
       } catch (err) {
         win?.close();
+        notify("No se pudo generar el reporte", { type: "error" });
         throw err;
       } finally {
         setBusy(null);
@@ -107,12 +118,20 @@ const GenerateActions = () => {
     handleSubmit(async () => {
       setBusy("download");
       try {
-        const url = URL.createObjectURL(await buildBlob());
+        const blob = await buildBlob();
+        if (!blob) {
+          notify("Sin resultados para estos filtros", { type: "warning" });
+          return;
+        }
+        const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
         a.download = PDF_FILENAME;
         a.click();
         setTimeout(() => URL.revokeObjectURL(url), 1_000);
+      } catch (err) {
+        notify("No se pudo generar el reporte", { type: "error" });
+        throw err;
       } finally {
         setBusy(null);
       }

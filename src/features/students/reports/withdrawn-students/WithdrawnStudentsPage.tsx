@@ -1,49 +1,53 @@
-import DownloadIcon from "@mui/icons-material/Download";
-import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import {
+  Alert,
   Box,
   Button,
   Card,
   CardContent,
   CircularProgress,
+  LinearProgress,
   Typography,
 } from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
+import DownloadIcon from "@mui/icons-material/Download";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { pdf } from "@react-pdf/renderer";
+import { useMemo, useState } from "react";
 import {
   Datagrid,
   Form,
+  FunctionField,
   ListBase,
   TextField,
-  TextInput,
   Title,
   useDataProvider,
   useListContext,
   useNotify,
 } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
-import { pdf } from "@react-pdf/renderer";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
+import { useAcademicFilterData } from "@/shared/hooks/useAcademicFilterData";
 import {
   loadReportFilters,
   ReportFiltersPersistence,
 } from "@/shared/hooks/useReportFilters";
 import {
-  RegistrationCardDocument,
-  type RegistrationCardStudent,
-} from "./RegistrationCardDocument";
+  formatAcademic,
+  formatDate,
+  WithdrawnStudentsDocument,
+  type WithdrawnStudent,
+} from "./WithdrawnStudentsDocument";
 
-const PDF_FILENAME = "Ficha-Matricula.pdf";
-const REPORT_KEY = "registration-card";
+const REPORT_KEY = "withdrawn-students";
+const PDF_FILENAME = "Estudiantes-Retirados.pdf";
 
+// Inner component — must live inside <Form> to access the form context.
+// Fetches the report rows, resolves filter labels for the PDF header, and
+// generates the PDF blob for opening in a new tab or downloading.
 const GenerateActions = () => {
   const dataProvider = useDataProvider();
   const notify = useNotify();
   const { handleSubmit } = useFormContext();
-  const { selectedIds, total, isPending } = useListContext();
   const [busy, setBusy] = useState<"open" | "download" | null>(null);
-
-  // No matching students (and none hand-picked) → nothing to generate.
-  const noResults = !isPending && total === 0 && selectedIds.length === 0;
 
   const schoolYearId = useWatch({ name: "schoolYearId" });
   const levelId = useWatch({ name: "levelId" });
@@ -51,31 +55,36 @@ const GenerateActions = () => {
   const shiftId = useWatch({ name: "shiftId" });
   const sectionId = useWatch({ name: "sectionId" });
 
-  const buildBlob = async () => {
-    const filter: Record<string, string> = {};
-    if (schoolYearId) filter.schoolYearId = String(schoolYearId);
-    if (levelId) filter.levelId = String(levelId);
-    if (gradeId) filter.gradeId = String(gradeId);
-    if (shiftId) filter.shiftId = String(shiftId);
-    if (sectionId) filter.sectionId = String(sectionId);
-    if (selectedIds.length > 0) filter.studentIds = selectedIds.join(",");
+  const { schoolYears, levels, grades, shifts, sections } =
+    useAcademicFilterData(schoolYearId, levelId, gradeId, shiftId);
 
-    const { data } = await dataProvider.getList(
-      "students-registration-card-report",
-      {
-        pagination: { page: 1, perPage: 1000 },
-        sort: { field: "fullName", order: "ASC" },
-        filter,
-      },
-    );
+  const buildBlob = async () => {
+    const filter: Record<string, unknown> = {};
+    if (schoolYearId != null) filter.schoolYearId = schoolYearId;
+    if (levelId != null) filter.levelId = levelId;
+    if (gradeId != null) filter.gradeId = gradeId;
+    if (shiftId != null) filter.shiftId = shiftId;
+    if (sectionId != null) filter.sectionId = sectionId;
+
+    const { data } = await dataProvider.getList("students-withdrawn-report", {
+      pagination: { page: 1, perPage: 1000 },
+      sort: { field: "fullName", order: "ASC" },
+      filter,
+    });
 
     // Don't produce a blank PDF — let the caller surface an empty-state notice.
     if (!data || data.length === 0) return null;
 
     const doc = (
-      <RegistrationCardDocument
-        students={data as RegistrationCardStudent[]}
-        context={{}}
+      <WithdrawnStudentsDocument
+        students={data as WithdrawnStudent[]}
+        context={{
+          schoolYear: schoolYears.find((sy) => sy.id == schoolYearId)?.year,
+          level: levels.find((lv) => lv.id == levelId)?.name,
+          grade: grades.find((g) => g.id == gradeId)?.name,
+          shift: shifts.find((sh) => sh.id == shiftId)?.name,
+          section: sections.find((s) => s.id == sectionId)?.section,
+        }}
       />
     );
     return pdf(doc).toBlob();
@@ -100,7 +109,7 @@ const GenerateActions = () => {
         setTimeout(() => URL.revokeObjectURL(url), 60_000);
       } catch (err) {
         win?.close();
-        notify("No se pudo generar la ficha", { type: "error" });
+        notify("No se pudo generar el reporte", { type: "error" });
         throw err;
       } finally {
         setBusy(null);
@@ -124,7 +133,7 @@ const GenerateActions = () => {
         a.click();
         setTimeout(() => URL.revokeObjectURL(url), 1_000);
       } catch (err) {
-        notify("No se pudo generar la ficha", { type: "error" });
+        notify("No se pudo generar el reporte", { type: "error" });
         throw err;
       } finally {
         setBusy(null);
@@ -132,9 +141,7 @@ const GenerateActions = () => {
     })();
 
   return (
-    <Box
-      sx={{ display: "flex", gap: 1.5, flexWrap: "wrap", alignItems: "center" }}
-    >
+    <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
       <Button
         variant="contained"
         startIcon={
@@ -145,9 +152,9 @@ const GenerateActions = () => {
           )
         }
         onClick={openInNewTab}
-        disabled={busy !== null || noResults}
+        disabled={busy !== null}
       >
-        Generar Ficha
+        Generar Reporte
       </Button>
       <Button
         variant="outlined"
@@ -159,79 +166,74 @@ const GenerateActions = () => {
           )
         }
         onClick={download}
-        disabled={busy !== null || noResults}
+        disabled={busy !== null}
       >
         Descargar PDF
       </Button>
-      {noResults && (
-        <Typography variant="body2" color="text.secondary">
-          Sin resultados para estos filtros
-        </Typography>
-      )}
     </Box>
   );
 };
 
-const SelectionResetter = ({ filterKey }: { filterKey: string }) => {
-  const { onUnselectItems } = useListContext();
-  const unselectRef = useRef(onUnselectItems);
-  unselectRef.current = onUnselectItems;
+const WithdrawnStudentsTable = () => {
+  const { isPending, error, total } = useListContext<WithdrawnStudent>();
 
-  useEffect(() => {
-    unselectRef.current();
-  }, [filterKey]);
-  return null;
+  if (isPending) return <LinearProgress sx={{ mt: 3 }} />;
+  if (error) {
+    return (
+      <Alert severity="error" sx={{ mt: 3 }}>
+        No se pudo cargar el reporte de estudiantes retirados.
+      </Alert>
+    );
+  }
+  if (!total) {
+    return (
+      <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
+        Sin resultados para estos filtros
+      </Typography>
+    );
+  }
+
+  return (
+    <Box sx={{ mt: 3 }}>
+      <Datagrid bulkActionButtons={false} rowClick={false}>
+        <TextField source="enrollmentCode" label="Código de Matrícula" />
+        <TextField source="fullName" label="Nombre Completo" />
+        <FunctionField
+          label="Nivel Académico"
+          render={(record: WithdrawnStudent) => formatAcademic(record)}
+        />
+        <FunctionField
+          label="Fecha de Matrícula"
+          render={(record: WithdrawnStudent) =>
+            formatDate(record.enrollmentDate)
+          }
+        />
+        <FunctionField
+          label="Fecha de Retiro"
+          render={(record: WithdrawnStudent) =>
+            formatDate(record.withdrawalDate)
+          }
+        />
+      </Datagrid>
+    </Box>
+  );
 };
 
-const StudentSelectionList = ({ filterKey }: { filterKey: string }) => (
-  <Box sx={{ mt: 3 }}>
-    <Typography variant="subtitle1" gutterBottom>
-      Seleccionar estudiantes{" "}
-      <Typography component="span" variant="body2" color="text.secondary">
-        (sin selección = todos)
-      </Typography>
-    </Typography>
-    <SelectionResetter filterKey={filterKey} />
-    <Datagrid bulkActionButtons={<></>} rowClick="toggleSelection">
-      <TextField source="dni" label="DNI" />
-      <TextField source="fullName" label="Nombre Completo" />
-    </Datagrid>
-    <Box sx={{ mt: 2 }}>
-      <GenerateActions />
-    </Box>
-  </Box>
-);
-
-const RegistrationCardForm = () => {
+const WithdrawnStudentsContent = () => {
   const schoolYearId = useWatch({ name: "schoolYearId" });
   const levelId = useWatch({ name: "levelId" });
   const gradeId = useWatch({ name: "gradeId" });
   const shiftId = useWatch({ name: "shiftId" });
   const sectionId = useWatch({ name: "sectionId" });
-  const dni = useWatch({ name: "dni" });
-  const fullName = useWatch({ name: "fullName" });
 
+  // Only send set values — mirrors the other student reports' cascade.
   const filter = {
     ...(schoolYearId && { schoolYearId }),
     ...(levelId && { levelId }),
     ...(gradeId && { gradeId }),
     ...(shiftId && { shiftId }),
     ...(sectionId && { sectionId }),
-    ...(dni && { dni }),
-    ...(fullName && { fullName }),
   };
-
-  const filterKey = [
-    schoolYearId,
-    levelId,
-    gradeId,
-    shiftId,
-    sectionId,
-    dni,
-    fullName,
-  ]
-    .filter(Boolean)
-    .join("|");
 
   return (
     <>
@@ -247,44 +249,36 @@ const RegistrationCardForm = () => {
       >
         <AcademicFormSelector required={false} requireYear defaultCurrentYear />
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 1.5,
-          mt: 2,
-          "& .MuiFormControl-root": { flex: "1 1 160px", mt: 0, mb: 0 },
-        }}
-      >
-        <TextInput source="dni" label="DNI" />
-        <TextInput source="fullName" label="Nombre" />
+      <Box sx={{ mt: 3 }}>
+        <GenerateActions />
       </Box>
       <ListBase
-        resource="students"
+        resource="students-withdrawn-report"
         filter={filter}
+        sort={{ field: "fullName", order: "ASC" }}
         disableSyncWithLocation
-        perPage={200}
+        perPage={1000}
       >
-        <StudentSelectionList filterKey={filterKey} />
+        <WithdrawnStudentsTable />
       </ListBase>
     </>
   );
 };
 
-export const RegistrationCardPage = () => {
+export const WithdrawnStudentsPage = () => {
   // Seed the form once per mount; restored values survive RA's initial reset.
   const defaultValues = useMemo(() => loadReportFilters(REPORT_KEY), []);
 
   return (
     <>
-      <Title title="Reporte: Ficha de Matrícula" />
+      <Title title="Reporte: Estudiantes Retirados" />
       <Card sx={{ mt: 2 }}>
         <CardContent>
           <Typography variant="h6" gutterBottom>
-            Ficha de Matrícula
+            Filtros
           </Typography>
           <Form defaultValues={defaultValues}>
-            <RegistrationCardForm />
+            <WithdrawnStudentsContent />
           </Form>
         </CardContent>
       </Card>

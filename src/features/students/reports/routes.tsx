@@ -2,9 +2,11 @@ import type { ReactElement } from "react";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import CakeIcon from "@mui/icons-material/Cake";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { BirthdaysPage } from "./birthdays/BirthdaysPage";
 import { EnrolledStudentsPage } from "./enrolled-students/EnrolledStudentsPage";
 import { RegistrationCardPage } from "./registration-card/RegistrationCardPage";
+import { WithdrawnStudentsPage } from "./withdrawn-students/WithdrawnStudentsPage";
 
 export interface ReportRoute {
   /** URL the hub card links to and the route registers. */
@@ -58,5 +60,14 @@ export const studentReportRoutes: ReportRoute[] = [
     icon: <CakeIcon />,
     color: "#db2777",
     element: <BirthdaysPage />,
+  },
+  {
+    path: "/students/reports/withdrawn",
+    title: "Estudiantes Retirados",
+    description:
+      "Tabla de estudiantes retirados con su código de matrícula, nivel académico y fechas de matrícula y retiro.",
+    icon: <PersonRemoveIcon />,
+    color: "#ea580c",
+    element: <WithdrawnStudentsPage />,
   },
 ];

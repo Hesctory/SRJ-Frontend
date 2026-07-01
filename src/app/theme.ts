@@ -244,7 +244,24 @@ const customizations = {
         root: { gap: 4 },
       },
     },
-    // Tables (RaDatagrid rows/columns) are intentionally left at their defaults.
+    // --- Tables: compact density (EXPERIMENTAL — recommendation #5) ---
+    // Tighter rows so admins scan more records per screen, plus a sticky,
+    // shaded header so column labels stay visible on long lists. RA Datagrid
+    // renders size="small" cells, so the padding override lands on every list.
+    // Delete this whole block to revert tables to RA/MUI defaults.
+    MuiTableCell: {
+      styleOverrides: {
+        sizeSmall: { paddingTop: 4, paddingBottom: 4 },
+        head: {
+          position: "sticky" as const,
+          top: 0,
+          zIndex: 2,
+          backgroundColor: "#f8fafc",
+          fontWeight: 600,
+          color: palette.text.secondary,
+        },
+      },
+    },
   },
 };
 

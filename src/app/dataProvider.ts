@@ -51,6 +51,13 @@ const REPORT_ENDPOINTS: Record<
     });
     return `${API_URL}/students/birthdays?${q.toString()}`;
   },
+  "students-withdrawn-report": (filter) => {
+    const q = new URLSearchParams();
+    Object.entries(filter).forEach(([k, v]) => {
+      if (v) q.set(k, v);
+    });
+    return `${API_URL}/students/withdrawn?${q.toString()}`;
+  },
 };
 
 const extendedSimpleDataProvider: DataProvider = {
