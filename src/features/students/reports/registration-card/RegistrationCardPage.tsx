@@ -1,4 +1,5 @@
 import DownloadIcon from "@mui/icons-material/Download";
+import GridOnIcon from "@mui/icons-material/GridOn";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import {
   Box,
@@ -21,26 +22,24 @@ import {
   useNotify,
 } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
-import { pdf } from "@react-pdf/renderer";
+import type { AppDataProvider } from "@/app/dataProvider";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
 import {
   loadReportFilters,
   ReportFiltersPersistence,
 } from "@/shared/hooks/useReportFilters";
-import {
-  RegistrationCardDocument,
-  type RegistrationCardStudent,
-} from "./RegistrationCardDocument";
+import { downloadBlob, openBlobInTab } from "@/shared/utils/blobFile";
 
 const PDF_FILENAME = "Ficha-Matricula.pdf";
+const XLSX_FILENAME = "Ficha-Matricula.xlsx";
 const REPORT_KEY = "registration-card";
 
 const GenerateActions = () => {
-  const dataProvider = useDataProvider();
+  const dataProvider = useDataProvider<AppDataProvider>();
   const notify = useNotify();
   const { handleSubmit } = useFormContext();
   const { selectedIds, total, isPending } = useListContext();
-  const [busy, setBusy] = useState<"open" | "download" | null>(null);
+  const [busy, setBusy] = useState<"open" | "download" | "excel" | null>(null);
 
   // No matching students (and none hand-picked) → nothing to generate.
   const noResults = !isPending && total === 0 && selectedIds.length === 0;
@@ -51,7 +50,7 @@ const GenerateActions = () => {
   const shiftId = useWatch({ name: "shiftId" });
   const sectionId = useWatch({ name: "sectionId" });
 
-  const buildBlob = async () => {
+  const buildFilter = () => {
     const filter: Record<string, string> = {};
     if (schoolYearId) filter.schoolYearId = String(schoolYearId);
     if (levelId) filter.levelId = String(levelId);
@@ -59,45 +58,27 @@ const GenerateActions = () => {
     if (shiftId) filter.shiftId = String(shiftId);
     if (sectionId) filter.sectionId = String(sectionId);
     if (selectedIds.length > 0) filter.studentIds = selectedIds.join(",");
-
-    const { data } = await dataProvider.getList(
-      "students-registration-card-report",
-      {
-        pagination: { page: 1, perPage: 1000 },
-        sort: { field: "fullName", order: "ASC" },
-        filter,
-      },
-    );
-
-    // Don't produce a blank PDF — let the caller surface an empty-state notice.
-    if (!data || data.length === 0) return null;
-
-    const doc = (
-      <RegistrationCardDocument
-        students={data as RegistrationCardStudent[]}
-        context={{}}
-      />
-    );
-    return pdf(doc).toBlob();
+    return filter;
   };
 
   // Open the tab synchronously (inside the click gesture) so the popup
-  // blocker doesn't kill it after the async PDF generation.
+  // blocker doesn't kill it after the async file fetch.
   const openInNewTab = () => {
     const win = window.open("", "_blank");
     handleSubmit(async () => {
       setBusy("open");
       try {
-        const blob = await buildBlob();
+        const { data: blob } = await dataProvider.exportReport({
+          report: "registrationCard",
+          format: "pdf",
+          filter: buildFilter(),
+        });
         if (!blob) {
           win?.close();
           notify("Sin resultados para estos filtros", { type: "warning" });
           return;
         }
-        const url = URL.createObjectURL(blob);
-        if (win) win.location.href = url;
-        else window.open(url, "_blank");
-        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+        openBlobInTab(win, blob);
       } catch (err) {
         win?.close();
         notify("No se pudo generar la ficha", { type: "error" });
@@ -108,21 +89,20 @@ const GenerateActions = () => {
     })();
   };
 
-  const download = () =>
+  const download = (format: "pdf" | "xlsx") =>
     handleSubmit(async () => {
-      setBusy("download");
+      setBusy(format === "pdf" ? "download" : "excel");
       try {
-        const blob = await buildBlob();
+        const { data: blob } = await dataProvider.exportReport({
+          report: "registrationCard",
+          format,
+          filter: buildFilter(),
+        });
         if (!blob) {
           notify("Sin resultados para estos filtros", { type: "warning" });
           return;
         }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = PDF_FILENAME;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 1_000);
+        downloadBlob(blob, format === "pdf" ? PDF_FILENAME : XLSX_FILENAME);
       } catch (err) {
         notify("No se pudo generar la ficha", { type: "error" });
         throw err;
@@ -158,10 +138,20 @@ const GenerateActions = () => {
             <DownloadIcon />
           )
         }
-        onClick={download}
+        onClick={() => download("pdf")}
         disabled={busy !== null || noResults}
       >
         Descargar PDF
+      </Button>
+      <Button
+        variant="outlined"
+        startIcon={
+          busy === "excel" ? <CircularProgress size={18} /> : <GridOnIcon />
+        }
+        onClick={() => download("xlsx")}
+        disabled={busy !== null || noResults}
+      >
+        Descargar Excel
       </Button>
       {noResults && (
         <Typography variant="body2" color="text.secondary">

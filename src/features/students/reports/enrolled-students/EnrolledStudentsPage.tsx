@@ -7,33 +7,31 @@ import {
   Typography,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
+import GridOnIcon from "@mui/icons-material/GridOn";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { pdf } from "@react-pdf/renderer";
 import { useMemo, useState } from "react";
 import { Form, Title, useDataProvider, useNotify } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
+import type { AppDataProvider } from "@/app/dataProvider";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
-import { useAcademicFilterData } from "@/shared/hooks/useAcademicFilterData";
 import {
   loadReportFilters,
   ReportFiltersPersistence,
 } from "@/shared/hooks/useReportFilters";
-import {
-  EnrolledStudentsDocument,
-  type EnrolledStudent,
-} from "./EnrolledStudentsDocument";
+import { downloadBlob, openBlobInTab } from "@/shared/utils/blobFile";
 
 const PDF_FILENAME = "Estudiantes-Matriculados.pdf";
+const XLSX_FILENAME = "Estudiantes-Matriculados.xlsx";
 const REPORT_KEY = "enrolled-students";
 
 // Inner component — must live inside <Form> to access the form context.
-// Reads current field values via useWatch, fetches labels for the PDF header,
-// and generates the PDF blob for opening in a new tab or downloading.
+// Reads current field values via useWatch and requests the backend-generated
+// file (PDF/Excel) for opening in a new tab or downloading.
 const GenerateActions = () => {
-  const dataProvider = useDataProvider();
+  const dataProvider = useDataProvider<AppDataProvider>();
   const notify = useNotify();
   const { handleSubmit } = useFormContext();
-  const [busy, setBusy] = useState<"open" | "download" | null>(null);
+  const [busy, setBusy] = useState<"open" | "download" | "excel" | null>(null);
 
   const schoolYearId = useWatch({ name: "schoolYearId" });
   const levelId = useWatch({ name: "levelId" });
@@ -41,60 +39,34 @@ const GenerateActions = () => {
   const shiftId = useWatch({ name: "shiftId" });
   const sectionId = useWatch({ name: "sectionId" });
 
-  // Cache-friendly label lookup — ReferenceInput inside AcademicFormSelector
-  // already populates react-query's cache with these lists.
-  const { schoolYears, levels, grades, shifts, sections } =
-    useAcademicFilterData(schoolYearId, levelId, gradeId, shiftId);
-
-  const buildBlob = async () => {
+  const buildFilter = () => {
     const filter: Record<string, unknown> = {};
-    if (schoolYearId != null) filter.schoolyearId = schoolYearId;
+    if (schoolYearId != null) filter.schoolYearId = schoolYearId;
     if (levelId != null) filter.levelId = levelId;
     if (gradeId != null) filter.gradeId = gradeId;
     if (shiftId != null) filter.shiftId = shiftId;
     if (sectionId != null) filter.sectionId = sectionId;
-
-    const { data } = await dataProvider.getList("students-enrolled-report", {
-      pagination: { page: 1, perPage: 1000 },
-      sort: { field: "fullName", order: "ASC" },
-      filter,
-    });
-
-    // Don't produce a blank PDF — let the caller surface an empty-state notice.
-    if (!data || data.length === 0) return null;
-
-    const doc = (
-      <EnrolledStudentsDocument
-        students={data as EnrolledStudent[]}
-        context={{
-          schoolYear: schoolYears.find((sy) => sy.id == schoolYearId)?.year,
-          level: levels.find((lv) => lv.id == levelId)?.name,
-          grade: grades.find((g) => g.id == gradeId)?.name,
-          shift: shifts.find((sh) => sh.id == shiftId)?.name,
-          section: sections.find((s) => s.id == sectionId)?.section,
-        }}
-      />
-    );
-    return pdf(doc).toBlob();
+    return filter;
   };
 
   // Open the tab synchronously (inside the click gesture) so the popup
-  // blocker doesn't kill it after the async PDF generation.
+  // blocker doesn't kill it after the async file fetch.
   const openInNewTab = () => {
     const win = window.open("", "_blank");
     handleSubmit(async () => {
       setBusy("open");
       try {
-        const blob = await buildBlob();
+        const { data: blob } = await dataProvider.exportReport({
+          report: "enrolled",
+          format: "pdf",
+          filter: buildFilter(),
+        });
         if (!blob) {
           win?.close();
           notify("Sin resultados para estos filtros", { type: "warning" });
           return;
         }
-        const url = URL.createObjectURL(blob);
-        if (win) win.location.href = url;
-        else window.open(url, "_blank");
-        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+        openBlobInTab(win, blob);
       } catch (err) {
         win?.close();
         notify("No se pudo generar el reporte", { type: "error" });
@@ -105,21 +77,20 @@ const GenerateActions = () => {
     })();
   };
 
-  const download = () =>
+  const download = (format: "pdf" | "xlsx") =>
     handleSubmit(async () => {
-      setBusy("download");
+      setBusy(format === "pdf" ? "download" : "excel");
       try {
-        const blob = await buildBlob();
+        const { data: blob } = await dataProvider.exportReport({
+          report: "enrolled",
+          format,
+          filter: buildFilter(),
+        });
         if (!blob) {
           notify("Sin resultados para estos filtros", { type: "warning" });
           return;
         }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = PDF_FILENAME;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 1_000);
+        downloadBlob(blob, format === "pdf" ? PDF_FILENAME : XLSX_FILENAME);
       } catch (err) {
         notify("No se pudo generar el reporte", { type: "error" });
         throw err;
@@ -153,10 +124,20 @@ const GenerateActions = () => {
             <DownloadIcon />
           )
         }
-        onClick={download}
+        onClick={() => download("pdf")}
         disabled={busy !== null}
       >
         Descargar PDF
+      </Button>
+      <Button
+        variant="outlined"
+        startIcon={
+          busy === "excel" ? <CircularProgress size={18} /> : <GridOnIcon />
+        }
+        onClick={() => download("xlsx")}
+        disabled={busy !== null}
+      >
+        Descargar Excel
       </Button>
     </Box>
   );

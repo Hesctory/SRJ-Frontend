@@ -7,39 +7,29 @@ import {
   Typography,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
+import GridOnIcon from "@mui/icons-material/GridOn";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
-import { pdf } from "@react-pdf/renderer";
 import { useMemo, useState } from "react";
 import { Form, Title, useDataProvider, useNotify } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
+import type { AppDataProvider } from "@/app/dataProvider";
 import AcademicFormSelector from "@/features/students/components/AcademicFormSelector";
-import { useAcademicFilterData } from "@/shared/hooks/useAcademicFilterData";
 import {
   loadReportFilters,
   ReportFiltersPersistence,
 } from "@/shared/hooks/useReportFilters";
-import { BirthdaysDocument, type BirthdayStudent } from "./BirthdaysDocument";
+import { downloadBlob, openBlobInTab } from "@/shared/utils/blobFile";
 
 const PDF_FILENAME = "Cumpleanos-Estudiantes.pdf";
+const XLSX_FILENAME = "Cumpleanos-Estudiantes.xlsx";
 const REPORT_KEY = "birthdays";
-
-/** Sort key: month*100 + day, so the list reads as a calendar of birthdays
- *  regardless of birth year. Unparseable dates sink to the bottom. */
-const dayMonthKey = (s: BirthdayStudent): number => {
-  const iso = s.birthDate?.match(/^(\d{4})-(\d{2})-(\d{2})/);
-  if (iso) return Number(iso[2]) * 100 + Number(iso[3]);
-  const d = new Date(s.birthDate);
-  return Number.isNaN(d.getTime())
-    ? 9999
-    : (d.getMonth() + 1) * 100 + d.getDate();
-};
 
 // Inner component — must live inside <Form> to access the form context.
 const GenerateActions = () => {
-  const dataProvider = useDataProvider();
+  const dataProvider = useDataProvider<AppDataProvider>();
   const notify = useNotify();
   const { handleSubmit } = useFormContext();
-  const [busy, setBusy] = useState<"open" | "download" | null>(null);
+  const [busy, setBusy] = useState<"open" | "download" | "excel" | null>(null);
 
   const schoolYearId = useWatch({ name: "schoolYearId" });
   const levelId = useWatch({ name: "levelId" });
@@ -47,63 +37,34 @@ const GenerateActions = () => {
   const shiftId = useWatch({ name: "shiftId" });
   const sectionId = useWatch({ name: "sectionId" });
 
-  const { schoolYears, levels, grades, shifts, sections } =
-    useAcademicFilterData(schoolYearId, levelId, gradeId, shiftId);
-
-  const buildBlob = async () => {
+  const buildFilter = () => {
     const filter: Record<string, unknown> = {};
     if (schoolYearId != null) filter.schoolYearId = schoolYearId;
     if (levelId != null) filter.levelId = levelId;
     if (gradeId != null) filter.gradeId = gradeId;
     if (shiftId != null) filter.shiftId = shiftId;
     if (sectionId != null) filter.sectionId = sectionId;
-
-    const { data } = await dataProvider.getList("students-birthdays-report", {
-      pagination: { page: 1, perPage: 1000 },
-      sort: { field: "fullName", order: "ASC" },
-      filter,
-    });
-
-    // Don't produce a blank PDF — let the caller surface an empty-state notice.
-    if (!data || data.length === 0) return null;
-
-    const students = [...(data as BirthdayStudent[])].sort(
-      (a, b) =>
-        dayMonthKey(a) - dayMonthKey(b) || a.fullName.localeCompare(b.fullName),
-    );
-
-    const doc = (
-      <BirthdaysDocument
-        students={students}
-        context={{
-          schoolYear: schoolYears.find((sy) => sy.id == schoolYearId)?.year,
-          level: levels.find((lv) => lv.id == levelId)?.name,
-          grade: grades.find((g) => g.id == gradeId)?.name,
-          shift: shifts.find((sh) => sh.id == shiftId)?.name,
-          section: sections.find((s) => s.id == sectionId)?.section,
-        }}
-      />
-    );
-    return pdf(doc).toBlob();
+    return filter;
   };
 
   // Open the tab synchronously (inside the click gesture) so the popup
-  // blocker doesn't kill it after the async PDF generation.
+  // blocker doesn't kill it after the async file fetch.
   const openInNewTab = () => {
     const win = window.open("", "_blank");
     handleSubmit(async () => {
       setBusy("open");
       try {
-        const blob = await buildBlob();
+        const { data: blob } = await dataProvider.exportReport({
+          report: "birthdays",
+          format: "pdf",
+          filter: buildFilter(),
+        });
         if (!blob) {
           win?.close();
           notify("Sin resultados para estos filtros", { type: "warning" });
           return;
         }
-        const url = URL.createObjectURL(blob);
-        if (win) win.location.href = url;
-        else window.open(url, "_blank");
-        setTimeout(() => URL.revokeObjectURL(url), 60_000);
+        openBlobInTab(win, blob);
       } catch (err) {
         win?.close();
         notify("No se pudo generar el reporte", { type: "error" });
@@ -114,21 +75,20 @@ const GenerateActions = () => {
     })();
   };
 
-  const download = () =>
+  const download = (format: "pdf" | "xlsx") =>
     handleSubmit(async () => {
-      setBusy("download");
+      setBusy(format === "pdf" ? "download" : "excel");
       try {
-        const blob = await buildBlob();
+        const { data: blob } = await dataProvider.exportReport({
+          report: "birthdays",
+          format,
+          filter: buildFilter(),
+        });
         if (!blob) {
           notify("Sin resultados para estos filtros", { type: "warning" });
           return;
         }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = PDF_FILENAME;
-        a.click();
-        setTimeout(() => URL.revokeObjectURL(url), 1_000);
+        downloadBlob(blob, format === "pdf" ? PDF_FILENAME : XLSX_FILENAME);
       } catch (err) {
         notify("No se pudo generar el reporte", { type: "error" });
         throw err;
@@ -162,10 +122,20 @@ const GenerateActions = () => {
             <DownloadIcon />
           )
         }
-        onClick={download}
+        onClick={() => download("pdf")}
         disabled={busy !== null}
       >
         Descargar PDF
+      </Button>
+      <Button
+        variant="outlined"
+        startIcon={
+          busy === "excel" ? <CircularProgress size={18} /> : <GridOnIcon />
+        }
+        onClick={() => download("xlsx")}
+        disabled={busy !== null}
+      >
+        Descargar Excel
       </Button>
     </Box>
   );

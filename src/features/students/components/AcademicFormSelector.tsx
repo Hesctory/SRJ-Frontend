@@ -50,7 +50,10 @@ const AcademicFormSelector = ({
       (sy) => Number(sy.year) === new Date().getFullYear(),
     );
     if (!match) return;
-    const timer = setTimeout(() => setValue(`${base}schoolYearId`, match.id), 0);
+    const timer = setTimeout(
+      () => setValue(`${base}schoolYearId`, match.id),
+      0,
+    );
     return () => clearTimeout(timer);
   }, [defaultCurrentYear, schoolYearId, schoolYears, base, setValue]);
 

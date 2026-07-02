@@ -60,6 +60,58 @@ const REPORT_ENDPOINTS: Record<
   },
 };
 
+// Base URLs for the backend file-export endpoints. Each report exposes an
+// `.../export?format=pdf|xlsx` sibling of its JSON endpoint. Add a new entry
+// here whenever a report needs backend-generated files.
+const REPORT_EXPORT_BASES = {
+  enrolled: `${API_URL}/students/report`,
+  birthdays: `${API_URL}/students/birthdays`,
+  withdrawn: `${API_URL}/students/withdrawn`,
+  registrationCard: `${API_URL}/students/registration-card`,
+} as const;
+
+export type ReportExportKey = keyof typeof REPORT_EXPORT_BASES;
+
+export type ExportReportParams = {
+  report: ReportExportKey;
+  format: "pdf" | "xlsx";
+  filter: Record<string, unknown>;
+};
+
+// Custom dataProvider method for binary file downloads. `httpClient`
+// (fetchUtils.fetchJson) JSON-parses every response and can't read a Blob, so
+// this uses a raw fetch. Returns `{ data: null }` on 204 (no rows) so callers
+// can surface an empty-state notice instead of downloading a blank file.
+const exportReport = async ({
+  report,
+  format,
+  filter,
+}: ExportReportParams): Promise<{ data: Blob | null }> => {
+  const q = new URLSearchParams({ format });
+  Object.entries(filter).forEach(([k, v]) => {
+    if (v !== undefined && v !== null && v !== "") q.set(k, String(v));
+  });
+
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${REPORT_EXPORT_BASES[report]}/export?${q}`, {
+    headers: {
+      Accept:
+        format === "pdf"
+          ? "application/pdf"
+          : "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  });
+
+  if (res.status === 204) return { data: null };
+  if (!res.ok) throw new Error(`Export failed: ${res.status}`);
+  return { data: await res.blob() };
+};
+
+export type AppDataProvider = DataProvider & {
+  exportReport: typeof exportReport;
+};
+
 const extendedSimpleDataProvider: DataProvider = {
   ...simpleDataProvider,
   getList: async (resource, params) => {
@@ -80,8 +132,9 @@ const extendedSimpleDataProvider: DataProvider = {
 
 const BATCH_CREATE_RESOURCES = new Set(["lunch-assignments"]);
 
-const dataProvider: DataProvider = {
+const dataProvider: AppDataProvider = {
   ...extendedSimpleDataProvider,
+  exportReport,
   create: async (resource, params) => {
     if (BATCH_CREATE_RESOURCES.has(resource)) {
       const { json } = await httpClient(`${API_URL}/${resource}`, {

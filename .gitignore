@@ -36,3 +36,10 @@ lunches.txt
 StaffMemberFormat.txt
 endpoints.md
 enrollment-payments-backend-contract.md
+
+# Reference: old react-pdf report layouts (kept for how the PDFs looked,
+# esp. the registration card). Not compiled/imported — see BackendGenerationOrientedMigration.md
+EnrolledStudentsDocument.tsx
+BirthdaysDocument.tsx
+WithdrawnStudentsDocument.tsx
+RegistrationCardDocument.tsx
